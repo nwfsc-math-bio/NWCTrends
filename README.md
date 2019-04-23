@@ -35,5 +35,5 @@ at the command line.
 
 ## Example output
 
-![Trend estimates](doc/figures/ESU_figures/Puget Sound Steelhead DPS.html)
+![](inst/doc/main_fig.jpg)
 
