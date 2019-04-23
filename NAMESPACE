@@ -1,0 +1,9 @@
+## export functions
+export(
+NWCTrends_report
+)
+
+## register S3 methods
+
+## Imports
+importFrom(shiny, runApp)
