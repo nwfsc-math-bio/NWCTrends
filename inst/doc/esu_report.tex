@@ -1,0 +1,243 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{}
+    \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{lscape}
+\usepackage{caption}
+
+\begin{document}
+
+\renewcommand{\floatpagefraction}{0.7}\renewcommand{\dblfloatpagefraction}{0.7}
+
+\includegraphics{figures/main_fig-1.pdf}
+
+\newpage
+
+\includegraphics{figures/fracwild_fig-1.pdf}
+
+\newpage
+
+\includegraphics{figures/productivity_fig-1.pdf}
+
+\newpage
+
+\includegraphics{figures/summary_fig-1.pdf}
+
+\newpage
+
+\begin{landscape}\begin{table}[p]
+\centering
+\caption{5-year geometric mean of smoothed wild spawner estimate (smoothed total spawners times smoothed fracwild).  In parentheses, the 5-year geometric mean of smoothed total spawners (black thick line in graphs) is shown.  A row with only values in parentheses indicates that no fraction wild estimates were available for that population. Geometric mean was computed as the product of counts raised to the power 1/5. Percent change between the most recent two 5-year periods is shown on the far right.} 
+\begin{tabular}{r|c|cccccc}
+  \hline
+Population & MPG & 1990-1994 & 1995-1999 & 2000-2004 & 2005-2009 & 2010-2014 & \% Change \\ 
+  \hline
+Cedar R. WR & Central \& South PS &  (334) &  (160) &  (42) &  (12) &  (4) &  (-67) \\ 
+  Green R. WR & Central \& South PS & 1648 (1815) & 1978 (2082) & 1269 (1327) & 843 (868) & 782 (806) & -7 (-7) \\ 
+  Nisqually R. WR & Central \& South PS & 1210 (1219) & 1159 (1159) & 624 (624) & 354 (354) & 283 (283) & -20 (-20) \\ 
+  N. Lake WA/Lake Sammamish WR & Central \& South PS & 359 (359) & 169 (169) & 44 (44) & 12 (12) & 5 (5) & -58 (-58) \\ 
+  Puyallup R./Carbon R. WR & Central \& South PS & 1883 (1977) & 1606 (1752) & 786 (869) & 410 (444) & 298 (321) & -27 (-28) \\ 
+  White R. WR & Central \& South PS & 559 (559) & 687 (687) & 475 (475) & 342 (342) & 353 (353) & 3 (3) \\ 
+  Dungeness R. WR & Hood Canal \& SJF & 309 (309) & 331 (335) & 199 (203) & 127 (128) & 114 (115) & -10 (-10) \\ 
+  East Hood Canal Tribs. WR & Hood Canal \& SJF & 152 (158) & 181 (181) & 116 (116) & 76 (76) & 70 (70) & -8 (-8) \\ 
+  Elwha R. WR & Hood Canal \& SJF & 214 (370) & 156 (464) & 120 (325) & 87 (237) & 90 (245) & 3 (3) \\ 
+  Sequim/Discovery Bays Tribs. WR & Hood Canal \& SJF &  (61) &  (63) &  (36) &  (21) &  (18) &  (-14) \\ 
+  Skokomish R. WR & Hood Canal \& SJF & 435 (435) & 562 (562) & 410 (410) & 317 (317) & 348 (348) & 10 (10) \\ 
+  S. Hood Canal Tribs. WR & Hood Canal \& SJF & 97 (97) & 131 (131) & 99 (99) & 78 (78) & 85 (85) & 9 (9) \\ 
+  Strait of Juan de Fuca Tribs. WR & Hood Canal \& SJF & 236 (236) & 300 (300) & 212 (212) & 156 (156) & 162 (162) & 4 (4) \\ 
+  West Hood Canal Tribs. WR & Hood Canal \& SJF & 93 (93) & 143 (143) & 124 (124) & 110 (110) & 137 (137) & 25 (25) \\ 
+  Nooksack R. WR & Northern Cascades & 3 (3) & 23 (24) & 94 (98) & 413 (426) & 2537 (2616) & 514 (514) \\ 
+  Pilchuck R. WR & Northern Cascades & 970 (970) & 1207 (1207) & 838 (838) & 609 (609) & 628 (628) & 3 (3) \\ 
+  Samish R./Bellingham Bay Tribs. WR & Northern Cascades & 464 (464) & 763 (763) & 700 (700) & 663 (663) & 894 (894) & 35 (35) \\ 
+  Skagit R. WR & Northern Cascades & 7240 (7717) & 9073 (9530) & 6316 (6614) & 4508 (4773) & 4592 (4884) & 2 (2) \\ 
+  Snohomish/Skykomish R. WR & Northern Cascades & 2765 (2933) & 3266 (3447) & 2134 (2254) & 1451 (1519) & 1385 (1449) & -5 (-5) \\ 
+  Snoqualmie R. WR & Northern Cascades & 1467 (1877) & 1663 (2214) & 872 (1453) & 617 (983) & 598 (940) & -3 (-4) \\ 
+  Stillaguamish R. WR & Northern Cascades & 1065 (1072) & 974 (1109) & 477 (641) & 316 (386) & 318 (330) & 1 (-15) \\ 
+  Tolt R. SuR & Northern Cascades & 104 (104) & 147 (147) & 115 (115) & 93 (93) & 108 (108) & 16 (16) \\ 
+   \hline
+\end{tabular}
+\end{table}
+\end{landscape}
+
+\begin{landscape}\begin{table}[p]
+\centering
+\caption{5-year geometric mean of raw wild spawner counts. This is the raw total spawner count times the fraction wild estimate, if available.  In parentheses, 5-year geometric mean of raw total spawner counts is shown. A value only in parentheses means that a total spawner count was available but no or only one estimate of wild spawners available. The geometric mean was computed as the product of counts raised to the power 1 over the number of counts available (2 to 5). A minimum of 2 values were used to compute the geometric mean. Percent change between the most recent two 5-year periods is shown on the far right.} 
+\begin{tabular}{r|c|cccccc}
+  \hline
+Population & MPG & 1990-1994 & 1995-1999 & 2000-2004 & 2005-2009 & 2010-2014 & \% Change \\ 
+  \hline
+Cedar R. WR & Central \& South PS &  (321) &  (298) &  (37) &  (12) &  (4) &  (-67) \\ 
+  Green R. WR & Central \& South PS & 1566 (1730) & 2379 (2505) & 1618 (1693) &  (716) &  (552) &  (-23) \\ 
+  Nisqually R. WR & Central \& South PS & 1201 (1208) & 759 (759) & 413 (413) & 375 (375) & 442 (442) & 18 (18) \\ 
+  N. Lake WA/Lake Sammamish WR & Central \& South PS & 321 (321) & 298 (298) & 37 (37) & 12 (12) &  &  \\ 
+  Puyallup R./Carbon R. WR & Central \& South PS & 1860 (1954) & 1523 (1660) & 907 (1000) & 641 (476) &  (277) &  (-42) \\ 
+  White R. WR & Central \& South PS & 696 (696) & 519 (519) & 466 (466) & 225 (225) & 531 (531) & 136 (136) \\ 
+  Dungeness R. WR & Hood Canal \& SJF & 356 (356) &  & 182 (186) &  &  (141) &  \\ 
+  East Hood Canal Tribs. WR & Hood Canal \& SJF & 110 (110) & 176 (176) & 202 (202) & 62 (62) & 60 (60) & -3 (-3) \\ 
+  Elwha R. WR & Hood Canal \& SJF & 206 (358) & 127 (508) &  (303) &  &  &  \\ 
+  Sequim/Discovery Bays Tribs. WR & Hood Canal \& SJF &  (30) &  (69) &  (63) &  (17) &  (19) &  (12) \\ 
+  Skokomish R. WR & Hood Canal \& SJF & 503 (385) & 359 (359) & 259 (205) & 351 (351) &  (580) &  (65) \\ 
+  S. Hood Canal Tribs. WR & Hood Canal \& SJF & 89 (89) & 111 (111) & 103 (103) & 113 (113) & 64 (64) & -43 (-43) \\ 
+  Strait of Juan de Fuca Tribs. WR & Hood Canal \& SJF &  & 275 (275) & 212 (212) & 244 (244) & 147 (147) & -40 (-40) \\ 
+  West Hood Canal Tribs. WR & Hood Canal \& SJF &  & 97 (97) & 210 (210) & 174 (149) &  (74) &  (-50) \\ 
+  Nooksack R. WR & Northern Cascades &  &  &  (80) &  & 1779 (1834) &  \\ 
+  Pilchuck R. WR & Northern Cascades & 1300 (1300) & 1465 (1465) & 604 (604) & 597 (597) & 614 (614) & 3 (3) \\ 
+  Samish R./Bellingham Bay Tribs. WR & Northern Cascades & 316 (316) & 717 (717) & 852 (852) & 534 (534) & 846 (846) & 58 (58) \\ 
+  Skagit R. WR & Northern Cascades & 7189 (7650) & 7656 (8059) & 5424 (5675) & 5547 (4767) &  (5123) &  (7) \\ 
+  Snohomish/Skykomish R. WR & Northern Cascades & 3634 (3877) & 4141 (4382) & 2562 (2711) & 2945 (3084) &  (930) &  (-70) \\ 
+  Snoqualmie R. WR & Northern Cascades & 1832 (2328) & 2060 (2739) & 856 (1544) & 1396 (1249) &  (680) &  (-46) \\ 
+  Stillaguamish R. WR & Northern Cascades & 1078 (1078) & 1024 (1166) & 401 (550) & 259 (327) &  (392) &  (20) \\ 
+  Tolt R. SuR & Northern Cascades & 112 (112) & 212 (212) & 119 (119) & 73 (73) & 105 (105) & 44 (44) \\ 
+   \hline
+\end{tabular}
+\end{table}
+\end{landscape}
+
+\begin{table}[p]
+\centering
+\caption{5-year mean of fraction wild (sum of all estimates divided by the number of estimates).  Blanks mean no estimate available in that 5-year range.} 
+\begin{tabular}{r|ccccc}
+  \hline
+Population & 1990-1994 & 1995-1999 & 2000-2004 & 2005-2009 & 2010-2014 \\ 
+  \hline
+Cedar R. WR &  &  &  &  &  \\ 
+  Green R. WR & 0.91 & 0.95 & 0.96 &  &  \\ 
+  Nisqually R. WR & 0.99 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  N. Lake WA/Lake Sammamish WR & 1.00 & 1.00 & 1.00 & 1.00 &  \\ 
+  Puyallup R./Carbon R. WR & 0.95 & 0.92 & 0.91 & 0.91 &  \\ 
+  White R. WR & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  Dungeness R. WR & 1.00 & 1.00 & 0.98 & 0.99 &  \\ 
+  East Hood Canal Tribs. WR & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  Elwha R. WR & 0.60 & 0.25 &  &  &  \\ 
+  Sequim/Discovery Bays Tribs. WR &  &  &  &  &  \\ 
+  Skokomish R. WR & 1.00 & 1.00 & 1.00 & 1.00 &  \\ 
+  S. Hood Canal Tribs. WR & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  Strait of Juan de Fuca Tribs. WR &  & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  West Hood Canal Tribs. WR &  & 1.00 & 1.00 & 1.00 &  \\ 
+  Nooksack R. WR &  &  & 0.96 & 0.97 & 0.97 \\ 
+  Pilchuck R. WR & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  Samish R./Bellingham Bay Tribs. WR & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+  Skagit R. WR & 0.94 & 0.95 & 0.96 & 0.95 &  \\ 
+  Snohomish/Skykomish R. WR & 0.94 & 0.95 & 0.94 & 0.96 &  \\ 
+  Snoqualmie R. WR & 0.79 & 0.76 & 0.58 & 0.66 &  \\ 
+  Stillaguamish R. WR & 1.00 & 0.88 & 0.75 & 0.81 &  \\ 
+  Tolt R. SuR & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[p]
+\centering
+\caption{15-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year.  Only populations with at least 4 wild spawner estimates from 1980 to 2014 are shown and with at least 2 data points in the first 5 years and last 5 years of the 15-year period.} 
+\begin{tabular}{r|c|cc}
+  \hline
+Population & MPG & 1990-2005 & 1999-2014 \\ 
+  \hline
+Green R. WR & Central \& South PS & -0.03 (-0.05, -0.01) &  \\ 
+  Nisqually R. WR & Central \& South PS & -0.07 (-0.09, -0.05) & -0.09 (-0.11, -0.06) \\ 
+  N. Lake WA/Lake Sammamish WR & Central \& South PS & -0.21 (-0.23, -0.19) &  \\ 
+  Puyallup R./Carbon R. WR & Central \& South PS & -0.09 (-0.11, -0.07) &  \\ 
+  White R. WR & Central \& South PS & -0.02 (-0.04, 0) & -0.04 (-0.06, -0.01) \\ 
+  Dungeness R. WR & Hood Canal \& SJF & -0.05 (-0.06, -0.03) &  \\ 
+  East Hood Canal Tribs. WR & Hood Canal \& SJF & -0.03 (-0.05, -0.01) & -0.06 (-0.08, -0.03) \\ 
+  Elwha R. WR & Hood Canal \& SJF &  &  \\ 
+  Skokomish R. WR & Hood Canal \& SJF & -0.01 (-0.03, 0.01) &  \\ 
+  S. Hood Canal Tribs. WR & Hood Canal \& SJF & 0 (-0.02, 0.02) & -0.02 (-0.05, 0.01) \\ 
+  Strait of Juan de Fuca Tribs. WR & Hood Canal \& SJF &  & -0.03 (-0.06, -0.01) \\ 
+  West Hood Canal Tribs. WR & Hood Canal \& SJF &  &  \\ 
+  Pilchuck R. WR & Northern Cascades & -0.02 (-0.04, 0) & -0.04 (-0.06, -0.01) \\ 
+  Samish R./Bellingham Bay Tribs. WR & Northern Cascades & 0.04 (0.02, 0.06) & 0.02 (-0.01, 0.05) \\ 
+  Skagit R. WR & Northern Cascades & -0.02 (-0.04, 0) &  \\ 
+  Snohomish/Skykomish R. WR & Northern Cascades & -0.03 (-0.05, -0.01) &  \\ 
+  Snoqualmie R. WR & Northern Cascades & -0.05 (-0.08, -0.03) &  \\ 
+  Stillaguamish R. WR & Northern Cascades & -0.08 (-0.1, -0.06) &  \\ 
+  Tolt R. SuR & Northern Cascades & 0.01 (-0.01, 0.03) & -0.01 (-0.04, 0.01) \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+\vfill
+\clearpage
+
+
+\end{document}
