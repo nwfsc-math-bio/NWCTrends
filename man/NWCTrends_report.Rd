@@ -4,17 +4,17 @@
 \description{
 The 2015 Status Review report can be viewed by typing
 RShowDoc("2015 Status Review Update",package="NWCTrends")
-at the command line. The report has a description of the methods used for computing the smoothed trend lines and the status metrics.  A pdf of the methods alone is also available by type
+at the command line. The report has a description of the methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing
 RShowDoc("Methods",package="NWCTrends") 
-at the command line.
+at the command line. 
 
 The default model used to fit the data is that used in the 2015 Status Update.
-This model uses information across the populations in an ESU to estimate the process variance, non-process variance (residuals between smoothed fits and observed spawners), covarianc in process errors 
+This model uses information across the populations in an ESU to estimate the process variance, non-process variance (residuals between smoothed fits and observed spawners), covariance in process errors 
 (good and bad year correlation). However it allows each population to have a different trend.  This model is specified as model=list(Z="identity", R="diagonal and equal", U="unequal", Q="equalvarcov").
 }
 
 \usage{
-create_reports(
+NWCTrends_report(
   inputfile=file.choose(), 
   fit.min.year=1975, fit.max.year=2014,
   model=list(Z="identity", R="diagonal and equal", Q="equalvarcov", U="unequal"), 
