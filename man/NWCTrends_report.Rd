@@ -21,12 +21,12 @@ NWCTrends_report(
   logit.fw=FALSE,
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
-  output.type = "latex"
+  output.type = "pdf"
 )  
 }
   
   \arguments{
-  \item{ inputfile }{comma-delimited data file (see demo files for the format)}
+  \item{ inputfile }{comma-delimited data file (see demo files for the format). demofiles are in inst/doc/demodata.}
   \item{ fit.min.year }{ The earliest year to use when fitting the models. }
   \item{ fit.max.year }{ The latest year to use when fitting the models. }
   \item{ model }{ The structure of the MARSS model to use as a list.  }
@@ -37,7 +37,7 @@ NWCTrends_report(
   }
 
 \value{
-  A ascii file with the extension .rav to be used in VRAP for RER calculations.
+  Plots and tables that are saved to doc/figures/ESU_figures.
 }
 \author{ 
   Eli Holmes, NOAA, Seattle, USA.  
