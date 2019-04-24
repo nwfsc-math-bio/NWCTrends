@@ -8,7 +8,9 @@ library(devtools)
 devtools::install_github("nwfsc-timeseries/NWCTrends")
 ```
 
-To download a set of demo files, run the following code.
+## Instructions to run a demo
+
+Download a set of demo files, run the following code.
 ```
 fpath <- system.file("doc","demodata",package="NWCTrends")
 file.copy(fpath, ".",recursive=TRUE)
