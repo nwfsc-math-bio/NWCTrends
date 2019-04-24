@@ -11,3 +11,5 @@ License: GPL-2
 LazyData: yes
 BuildVignettes: yes
 ByteCompile: TRUE
+RoxygenNote: 6.1.1
+
