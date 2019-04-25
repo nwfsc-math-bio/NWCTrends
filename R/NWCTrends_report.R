@@ -78,7 +78,7 @@ NWCTrends_report=function(
     cat("Select a data file (.csv or .RData).\n")
     inputfile=file.choose()
   }
-  filetype=str_split(inputfile,"[.]")[[1]]
+  filetype=stringr::str_split(inputfile,"[.]")[[1]]
   filetype=filetype[length(filetype)]
 
   # Read in the data
@@ -165,7 +165,7 @@ NWCTrends_report=function(
       pops.to.plot.wild=pops.to.plot.wild[ord]
       mpg.to.plot.wild=mpg.to.plot.wild[ord]
     }
-    outputfile=str_replace_all(esuname,"/","-")
+    outputfile=stringr::str_replace_all(esuname,"/","-")
     if(output.type=="latex") outputfile.ext = ".pdf" 
     if(output.type=="html") outputfile.ext = ".html" 
     if(output.type=="word") outputfile.ext = ".docx" 
@@ -177,14 +177,14 @@ NWCTrends_report=function(
     
     #this will rename the figures made to the ESU specific name
     file.rename(paste0(paste0(instdocpath,"/report_files/esu_report"), outputfile.ext), outputfile)
-    outnames=paste(figdir, str_replace_all(esuname,"/","-"),"-",
+    outnames=paste(figdir, stringr::str_replace_all(esuname,"/","-"),"-",
                    c("summary_fig.pdf","fracwild_fig.pdf","main_fig.pdf","productivity_fig.pdf"), sep="")
     innames = paste(figdir, c("summary_fig-1.pdf","fracwild_fig-1.pdf","main_fig-1.pdf","productivity_fig-1.pdf"),sep="")
     tabnames=c("trend_15_table", "geomean_wild_table", "geomean_total_table", "fracwild_table")
     tabinnames=paste0(texdir,"/wrapper_", tabnames, ".tex", sep="")
     #oddly pdf created at base level not in folder where tex is
     taboutnames.tmp=paste("wrapper_", tabnames, ".pdf", sep="")
-    taboutnames=paste0(figdir, str_replace_all(esuname,"/","-"),"-",
+    taboutnames=paste0(figdir, stringr::str_replace_all(esuname,"/","-"),"-",
                       tabnames, ".pdf")
     
     if(output.type=="latex"){
@@ -199,7 +199,7 @@ NWCTrends_report=function(
     if(output.type=="html" | output.type=="word"){
       #rename the tmp fig to fig with ESU
       innames = paste(figdir, c("summary_fig-1.png","fracwild_fig-1.png","main_fig-1.png","productivity_fig-1.png"),sep="")
-      outnames=paste(figdir, str_replace_all(esuname,"/","-"),"-",
+      outnames=paste(figdir, stringr::str_replace_all(esuname,"/","-"),"-",
                      c("summary_fig.png","fracwild_fig.png","main_fig.png","productivity_fig.png"), sep="")
       for(i in 1:4) file.rename(innames[i], outnames[i]) 
     }

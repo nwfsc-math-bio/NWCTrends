@@ -26,6 +26,6 @@ sort.PSChinook=function(x){
   if(length(x)!=length(pop.ord)) stop("Something wrong with sort names for PS Chinook")
   
   ord=1:length(pop.ord)
-  for(i in 1:length(pop.ord)) ord[i]=which(str_detect(x,pop.ord[i]))
+  for(i in 1:length(pop.ord)) ord[i]=which(stringr::str_detect(x,pop.ord[i]))
   return(ord)
 }
