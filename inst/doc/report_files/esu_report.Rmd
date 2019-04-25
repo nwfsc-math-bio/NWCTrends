@@ -179,27 +179,45 @@ if(output.type=="latex") cat("\\newpage")
 require(xtable)
 #source("geomean_tables.R")
 a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)
-print(xtable(a[[1]], align="rr|c|cccccc", digits=0), 
+if(output.type=="latex")
+  print(xtable(a[[1]], align="rr|c|cccccc", digits=0), 
       comment=FALSE, include.rownames=FALSE, table.placement="p", type=output.type,
       file=paste0(figdir,"/geomean_total_table.tex"))
 caption="5-year geometric mean of smoothed wild spawner estimate (smoothed total spawners times smoothed fracwild).  In parentheses, the 5-year geometric mean of smoothed total spawners (black thick line in graphs) is shown.  A row with only values in parentheses indicates that no fraction wild estimates were available for that population. Geometric mean was computed as the product of counts raised to the power 1/5. Percent change between the most recent two 5-year periods is shown on the far right."
-if(output.type=="latex") cat("\\begin{landscape}")
-print(xtable(a[[1]], align="rr|c|cccccc", digits=0, caption=caption), 
+if(output.type=="latex"){
+  cat("\\begin{landscape}")
+  print(xtable(a[[1]], align="rr|c|cccccc", digits=0, caption=caption), 
       comment=FALSE, include.rownames=FALSE,
       caption.placement="top", table.placement="p", type=output.type)
-if(output.type=="latex") cat("\\end{landscape}")
+  cat("\\end{landscape}") }
+if(output.type=="html"){
+  cat("## 5-year geometric mean of smoothed wild spawners\n\n")
+  cat(caption)
+  clean.a = data.frame(lapply(a[[1]], function(x) {str_replace_all(x, "[)]", "\\\\)")} ))
+  colnames(clean.a)=colnames(a[[2]])
+  kable(clean.a) %>% kable_styling(full_width = FALSE)
+}
 ```
 
 ```{r geomean_wild_table, results='asis', echo=FALSE}
-print(xtable(a[[2]], align="rr|c|cccccc", digits=0), 
+if(output.type=="latex")
+  print(xtable(a[[2]], align="rr|c|cccccc", digits=0), 
       comment=FALSE, include.rownames=FALSE, table.placement="p", type=output.type,
       file=paste0(figdir,"/geomean_wild_table.tex"))
 caption="5-year geometric mean of raw wild spawner counts. This is the raw total spawner count times the fraction wild estimate, if available.  In parentheses, 5-year geometric mean of raw total spawner counts is shown. A value only in parentheses means that a total spawner count was available but no or only one estimate of wild spawners available. The geometric mean was computed as the product of counts raised to the power 1 over the number of counts available (2 to 5). A minimum of 2 values were used to compute the geometric mean. Percent change between the most recent two 5-year periods is shown on the far right."
-if(output.type=="latex") cat("\\begin{landscape}")
-print(xtable(a[[2]], align="rr|c|cccccc", digits=0, caption=caption), 
+if(output.type=="latex"){
+  cat("\\begin{landscape}")
+  print(xtable(a[[2]], align="rr|c|cccccc", digits=0, caption=caption), 
       comment=FALSE, include.rownames=FALSE,
       caption.placement="top", table.placement="p", type=output.type) 
-if(output.type=="latex") cat("\\end{landscape}")
+  cat("\\end{landscape}") }
+if(output.type=="html"){
+  cat("## 5-year geometric mean of raw wild spawners\n\n")
+  cat(caption)
+  clean.a = data.frame(lapply(a[[2]], function(x) {str_replace_all(x, "[)]", "\\\\)")} ))
+  colnames(clean.a)=colnames(a[[2]])
+  kable(clean.a) %>% kable_styling(full_width = FALSE)
+}
 ```
 
 ```{r frac_wild_table, results='asis', echo=FALSE}
@@ -207,26 +225,42 @@ if(output.type=="latex") cat("\\end{landscape}")
 total.spawners=matdat.spawners[esus==esuname,,drop=FALSE]
 wild.spawners=matdat.wildspawners[esus==esuname,,drop=FALSE]
 a=fracwild_table(wild.spawners[pops.to.plot,,drop=FALSE], total.spawners[pops.to.plot,,drop=FALSE])
-print(xtable(a, align="rr|ccccc", digits=2), 
+if(output.type=="latex")
+  print(xtable(a, align="rr|ccccc", digits=2), 
       comment=FALSE, include.rownames=FALSE, table.placement="p", type=output.type,
       file=paste0(figdir,"/fracwild_table.tex"))
-caption="5-year mean of fraction wild (sum of all estimates divided by the number of estimates).  Blanks mean no estimate available in that 5-year range."
-print(xtable(a, align="rr|ccccc", digits=2, caption=caption), 
+caption="5-year mean of fraction wild (sum of all estimates divided by the number of estimates).  Blanks (or NaN) mean no estimate available in that 5-year range."
+if(output.type=="latex") 
+  print(xtable(a, align="rr|ccccc", digits=2, caption=caption), 
       comment=FALSE, include.rownames=FALSE,
       caption.placement="top", table.placement="p", type=output.type)
+if(output.type=="html"){
+  cat("## Wild fracton\n\n")
+  cat(caption)
+  kable(a, digits=2) %>%
+  kable_styling(full_width = FALSE)
+}
 ```
 
 ```{r trend15_table, results='asis', echo=FALSE}
 #source("trend_15_tables.R")
 a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
-print(xtable(a, align="rr|c|cc", digits=2), 
+if(output.type=="latex")
+  print(xtable(a, align="rr|c|cc", digits=2), 
       comment=FALSE, include.rownames=FALSE,
       table.placement="p", type=output.type,
       file=paste0(figdir,"/trend_15_table.tex")) 
-caption="15-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year.  Only populations with at least 4 wild spawner estimates from 1980 to 2014 are shown and with at least 2 data points in the first 5 years and last 5 years of the 15-year period."
-print(xtable(a, align="rr|c|cc", digits=2, caption=caption), 
+caption="15-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates from 1980 to 2014 are shown and with at least 2 data points in the first 5 years and last 5 years of the 15-year period."
+if(output.type=="latex")
+  print(xtable(a, align="rr|c|cc", digits=2, caption=caption), 
       comment=FALSE, include.rownames=FALSE,
       caption.placement="top", table.placement="p", type=output.type)
+if(output.type=="html"){
+  cat("## 15-year trends\n\n")
+  cat(caption)
+  kable(a, digits=2) %>%
+  kable_styling(full_width = FALSE)
+}
 ```
 
 \vfill

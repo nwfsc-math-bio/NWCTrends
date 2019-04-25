@@ -198,8 +198,7 @@ NWCTrends_report=function(
       innames = paste(figdir, c("summary_fig-1.png","fracwild_fig-1.png","main_fig-1.png","productivity_fig-1.png"),sep="")
       outnames=paste(figdir, str_replace_all(esuname,"/","-"),"-",
                      c("summary_fig.png","fracwild_fig.png","main_fig.png","productivity_fig.png"), sep="")
-      file.rename(innames[i], outnames[i]) 
-      file.remove(paste0(figdir, tabnames, ".tex")) 
+      for(i in 1:4) file.rename(innames[i], outnames[i]) 
     }
   }
   
