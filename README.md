@@ -4,13 +4,13 @@ This is runs the standardized trends metrics used in the 2015 5-year Status Revi
 
 ## Installation
 
-To install, install the **devtools** package from CRAN and then use:
+To install, install the **devtools** package (if needed) from CRAN and then use:
 ```
 library(devtools)
 devtools::install_github("nwfsc-timeseries/NWCTrends")
 ```
 
-If you do not have a TeX installation on your machine, then you also need to install *tinytex* with this code in order to create pdf files and tables. The default is to create a png of the figures and an html file with the tables.
+The default is to create an html file with the tables and figures. You can also select Word or PDF output. In order to create PDF files and tables, you also need to install **tinytex** if you do not have a TeX installation. Code to install **tinytex** is below.  
 
 ```
 install.packages('tinytex')
@@ -33,7 +33,7 @@ NWCTrends_report()
 ```
 You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the `demofiles` folder.
 
-Type `?NWCTrends` for instructions for analyzing a data set. The data must be .csv file. Figures will be saved in the **NWCTrends_output** folder.  The default output is a html file. You can also select Word and PDF.
+Type `?NWCTrends` for instructions for analyzing a data set. The data must be .csv file. Figures will be saved in the **NWCTrends_output** folder, created in your working directory.  
 
 ## References
 
