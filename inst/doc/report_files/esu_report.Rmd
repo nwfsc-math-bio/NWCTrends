@@ -16,6 +16,7 @@ cat("\\renewcommand{\\dblfloatpagefraction}{0.7}")
 #figdir speced in NWCTrends_report()
 knitr::opts_chunk$set(fig.path=figdir,
                       echo=FALSE, warning=FALSE, message=FALSE)
+if(output.type == "word") options(knitr.table.format = 'markdown')
   
 #set the fig.height for the figs that use pops.to.plot
 n = length(pops.to.plot)  
@@ -197,6 +198,13 @@ if(output.type=="html"){
   colnames(clean.a)=colnames(a[[2]])
   kable(clean.a) %>% kable_styling(full_width = FALSE)
 }
+if(output.type=="word"){
+  cat("## 5-year geometric mean of smoothed wild spawners\n\n")
+  cat(caption)
+  clean.a = data.frame(lapply(a[[1]], function(x) {str_replace_all(x, "[)]", "\\\\)")} ))
+  colnames(clean.a)=colnames(a[[2]])
+  kable(clean.a)
+}
 ```
 
 ```{r geomean_wild_table, results='asis', echo=FALSE}
@@ -217,6 +225,13 @@ if(output.type=="html"){
   clean.a = data.frame(lapply(a[[2]], function(x) {str_replace_all(x, "[)]", "\\\\)")} ))
   colnames(clean.a)=colnames(a[[2]])
   kable(clean.a) %>% kable_styling(full_width = FALSE)
+}
+if(output.type=="word"){
+  cat("## 5-year geometric mean of raw wild spawners\n\n")
+  cat(caption)
+  clean.a = data.frame(lapply(a[[2]], function(x) {str_replace_all(x, "[)]", "\\\\)")} ))
+  colnames(clean.a)=colnames(a[[2]])
+  kable(clean.a)
 }
 ```
 
@@ -240,6 +255,11 @@ if(output.type=="html"){
   kable(a, digits=2) %>%
   kable_styling(full_width = FALSE)
 }
+if(output.type=="word"){
+  cat("## Wild fracton\n\n")
+  cat(caption)
+  kable(a, digits=2)
+}
 ```
 
 ```{r trend15_table, results='asis', echo=FALSE}
@@ -261,7 +281,13 @@ if(output.type=="html"){
   kable(a, digits=2) %>%
   kable_styling(full_width = FALSE)
 }
+if(output.type=="word"){
+  cat("## 15-year trends\n\n")
+  cat(caption)
+  kable(a, digits=2)
+}
 ```
+
 
 \vfill
 \clearpage

@@ -10,7 +10,7 @@ library(devtools)
 devtools::install_github("nwfsc-timeseries/NWCTrends")
 ```
 
-If you do not have a TeX installation on your machine, then you also need to install *tinytex* with this code.
+If you do not have a TeX installation on your machine, then you also need to install *tinytex* with this code in order to create pdf files and tables. The default is to create a png of the figures and an html file with the tables.
 
 ```
 install.packages('tinytex')
@@ -31,13 +31,9 @@ To run a demo analysis and create a report, type
 library(NWCTrends)
 NWCTrends_report()
 ```
-You will be asked to select a data file. If you do not have data, navigate to one of the .csv files in the `demofiles` folder.
+You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the `demofiles` folder.
 
-Type `?NWCTrends` for instructions for analyzing a data set. The data must be .csv or .xls (eventually) or RData from prior fit. Figures will be saved in the **doc/figures/ESU_figures** folder.
-
-The **doc/tex** files folder are some wrappers that are used to make the tables that go into the ESU reports.  Don't delete.  They call the tex files made by create_reports.R for the tables.
-
-The file `esu_report.Rmd` is the file that makes the report.  Don't delete.
+Type `?NWCTrends` for instructions for analyzing a data set. The data must be .csv file. Figures will be saved in the **NWCTrends_output** folder.  The default output is a html file. You can also select Word and PDF.
 
 ## References
 
@@ -53,6 +49,10 @@ RShowDoc("Methods",package="NWCTrends")
 at the command line. 
 
 ## Example output
+
+A report will be generated with figures and tables. [Example report](inst/doc/example.html)
+
+The main figure shows the estimated trends.
 
 ![](inst/doc/main_fig.jpg)
 

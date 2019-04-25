@@ -8,7 +8,7 @@ NWCTrends_report(inputfile = NULL, fit.min.year = 1975,
   fit.max.year = 2014, model = list(Z = "identity", R =
   "diagonal and equal", Q = "equalvarcov", U = "unequal"),
   logit.fw = FALSE, plot.min.year = 1980, plot.max.year = 2014,
-  min.data.points = 5, output.type = c("pdf", "html"))
+  min.data.points = 5, output.type = c("html", "pdf", "word"))
 }
 \arguments{
 \item{inputfile}{comma-delimited data file (see demo files for the format). 
@@ -28,7 +28,7 @@ demofiles are in inst/doc/demodata.}
 
 \item{min.data.points}{The minimum data points to require from a population (for fitting and plotting).}
 
-\item{output.type}{"pdf"/"word" Format to produce the report in.}
+\item{output.type}{"html", "pdf", or "word" Format to produce the report in.}
 }
 \value{
 Plots and tables that are saved to doc/figures/ESU_figures.

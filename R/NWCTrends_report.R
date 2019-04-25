@@ -46,7 +46,7 @@
 #' @param plot.min.year The earliest year to use when plotting the data.
 #' @param plot.max.year The latest year to use when plotting the data.
 #' @param min.data.points The minimum data points to require from a population (for fitting and plotting).
-#' @param output.type "pdf"/"word" Format to produce the report in.
+#' @param output.type "html", "pdf", or "word" Format to produce the report in.
 
 #' @return
 #' Plots and tables that are saved to doc/figures/ESU_figures.
@@ -63,8 +63,9 @@ NWCTrends_report=function(
   logit.fw=FALSE,
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
-  output.type = c("pdf","html")
+  output.type = c("html", "pdf", "word")
 ){
+  output.type = tolower(output.type)
   output.type = match.arg(output.type)
   # Set up the directory locations
   output.dir="NWCTrend_output"
@@ -117,6 +118,7 @@ NWCTrends_report=function(
   if(output.type=="pdf") output.type="latex" #this is what R wants for pdf
   if(output.type=="latex") render.type="pdf_document"
   if(output.type=="html") render.type="html_document"
+  if(output.type=="word") render.type="word_document"
   
   #In the code for the Status Review, multiple models could be tested.
   # For this code only one model is used
@@ -166,6 +168,7 @@ NWCTrends_report=function(
     outputfile=str_replace_all(esuname,"/","-")
     if(output.type=="latex") outputfile.ext = ".pdf" 
     if(output.type=="html") outputfile.ext = ".html" 
+    if(output.type=="word") outputfile.ext = ".docx" 
     outputfile=paste0(figdir, outputfile, outputfile.ext)
     
     #this Rmd file will make all the figures with a default name
@@ -193,7 +196,7 @@ NWCTrends_report=function(
       }
     }
     
-    if(output.type=="html"){
+    if(output.type=="html" | output.type=="word"){
       #rename the tmp fig to fig with ESU
       innames = paste(figdir, c("summary_fig-1.png","fracwild_fig-1.png","main_fig-1.png","productivity_fig-1.png"),sep="")
       outnames=paste(figdir, str_replace_all(esuname,"/","-"),"-",
