@@ -2,10 +2,19 @@
 
 This is runs the standardized trends metrics used in the 2015 5-year Status Review Update for listed PNW salmonids.  
 
+## Installation
+
 To install, install the **devtools** package from CRAN and then use:
 ```
 library(devtools)
 devtools::install_github("nwfsc-timeseries/NWCTrends")
+```
+
+If you do not have a TeX installation on your machine, then you also need to install *tinytex* with this code.
+
+```
+install.packages('tinytex')
+tinytex::install_tinytex()
 ```
 
 ## Instructions to run a demo

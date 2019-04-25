@@ -63,20 +63,24 @@ NWCTrends_report=function(
   logit.fw=FALSE,
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
-  output.type = "pdf"
-){ 
+  output.type = c("pdf","html")
+){
+  output.type = match.arg(output.type)
+  # Set up the directory locations
   output.dir="NWCTrend_output"
-
+  instdocpath = system.file("doc", package="NWCTrends")
+  texdir=system.file("doc", "report_files", package="NWCTrends") #where the tex wrappers are
+  figdir=paste0(file.path(getwd(),output.dir),"/")
+  
+  # Get the input data
   if(missing(inputfile)){
     cat("Select a data file (.csv or .RData).\n")
     inputfile=file.choose()
   }
-  
   filetype=str_split(inputfile,"[.]")[[1]]
   filetype=filetype[length(filetype)]
 
-  #Set equal to NA until it gets set
-  
+  # Read in the data
   if(filetype=="rdata" | filetype=="RData"){ #load fits and data
     inputnames=load(inputfile)
     if(!all(c("datalist","fits")%in%inputnames))
@@ -99,7 +103,7 @@ NWCTrends_report=function(
     
     #outputfile name
     #the outputfile is saved debugging purposes
-    fits.file = "NWCTrends_debug_file.RData"
+    fits.file = paste0(figdir,"NWCTrends_debug_file.RData")
     
     #then do multivariate analysis where
     fitslist = trend_fits(datalist, fits.file, wild=FALSE, 
@@ -114,6 +118,8 @@ NWCTrends_report=function(
   if(output.type=="latex") render.type="pdf_document"
   if(output.type=="html") render.type="html_document"
   
+  #In the code for the Status Review, multiple models could be tested.
+  # For this code only one model is used
   modn=1
   
   for(this.esu in 1:length(fits)){
@@ -128,14 +134,14 @@ NWCTrends_report=function(
     if(is.null(plot.max.year)) plot.max.year = max(years)
     if(plot.max.year>max(years)) plot.max.year = max(years)
     
-    #Figure out the names of the populations to plot
-    #it's the row in total.fit where there are enough data points for the min to max year range
+    # Figure out the names of the populations to plot
+    # it's the row in total.fit where there are enough data points for the min to max year range
     pops = rownames(ifit.total$model$data)
     mpg=metadat$PopGroup[metadat$name%in%pops]
     pops.to.plot =  pops[
       apply(ifit.total$model$data[,which(years==plot.min.year):which(years==plot.max.year),drop=FALSE],1,
             function(x){sum(!is.na(x))>=min.data.points})]
-    #mpg.to.plot used for mgp col in tables
+    # mpg.to.plot used for mgp col in tables
     mpg.to.plot = sort(metadat$PopGroup[metadat$name%in%pops.to.plot])
     mpg.to.plot = clean.mpg(mpg.to.plot)
     pops.to.plot = pops.to.plot[order( metadat$PopGroup[metadat$name%in%pops.to.plot] )]
@@ -148,7 +154,7 @@ NWCTrends_report=function(
     pops.to.plot.wild =  rownames(ifit.fracwild$fracwild.raw)[
       apply(ifit.fracwild$fracwild.raw[,which(years==plot.min.year):which(years==plot.max.year),drop=FALSE],1,
             function(x){sum(!is.na(x))>=min.data.points})]
-    #mpg.to.plot.wild used for mgp col in tables
+    # mpg.to.plot.wild used for mgp col in tables
     mpg.to.plot.wild = sort(metadat$PopGroup[metadat$name%in%pops.to.plot.wild])
     mpg.to.plot.wild = clean.mpg(mpg.to.plot.wild)
     pops.to.plot.wild = pops.to.plot.wild[order( metadat$PopGroup[metadat$name%in%pops.to.plot.wild] )]
@@ -157,42 +163,43 @@ NWCTrends_report=function(
       pops.to.plot.wild=pops.to.plot.wild[ord]
       mpg.to.plot.wild=mpg.to.plot.wild[ord]
     }
-    instdocpath = system.file("doc", package="NWCTrends")
-    texdir=system.file("doc", "figures", package="NWCTrends") #where the tex wrappers are
-    figdir=file.path(getwd(),output.dir)
     outputfile=str_replace_all(esuname,"/","-")
     if(output.type=="latex") outputfile.ext = ".pdf" 
     if(output.type=="html") outputfile.ext = ".html" 
-    outputfile=paste0(figdir, "/", outputfile, outputfile.ext)
+    outputfile=paste0(figdir, outputfile, outputfile.ext)
+    
     #this Rmd file will make all the figures with a default name
-    render(paste0(instdocpath,"/esu_report.Rmd"), render.type, 
+    render(paste0(instdocpath,"/report_files/esu_report.Rmd"), render.type, 
            output_options=list(fig_caption=TRUE), quiet=TRUE)
     
     #this will rename the figures made to the ESU specific name
-    file.rename(paste0(paste0(instdocpath,"/esu_report"), outputfile.ext), outputfile)
+    file.rename(paste0(paste0(instdocpath,"/report_files/esu_report"), outputfile.ext), outputfile)
     outnames=paste(figdir, str_replace_all(esuname,"/","-"),"-",
                    c("summary_fig.pdf","fracwild_fig.pdf","main_fig.pdf","productivity_fig.pdf"), sep="")
-    innames = paste(texdir, c("summary_fig-1.pdf","fracwild_fig-1.pdf","main_fig-1.pdf","productivity_fig-1.pdf"),sep="")
+    innames = paste(figdir, c("summary_fig-1.pdf","fracwild_fig-1.pdf","main_fig-1.pdf","productivity_fig-1.pdf"),sep="")
     tabnames=c("trend_15_table", "geomean_wild_table", "geomean_total_table", "fracwild_table")
     tabinnames=paste0(texdir,"/wrapper_", tabnames, ".tex", sep="")
-    #oddly pdf created at package level not inst/doc/figures where tex is
+    #oddly pdf created at base level not in folder where tex is
     taboutnames.tmp=paste("wrapper_", tabnames, ".pdf", sep="")
-    taboutnames=paste0(figdir,"/", str_replace_all(esuname,"/","-"),"-",
+    taboutnames=paste0(figdir, str_replace_all(esuname,"/","-"),"-",
                       tabnames, ".pdf")
     
     if(output.type=="latex"){
       for(i in 1:4){
         file.rename(innames[i], outnames[i]) #rename the tmp fig to fig with ESU
         texi2pdf(tabinnames[i], clean=TRUE) #create tables from tex
-        file.remove(paste(texdir, "/", tabnames[i], ".tex", sep="")) #remove the tex file (only wrapper needed it)
+        file.remove(paste(figdir, tabnames[i], ".tex", sep="")) #remove the tex file (only wrapper needed it)
         file.rename(taboutnames.tmp[i], taboutnames[i]) #rename table pdf
       }
     }
     
     if(output.type=="html"){
-      pngnames = paste0(texdir, "/", c("summary_fig-1.png","fracwild_fig-1.png","main_fig-1.png","productivity_fig-1.png"))
-      file.remove(pngnames) #remove the png files
-      file.remove(paste0(texdir, "/", tabnames, ".tex")) 
+      #rename the tmp fig to fig with ESU
+      innames = paste(figdir, c("summary_fig-1.png","fracwild_fig-1.png","main_fig-1.png","productivity_fig-1.png"),sep="")
+      outnames=paste(figdir, str_replace_all(esuname,"/","-"),"-",
+                     c("summary_fig.png","fracwild_fig.png","main_fig.png","productivity_fig.png"), sep="")
+      file.rename(innames[i], outnames[i]) 
+      file.remove(paste0(figdir, tabnames, ".tex")) 
     }
   }
   

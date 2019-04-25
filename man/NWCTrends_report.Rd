@@ -8,7 +8,7 @@ NWCTrends_report(inputfile = NULL, fit.min.year = 1975,
   fit.max.year = 2014, model = list(Z = "identity", R =
   "diagonal and equal", Q = "equalvarcov", U = "unequal"),
   logit.fw = FALSE, plot.min.year = 1980, plot.max.year = 2014,
-  min.data.points = 5, output.type = "pdf")
+  min.data.points = 5, output.type = c("pdf", "html"))
 }
 \arguments{
 \item{inputfile}{comma-delimited data file (see demo files for the format). 
