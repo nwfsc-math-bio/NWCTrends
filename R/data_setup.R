@@ -3,7 +3,7 @@ data_setup=function(inputfile, min.year, max.year){
   
   ####### Replace with shiny app #################
   # This code is specific to my machine.  Replace 
-  if(str_sub(inputfile,-4)==".xls" | str_sub(inputfile,-5)==".xlsx"){
+  if(stringr::str_sub(inputfile,-4)==".xls" | stringr::str_sub(inputfile,-5)==".xlsx"){
     require(XLConnect)    
     inputfile = xls2csv(inputfile, sheet=1, perl="C:/Program Files (x86)/Perl/bin/perl.exe")
   }
@@ -13,8 +13,8 @@ data_setup=function(inputfile, min.year, max.year){
   toproper = function(x){
     require(stringr)
     x=tolower(x)
-    x=str_replace_all(x, "[.]", " ")
-    x=str_replace_all(x, "_", " ")
+    x=stringr::str_replace_all(x, "[.]", " ")
+    x=stringr::str_replace_all(x, "_", " ")
     out=c()
     for(i in x){
       s = strsplit(i, " ")[[1]]
@@ -22,9 +22,9 @@ data_setup=function(inputfile, min.year, max.year){
                 sep = "", collapse = " ")
       out = c(out, s)
     }
-    out=str_replace_all(out, " ", ".")
-    out=str_replace_all(out, "Nwr", "NWR")
-    out=str_replace_all(out, "Esu", "ESU")
+    out=stringr::str_replace_all(out, " ", ".")
+    out=stringr::str_replace_all(out, "Nwr", "NWR")
+    out=stringr::str_replace_all(out, "Esu", "ESU")
     
     out
   }
@@ -50,14 +50,14 @@ data_setup=function(inputfile, min.year, max.year){
   }
   
   ## Do clean up on names
-  dat$Common.Population.Name = str_trim(dat$Common.Population.Name)
+  dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
   #clean up the common names with run timing
   for(i in c("Fall-run", "Winter-run", "Spring-run", "Summer-run", "Late-run", "Early-run", "Early-late-run")){
-    tmp = dat$Common.Population.Name[str_detect(dat$Common.Population.Name, i)]
-    tmp2 = str_sub(tmp, 1, str_locate(tmp, i)[,1]-1)
-    dat$Common.Population.Name[str_detect(dat$Common.Population.Name, i)] = tmp2
+    tmp = dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)]
+    tmp2 = stringr::str_sub(tmp, 1, stringr::str_locate(tmp, i)[,1]-1)
+    dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)] = tmp2
   }
-  dat$Common.Population.Name = str_trim(dat$Common.Population.Name)
+  dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
   
   ## replace 0s with NAs
   dat$Spawners[dat$Spawners==0]=NA

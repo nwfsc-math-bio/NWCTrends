@@ -70,21 +70,21 @@ trend_fits=function(datalist,
       #get the run timing for each pop
       runs=unique(datalist[["metadat"]]$Run)
       this.pop.names = rownames(tmpdat)
-      no.run=sapply(this.pop.names, function(x){!any(str_detect(x, runs))})
+      no.run=sapply(this.pop.names, function(x){!any(stringr::str_detect(x, runs))})
       this.pop.names[no.run] = paste(this.pop.names[no.run], "No-run")
       runs = c(runs, "No-run")
       this.pop.runs = rep(NA, n) #vector with run for each pop
       for(this.run in runs){
-        tmp=str_detect(this.pop.names, this.run)
+        tmp=stringr::str_detect(this.pop.names, this.run)
         this.pop.runs[tmp] = this.run
       }
       #set up a Q by run matrix
       Q.by.run=matrix(list(0),n,n)
       for(this.run in runs){
-        tmp=str_detect(this.pop.names, this.run)
+        tmp=stringr::str_detect(this.pop.names, this.run)
         Q.by.run[tmp,tmp]=paste(this.run,"cov",sep=".")
         for(j in runs[!(runs==this.esu.name)]){
-          tmp2=str_detect(this.pop.names, j)
+          tmp2=stringr::str_detect(this.pop.names, j)
           Q.by.run[tmp,tmp2]=paste(this.run,j,"cov",sep=".")
           Q.by.run[tmp2,tmp]=paste(this.run,j,"cov",sep=".")
         }
