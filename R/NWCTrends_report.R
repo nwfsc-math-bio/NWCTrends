@@ -69,6 +69,7 @@ NWCTrends_report=function(
   output.type = match.arg(output.type)
   # Set up the directory locations
   output.dir="NWCTrend_output"
+  if(!dir.exists(output.dir)) dir.create(output.dir)
   instdocpath = system.file("doc", package="NWCTrends")
   texdir=system.file("doc", "report_files", package="NWCTrends") #where the tex wrappers are
   figdir=paste0(file.path(getwd(),output.dir),"/")
