@@ -22,8 +22,8 @@ trend_fits=function(datalist,
   
   if(!wild){
     good=!(apply(matdat.spawners,1,function(x){sum(!is.na(x))})<min.years)
-    matdat.long.spawners=matdat.spawners[good,]
-    fw = matdat.wildspawners[good,]/matdat.spawners[good,]
+    matdat.long.spawners=matdat.spawners[good,,drop=FALSE]
+    fw = matdat.wildspawners[good,,drop=FALSE]/matdat.spawners[good,,drop=FALSE]
     pops.long.spawners = datalist[["metadat"]]$name[good]
     esus.long.spawners = datalist[["metadat"]]$ESU[good]
     esus.sub = esus.long.spawners
