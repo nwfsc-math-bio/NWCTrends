@@ -81,12 +81,12 @@ total.spawners=matdat.spawners[esus==esuname,,drop=FALSE]
 wild.spawners=matdat.wildspawners[esus==esuname,,drop=FALSE]
 a=fracwild_table(wild.spawners[pops.to.plot,,drop=FALSE], total.spawners[pops.to.plot,,drop=FALSE])
 
-barplot(table(cut(as.numeric(as.character((a[,5]))),seq(0,1,.2)),exclude=NULL), 
+barplot(table(cut(as.numeric(as.character((a[,5]))),seq(0,1,.2)),exclude=NULL, useNA="always"), 
         names.arg=c(as.character(seq(0.1,.9,0.2)),"NA"),ylab="Count",
         ylim=c(0,dim(a)[1]))
 title("Fraction wild across populations 2005-2009")
 
-barplot(table(cut(as.numeric(as.character((a[,6]))),seq(0,1,.2)),exclude=NULL), 
+barplot(table(cut(as.numeric(as.character((a[,6]))),seq(0,1,.2)),exclude=NULL, useNA="always"), 
         names.arg=c(as.character(seq(0.1,.9,0.2)),"NA"),ylab="Count",
         ylim=c(0,dim(a)[1]))
 title("Fraction wild across populations 2010-2014")
