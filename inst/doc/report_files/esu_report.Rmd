@@ -92,7 +92,9 @@ barplot(table(cut(as.numeric(as.character((a[,6]))),seq(0,1,.2)),exclude=NULL, u
 title("Fraction wild across populations 2010-2014")
 
 #source("geomean_tables.R")
-a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)[[1]]
+#a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)[[1]]
+a=do.call(geomean_table, 
+          c(list(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild),geomean.table.control))[[1]]
 vals1=vals2=c()
 geo.start=which(names(a)=="MPG")+1
 geo.end=which(names(a)=="% Change")-1
@@ -179,12 +181,19 @@ if(output.type=="latex") cat("\\newpage")
 ```{r, results='asis', echo=FALSE}
 require(xtable)
 #source("geomean_tables.R")
-a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)
+#a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)
+a=do.call(geomean_table, 
+          c(list(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild),geomean.table.control))
 if(output.type=="latex")
   print(xtable(a[[1]], align="rr|c|cccccc", digits=0), 
       comment=FALSE, include.rownames=FALSE, table.placement="p", type=output.type,
       file=paste0(figdir,"/geomean_total_table.tex"))
-caption="5-year geometric mean of smoothed wild spawner estimate (smoothed total spawners times smoothed fracwild).  In parentheses, the 5-year geometric mean of smoothed total spawners (black thick line in graphs) is shown.  A row with only values in parentheses indicates that no fraction wild estimates were available for that population. Geometric mean was computed as the product of counts raised to the power 1/5. Percent change between the most recent two 5-year periods is shown on the far right."
+caption="5-year geometric mean of smoothed wild spawner estimate (smoothed total spawners times smoothed fracwild).  In parentheses, the 5-year geometric mean of smoothed total spawners (black thick line in graphs) is shown.  A row with only values in parentheses indicates that no fraction wild estimates were available for that population. Geometric mean was computed as the product of counts raised to the power 1/(number of values in band)."
+if(geomean.table.control$change.col=="first.last")
+  chg.col = "Percent change between first and last 5-year periods is shown on the far right."
+if(geomean.table.control$change.col=="last.two" | is.null(geomean.table.control$change.col))
+  chg.col = "Percent change between the most recent two 5-year periods is shown on the far right."
+caption <- paste(caption, chg.col)
 if(output.type=="latex"){
   cat("\\begin{landscape}")
   print(xtable(a[[1]], align="rr|c|cccccc", digits=0, caption=caption), 
@@ -213,7 +222,12 @@ if(output.type=="latex")
   print(xtable(a[[2]], align="rr|c|cccccc", digits=0), 
       comment=FALSE, include.rownames=FALSE, table.placement="p", type=output.type,
       file=paste0(figdir,"/geomean_wild_table.tex"))
-caption="5-year geometric mean of raw wild spawner counts. This is the raw total spawner count times the fraction wild estimate, if available.  In parentheses, 5-year geometric mean of raw total spawner counts is shown. A value only in parentheses means that a total spawner count was available but no or only one estimate of wild spawners available. The geometric mean was computed as the product of counts raised to the power 1 over the number of counts available (2 to 5). A minimum of 2 values were used to compute the geometric mean. Percent change between the most recent two 5-year periods is shown on the far right."
+caption="5-year geometric mean of raw wild spawner counts. This is the raw total spawner count times the fraction wild estimate, if available.  In parentheses, 5-year geometric mean of raw total spawner counts is shown. A value only in parentheses means that a total spawner count was available but no or only one estimate of wild spawners available. The geometric mean was computed as the product of counts raised to the power 1 over the number of counts available (2 to 5). A minimum of 2 values were used to compute the geometric mean."
+if(geomean.table.control$change.col=="first.last")
+  chg.col = "Percent change between first and last 5-year periods is shown on the far right."
+if(geomean.table.control$change.col=="last.two" | is.null(geomean.table.control$change.col))
+  chg.col = "Percent change between the most recent two 5-year periods is shown on the far right."
+caption <- paste(caption, chg.col)
 if(output.type=="latex"){
   cat("\\begin{landscape}")
   print(xtable(a[[2]], align="rr|c|cccccc", digits=0, caption=caption), 

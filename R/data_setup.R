@@ -120,7 +120,7 @@ data_setup=function(inputfile, min.year, max.year){
   #dat is datafile as data.frame
   #matdat.spawners is a matrix of the total spawners
   #matdat.wildspawners is a matrix of the wildspawners using the fracwild data if included
-  #metedat is a data.frame with all the metadata for each population:
+  #metadat is a data.frame with all the metadata for each population:
   #name = population name
   #ESU = ESU name
   #Species

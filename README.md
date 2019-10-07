@@ -40,6 +40,25 @@ Type `?NWCTrends` for instructions for analyzing a data set. The data must be .c
 
 Download the demo data files and duplicate the format. Do not rename the columns. Missing data are entered with a -99. An ESU name and a unique population name (COMMON_POPULATION_NAME) is required. The tables produced by **NWCTrends** only use the BROOD_YEAR, NUMBER_OF_SPAWNERS, and FRACWILD columns. An entry is required for each year. RUN_TIME, SPECIES and MAJOR_POPULATION_GROUP are used to adding labels to plots and tables.
 
+## Modifying the tables
+
+Set the years to use for the analysis using `fit.min.year` and `fit.max.year`. 
+
+In the tables for the geometric means, you can control the table by passing in the list `geomean.table.control`. For example, you can set the beginning and ending years to be shown in the table. These can be different than `fit.min.year` and `fit.max.year`. For example, you may want to fit to 1990 to 2019 data but only show
+5-year geometric means for 1999 to 2018. To do this, you would call the report with
+
+```
+NWCTrends_report(fit.min.year=1990, fit.max.year=2019,
+                 geomean.table.control=list(min.year=1999, max.year=2018, change.col="first.last"))
+```
+The `change.col` argument determines whether the last column is the percent change between the first and last 5-year bands or between the last two bands.
+
+The code will create bands with 5 years in each band starting with min.year. If max.year,
+would lead to a final band with less than 5 years, then the last band will not have 5
+years. If it has fewer than min.band.points, then the last band will be NA.
+You will need to properly choose min.year and max.year to get the table to look as you want.
+
+
 ## References
 
 The 2015 Status Review report can be viewed by typing
