@@ -12,7 +12,7 @@
 #'  years. If it has fewer than min.band.points, then the last band will be NA.
 #'  You will need to properly choose min.year and max.year to get the table to look as you want.
 #'  
-#'  The last column of the tables is the % change. This can be over the last 2 bands or the first and last
+#'  The last column of the tables is the percent change. This can be over the last 2 bands or the first and last
 #'  bands. The change.col argument determines which it is.
 #'
 #' @param pops which populations to include in the table
