@@ -8,7 +8,9 @@ NWCTrends_report(inputfile = NULL, fit.min.year = 1975,
   fit.max.year = 2014, model = list(Z = "identity", R =
   "diagonal and equal", Q = "equalvarcov", U = "unequal"),
   logit.fw = FALSE, plot.min.year = 1980, plot.max.year = 2014,
-  min.data.points = 5, output.type = c("html", "pdf", "word"))
+  min.data.points = 5, geomean.table.control = list(min.year = 1990,
+  max.year = 2014, lenbands = 5, min.band.points = 2),
+  output.type = c("html", "pdf", "word"))
 }
 \arguments{
 \item{inputfile}{comma-delimited data file (see demo files for the format). 
@@ -27,6 +29,8 @@ demofiles are in inst/doc/demodata.}
 \item{plot.max.year}{The latest year to use when plotting the data.}
 
 \item{min.data.points}{The minimum data points to require from a population (for fitting and plotting).}
+
+\item{geomean.table.control}{A list with the adjustable variables for geomean_table(). See ?geomean_table}
 
 \item{output.type}{"html", "pdf", or "word" Format to produce the report in.}
 }
@@ -65,7 +69,11 @@ This function does all the steps to create the trend plots and figures
 }
 By default, the plots and tables are saved in a directory
  named (and created if necessary) NWCTrend_output in your
- working directory.
+ working directory. 
+ 
+The look of the tables can be adjusted by passing in geomean.tables.control. See ?geomean_tables
+for the elements that can be controlled. Note that if the defaults for
+geomean.table.control are changed, they must be also changed in geomean_tables.R
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.
