@@ -1,7 +1,20 @@
-##################################################################################################
-## This creates a data frame with a column of trend estimates from the year ranges in year.ranges
-## From a MARSS fit object
-##################################################################################################
+#' Create the trend tables
+#'
+#' Create the tables with the trends for different time periods using the smoothed wild
+#' spawner estimates. Despite the name of the function, the range of years need not be 15 years.
+#' The years to show are specified
+#' by list `year.ranges`. The ranges are specified as `begin.year:end.year`, for example
+#' `1990:2005`. `year.ranges` can be padded into the NWCTrends_report() call by passing in 
+#'  trend.table.control as list.  For example `list(year.ranges=list(1990:2000,2000:2010))`.
+#' 
+#' @param pops which populations to include in the table
+#' @param mpg Population group. Shown in the table.
+#' @param total.fit The matrix of total spawner estimates
+#' @param fracwild.fit The matrix of fraction wild associated with each total row.
+#' @param year.ranges The columns of years.
+#'
+#' @return A data frames with the estimates trend for each year range in a different column.
+#'
 trend_15_table = function(pops, mpg, total.fit, fracwild.fit, year.ranges=list(1990:2005,1999:2014)) {
 
   n = length(pops)

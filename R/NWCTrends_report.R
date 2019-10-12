@@ -51,6 +51,7 @@
 #' @param plot.max.year The latest year to use when plotting the data.
 #' @param min.data.points The minimum data points to require from a population (for fitting and plotting).
 #' @param geomean.table.control A list with the adjustable variables for geomean_table(). See ?geomean_table
+#' @param trend.table.control A list with the adjustable variables for trend_15_table(). See ?trend_15_table
 #' @param output.type "html", "pdf", or "word" Format to produce the report in.
 
 #' @return
@@ -69,6 +70,7 @@ NWCTrends_report=function(
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
   geomean.table.control=list(min.year=1990, max.year=2014, lenbands=5, min.band.points=2),
+  trend.table.control=list(year.ranges=list(1990:2005,1999:2014)),
   output.type = c("html", "pdf", "word")
 ){
   output.type = tolower(output.type)

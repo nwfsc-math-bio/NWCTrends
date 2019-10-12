@@ -10,6 +10,7 @@ NWCTrends_report(inputfile = NULL, fit.min.year = 1975,
   logit.fw = FALSE, plot.min.year = 1980, plot.max.year = 2014,
   min.data.points = 5, geomean.table.control = list(min.year = 1990,
   max.year = 2014, lenbands = 5, min.band.points = 2),
+  trend.table.control = list(year.ranges = list(1990:2005, 1999:2014)),
   output.type = c("html", "pdf", "word"))
 }
 \arguments{
@@ -31,6 +32,8 @@ demofiles are in inst/doc/demodata.}
 \item{min.data.points}{The minimum data points to require from a population (for fitting and plotting).}
 
 \item{geomean.table.control}{A list with the adjustable variables for geomean_table(). See ?geomean_table}
+
+\item{trend.table.control}{A list with the adjustable variables for trend_15_table(). See ?trend_15_table}
 
 \item{output.type}{"html", "pdf", or "word" Format to produce the report in.}
 }

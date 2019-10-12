@@ -98,25 +98,26 @@ a=do.call(geomean_table,
 vals1=vals2=c()
 geo.start=which(names(a)=="MPG")+1
 geo.end=which(names(a)=="% Change")-1
+# This gets the values from the tables; matrix npops x ngeomeans
 for(i in 1:dim(a)[1]){
   vals1=rbind(vals1, as.numeric(apply(a[i,geo.start:geo.end],2,function(x){stringr::str_split(x," [(]")[[1]][1]})))
   vals=apply(a[i,geo.start:geo.end],2,function(x){stringr::str_split(x," [(]")[[1]][2]})
   vals=sapply(vals,function(x){stringr::str_split(x,"[)]")[[1]][1]})
   vals2=rbind(vals2, as.numeric(vals))
   }
-
-plot(0:5,0:5,xlim=c(0,4.5),ylim=c(-1*log10(1000),log10(1000)), type="n", axes=FALSE, 
-     ylab="log 10 percent change", xlab="")
+labs <- colnames(a)[geo.start:geo.end]
+labs <- cbind(labs[2:length(labs)], labs[1:(length(labs)-1)])
+labs <- apply(labs,1,function(x){paste(x, collapse="\n")})
+nlabs <- length(labs)
+plot(0:(nlabs+1), 0:(nlabs+1), xlim=c(0,nlabs+0.5), ylim=c(-1*log10(1000),log10(1000)), type="n",
+     axes=FALSE, ylab="log 10 percent change", xlab="")
+n=dim(vals2)[1] # n pops
 for(i in 1:(dim(vals1)[2]-1)){
-  n=dim(vals2)[1]
   vals=100*(vals1[,i+1]-vals1[,i])/vals1[,i]
   points(i+rnorm(n,0,0.01),ifelse(vals<0,-1,1)*log10(abs(vals)), 
          cex=1.5, pch=19,col=ifelse(vals<0,"red","black"))
-  }
-axis(side=1, at=1:4, label=c("1995-1999\n1990-1994",
-                             "2000-2004\n1995-1999",
-                             "2005-2009\n2000-2004",
-                             "2010-2014\n2005-2009"), cex.axis=.9, padj=0.5)
+}
+axis(side=1, at=1:nlabs, label=labs, cex.axis=.9, padj=0.5)
 axis(side=2); 
 abline(h=0)
 abline(h=1:3,lty=2,col="grey"); abline(h= -1:-3,lty=2,col="grey")
@@ -126,8 +127,12 @@ for(i in 1:3){
   }
 box()
 title("% change in 5-year geomean of smoothed wild spawners")
+labs <- colnames(a)[geo.start:geo.end]
+labs <- cbind(labs[2:length(labs)], labs[1:(length(labs)-1)])
+labs <- apply(labs,1,function(x){paste(x, collapse="\n")})
+nlabs <- length(labs)
 
-plot(0:5,0:5,xlim=c(0,4.5),ylim=c(-1*log10(1000),log10(1000)), type="n", axes=FALSE, 
+plot(0:(nlabs+1),0:(nlabs+1),xlim=c(0,nlabs+0.5),ylim=c(-1*log10(1000),log10(1000)), type="n", axes=FALSE, 
      ylab="log 10 percent change", xlab="")
 for(i in 1:(dim(vals1)[2]-1)){
   n=dim(vals2)[1]
@@ -135,10 +140,7 @@ for(i in 1:(dim(vals1)[2]-1)){
   points(i+rnorm(n,0,0.01),ifelse(vals<0,-1,1)*log10(abs(vals)), 
          cex=1.5, pch=19,col=ifelse(vals<0,"red","black"))
   }
-axis(side=1, at=1:4, label=c("1995-1999\n1990-1994",
-                             "2000-2004\n1995-1999",
-                             "2005-2009\n2000-2004",
-                             "2010-2014\n2005-2009"), cex.axis=.9, padj=0.5)
+axis(side=1, at=1:nlabs, label=labs, cex.axis=.9, padj=0.5)
 axis(side=2); 
 abline(h=0)
 abline(h=1,lty=2); abline(h=2,lty=2); abline(h=3,lty=2)
@@ -156,22 +158,32 @@ x = barplot(vals, xaxt="n",col=c(rep("red",6),rep("black",6)),ylab="Num of popul
 labs=paste(seq(-120,100,20)," to ",seq(-100,120,20),"%", sep="")
 labs[1]="       < -100%"; labs[12]="       > 100%"
 text(cex=1, x=x-1, y=-.1, labs, xpd=TRUE, srt=45,pos=1, offset=1.5)
-title("Percent change in 5-year geomean\nof smoothed log wild spawners")
+title("Percent change in 5-year geomean of smoothed\nlog wild spawners between last two 5-yr periods")
 
 #source("trend_15_tables.R")
-a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
-vals1 = as.numeric(sapply(a[,3],function(x){stringr::str_split(x," [(]")[[1]][1]}))
-vals2 = as.numeric(sapply(a[,4],function(x){stringr::str_split(x," [(]")[[1]][1]}))
+#a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
+a=do.call(trend_15_table, 
+          c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild),trend.table.control))
+ntrend <- length(trend.table.control$year.ranges[[1]])
+nrange <- length(trend.table.control$year.ranges)
+vals <- list()
+for(i in 1:nrange){
+  vals[[i]] <- as.numeric(sapply(a[,2+i],function(x){stringr::str_split(x," [(]")[[1]][1]}))
+}
 
 #ylims=c( 0.95*min(vals1, vals2, na.rm=TRUE), 1.05*max(vals1, vals2, na.rm=TRUE) )
-ylims=c( 0.95*min(-.2, vals1, vals2, na.rm=TRUE), 1.05*max(0.2, vals1, vals2, na.rm=TRUE) )
-plot( rep(1,dim(a)[1]),vals1, xlim=c(0.5,2.5), ylim=ylims, col=ifelse(a[,3]<0,"red","black"),
+ylims=c( 0.95*min(-.2, unlist(vals), na.rm=TRUE), 1.05*max(0.2, unlist(vals), na.rm=TRUE) )
+plot( rep(1,dim(a)[1]),vals[[1]], xlim=c(0.5,nrange+0.5), ylim=ylims, col=ifelse(a[,3]<0,"red","black"),
       axes=FALSE, ylab="15-year trend in log abundance", xlab="", cex=1.5, pch=19); axis(side=2); box()
-points( rep(2,dim(a)[1]), vals2, col=ifelse(a[,4] <= 0,"red","black"), cex=1.5, pch=19 )
+if(nrange>1){
+  for(i in 2:nrange){
+  points( rep(i,dim(a)[1]), vals[[i]], col=ifelse(a[,2+i] <= 0,"red","black"), cex=1.5, pch=19 )
+  }
+}
 abline(h=0)
-axis(side=1, at=1:2, label=c("1990-2005", "1999-2014"))
-title("15-year trend in log wild spawners\n1990-2005 vs 1999-2014")
-
+labs <- lapply(trend.table.control$year.ranges, function(x){paste(x[1], x[length(x)], sep="-")})
+axis(side=1, at=1:length(labs), label=unlist(labs))
+title(paste0(ntrend,"-year trends in log wild spawners"))
 ```
 
 ```{r, results='asis', echo=FALSE}
@@ -280,25 +292,29 @@ if(output.type=="word"){
 
 ```{r trend15_table, results='asis', echo=FALSE}
 #source("trend_15_tables.R")
-a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
+#a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
+a=do.call(trend_15_table, 
+          c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild),trend.table.control))
+ntrend <- length(trend.table.control$year.ranges[[1]])
+nrange <- length(trend.table.control$year.ranges)
 if(output.type=="latex")
-  print(xtable(a, align="rr|c|cc", digits=2), 
+  print(xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2), 
       comment=FALSE, include.rownames=FALSE,
       table.placement="p", type=output.type,
       file=paste0(figdir,"/trend_15_table.tex")) 
-caption="15-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates from 1980 to 2014 are shown and with at least 2 data points in the first 5 years and last 5 years of the 15-year period."
+caption=paste0(ntrend,"-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates and with at least 2 data points in the first 5 years and last 5 years of the ",ntrend,"-year ranges are shown.")
 if(output.type=="latex")
-  print(xtable(a, align="rr|c|cc", digits=2, caption=caption), 
+  print(xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2, caption=caption), 
       comment=FALSE, include.rownames=FALSE,
       caption.placement="top", table.placement="p", type=output.type)
 if(output.type=="html"){
-  cat("## 15-year trends\n\n")
+  cat(paste0("## ",ntrend,"-year trends\n\n"))
   cat(caption)
   knitr::kable(a, digits=2) %>%
     kableExtra::kable_styling(full_width = FALSE)
 }
 if(output.type=="word"){
-  cat("## 15-year trends\n\n")
+  cat(paste0("## ",ntrend,"-year trends\n\n"))
   cat(caption)
   knitr::kable(a, digits=2)
 }
