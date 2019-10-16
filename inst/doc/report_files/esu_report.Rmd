@@ -295,7 +295,7 @@ if(output.type=="word"){
 #a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
 a=do.call(trend_15_table, 
           c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild),trend.table.control))
-ntrend <- length(trend.table.control$year.ranges[[1]])
+ntrend <- length(trend.table.control$year.ranges[[1]])-1
 nrange <- length(trend.table.control$year.ranges)
 if(output.type=="latex")
   print(xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2), 
