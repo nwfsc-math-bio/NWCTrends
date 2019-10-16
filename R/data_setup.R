@@ -30,7 +30,7 @@ data_setup=function(inputfile, min.year, max.year){
   }
   
   #read in the data
-  dat = read.csv(inputfile,header=TRUE,na='-99',stringsAsFactors=FALSE)
+  dat = read.csv(inputfile,header=TRUE,na.strings=c('-99','-99.00','-99.0'),stringsAsFactors=FALSE)
     
   #clean up some column names
   names(dat) = toproper(names(dat))
