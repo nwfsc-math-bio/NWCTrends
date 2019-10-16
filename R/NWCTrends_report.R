@@ -69,7 +69,7 @@ NWCTrends_report=function(
   logit.fw=FALSE,
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
-  geomean.table.control=list(min.year=1990, max.year=2014, lenbands=5, min.band.points=2),
+  geomean.table.control=list(min.year=1990, max.year=2014, lenbands=5, min.band.points=2, change.col="last.two"),
   trend.table.control=list(year.ranges=list(1990:2005,1999:2014)),
   output.type = c("html", "pdf", "word")
 ){
