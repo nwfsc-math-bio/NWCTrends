@@ -9,9 +9,9 @@ NWCTrends_report(inputfile = NULL, fit.min.year = 1975,
   "diagonal and equal", Q = "equalvarcov", U = "unequal"),
   logit.fw = FALSE, plot.min.year = 1980, plot.max.year = 2014,
   min.data.points = 5, geomean.table.control = list(min.year = 1990,
-  max.year = 2014, lenbands = 5, min.band.points = 2),
-  trend.table.control = list(year.ranges = list(1990:2005, 1999:2014)),
-  output.type = c("html", "pdf", "word"))
+  max.year = 2014, lenbands = 5, min.band.points = 2, change.col =
+  "last.two"), trend.table.control = list(year.ranges = list(1990:2005,
+  1999:2014)), output.type = c("html", "pdf", "word"))
 }
 \arguments{
 \item{inputfile}{comma-delimited data file (see demo files for the format). 
