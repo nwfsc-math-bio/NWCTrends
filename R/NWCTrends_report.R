@@ -117,7 +117,7 @@ NWCTrends_report=function(
     
     #then do multivariate analysis where
     fitslist <- trend_fits(datalist, fits.file, wild=FALSE, 
-                          model=model, logit.fw=FALSE)
+                          model=model, logit.fw=logit.fw)
     
     #the below code to makes the ESU figures 
     fits = fitslist$fits
