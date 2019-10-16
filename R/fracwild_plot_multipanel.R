@@ -1,4 +1,4 @@
-fracwild_multipanel = function(esu, pops, fracwild.fit, min.year=NULL, max.year=NULL) {
+fracwild_multipanel = function(esu, pops, fracwild.fit, min.year=NULL, max.year=NULL, show.all=TRUE) {
   
   #Set up the min and max years
   years = as.numeric(colnames(fracwild.fit$fracwild.states))
@@ -25,7 +25,7 @@ fracwild_multipanel = function(esu, pops, fracwild.fit, min.year=NULL, max.year=
       fracwild.states = fracwild.fit$fracwild.states[popname, ]
       fracwild.raw = fracwild.fit$fracwild.raw[popname, ]
        
-    if(all(is.na(fracwild.raw))){
+    if(all(is.na(fracwild.raw)) | show.all){
       min.year = min.year
       n.start = which(years==min.year)
       n.end = which(years==max.year)
@@ -33,6 +33,7 @@ fracwild_multipanel = function(esu, pops, fracwild.fit, min.year=NULL, max.year=
       n.start=max(min(which(!is.na(fracwild.raw))), which(years==min.year))
       n.end=min(max(which(!is.na(fracwild.raw))), which(years==max.year))
     }
+
     
     
     #trim down the data
@@ -44,7 +45,7 @@ fracwild_multipanel = function(esu, pops, fracwild.fit, min.year=NULL, max.year=
     par(mar=c(2, 2, 2, 2) + 0.1)
     plot(years.trim, fracwild.raw, type="n", bty="L", xlab="", ylab="", 
          ylim=c(0,1), xlim=c(min.year-1,max.year+1))
-    lines(years.trim, fracwild.states, col="black", lwd=2)
+    lines(years.trim, fracwild.states, col="blue", lwd=2)
     #if(!all((total.raw-wild.raw)>0.999, na.rm=TRUE)) 
     
     points(years.trim, fracwild.raw)
