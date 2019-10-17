@@ -65,12 +65,13 @@ The 2015 Status Review report can be viewed by typing
 ```
 RShowDoc("2015 Status Review Update",package="NWCTrends")
 ```
+or navigate to the "\inst\doc" folder on GitHub.
 
 A pdf of the methods alone is also available by typing
 ```
 RShowDoc("Methods",package="NWCTrends")
 ```
-at the command line. 
+at the command line or navigate to the "\inst\doc" folder on GitHub.
 
 ## Example output
 
