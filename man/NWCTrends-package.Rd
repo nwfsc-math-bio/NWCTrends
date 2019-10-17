@@ -29,6 +29,9 @@ allows each population to have a different trend.  This model is
 specified as \code{ model=list(Z="identity", R="diagonal and equal", U="unequal", Q="equalvarcov") }.
 
 The main function that creates the reports and plots is \link{NWCTrends_report}.
+The internal functions are also documented: \link{data_setup}, 
+\link{trend_15_tables}, \link{trend_fits},
+\link{geomean_tables}.
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.

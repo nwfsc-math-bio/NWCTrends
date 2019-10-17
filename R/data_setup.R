@@ -1,5 +1,27 @@
+#' Read in the inputfile
+#'
+#' Read in the csv inputfile and create the data frames and matrices needed for 
+#' the fitting, plots and tables: matdat.spawners, matdat.wildspawners, and metadata. 
+#' Some clean up of names and runtiming is done.
+#' 
+#' NAs are specified with -99, -99.00 or -99.0.
+#'
+#' @param inputfile .csv file. See demofiles for the proper format.
+#' @param min.year The minumum year for the returned data frames.
+#' @param max.year The maximum year for the returned data frames.
+#'
+#' @return A list with four items:
+#' \describe{
+#'   \item{dat}{The raw data for the selected ESUs.}
+#'   \item{matdat.spawners}{A matrix of the total spawners with NAs for missing years. Each column is a year from min.year to max.year and each row is a population.}
+#'   \item{matdat.wildspawners}{A matrix of the the wildspawners using the fracwild data if included. NAs for years with either missing fracwild or missing spawner count. Each column is a year from min.year to max.year and each row is a population.}
+#'   \item{metadat}{A data.frame with all the metadata for each population: name = population name, ESU = ESU name, Species, Run = runtiming for population, PopGroup = name of the Major Population Group (within ESU).}
+#' } 
+#'
 data_setup=function(inputfile, min.year, max.year){
   require(stringr)
+  
+  if(str_split(inputfile,"[.]")[[1]][2]!="csv") stop("Inputfile must be a .csv file.")
   
   ####### Replace with shiny app #################
   # This code is specific to my machine.  Replace 
@@ -117,13 +139,4 @@ data_setup=function(inputfile, min.year, max.year){
       metadat=metadat
     )
   )
-  #dat is datafile as data.frame
-  #matdat.spawners is a matrix of the total spawners
-  #matdat.wildspawners is a matrix of the wildspawners using the fracwild data if included
-  #metadat is a data.frame with all the metadata for each population:
-  #name = population name
-  #ESU = ESU name
-  #Species
-  #Run = runtiming for population
-  #PopGroup = name of the Major Population Group (within ESU)
 }

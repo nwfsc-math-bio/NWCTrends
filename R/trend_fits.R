@@ -1,18 +1,39 @@
-#######################################################################################
-## This function will fit a MARSS model and store in a list
-#######################################################################################
+#' Fit a MARSS model and store in a list
+#'
+#' Fis a MARSS model to data from each ESUs treating each population as a
+#' subpopulation. The structure of the variance-covariance matrix, the U matrix, the
+#' Z matrix, and the R matrix can be specified. If you want to fit a specific model, 
+#' then pass in model as a list as per a MARSS model. The populations in the ESU
+#'  with < min.years
+#'  of data points are not used in the fitting and no states are estimated for those.
+#' 
+#' If model=NULL then a set of all possible models is fit. This takes awhile but will
+#' allow one to use AIC to compare the model set. wild=TRUE means to do the fit on 
+#' fracwild*total versus on the total spawners.
+#' logit.fw says whether to fit to logit of fracwild or to the percentages.
+#' 
+#' This function produces a states estimate and a fracwild fit; 
+#'
+#' @param datalist The list output by data_detup()
+#' @param ouputfile The name of the RData file to save the results to.
+#' @param wild wild=TRUE means to do the fit on fracwild*total versus on the total spawners.
+#' @param model If null, a set of models is fit. Otherwise pass in a model specified as a list in MARSS format.
+#' @param logit.fw If TRUE fit to logit of fracwild instead of the raw percentages.
+#' @param min.years Only populations with at least min.years will be used in the fitting.
+#'
+#' @return A list with three items:
+#' \describe{
+#'   \item{fits}{A list with the fits for each ESUs included.}
+#'   \item{aic.table}{If there are multiple models fit, then the AIC will be returned.}
+#'   \item{best.model}{If there are multiple models fit, then the best model is returned.}
+#' } 
+#'
 trend_fits=function(datalist, 
                     outputfile, 
                     wild=TRUE, 
                     model=NULL,
                     logit.fw=TRUE,
                     min.years = 5){
-  #if model=NULL then a set of all possible models is fit; takes awhile
-  #wild means that do the fit on fracwild*total
-  #this function produces a states est and a fracwild fit; 
-  #logit.fw says whether to fit to logit of fw or not
-  #if you want to fit a specific model, then pass in model as a list
-  #the pops with < min.years of data points are not fitted
   
   require(stringr)
   require(MARSS)
