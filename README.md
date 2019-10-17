@@ -61,11 +61,11 @@ You will need to properly choose min.year and max.year to get the table to look 
 
 ## References
 
-The 2015 Status Review report can be viewed by typing
+The 2015 Status Review report can be viewed from the R command line by typing
 ```
 RShowDoc("2015 Status Review Update",package="NWCTrends")
 ```
-or navigate to the "\inst\doc" folder on GitHub.
+after installing the NWCTrends package. Or go to the GitHub repository and navigate to the "\inst\doc" folder on GitHub.
 
 A pdf of the methods alone is also available by typing
 ```
