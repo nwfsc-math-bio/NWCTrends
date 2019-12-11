@@ -65,7 +65,7 @@ data_setup=function(inputfile, min.year, max.year){
   #Check that all required columns are present
   required <- c("BROOD_YEAR", "NUMBER_OF_SPAWNERS", "Species", "FRACWILD", "COMMON_POPULATION_NAME", 
                 "RUN_TIMING", "ESU", "MAJOR_POPULATION_GROUP")
-  if(!all(required %in% colnames(dat))) stop(paste("Your data file must have the following columns:", required,"."))
+  if(!all(required %in% colnames(dat))) stop(paste0("\nYour data file must have the following columns: ", paste(required, collapse=", "),"."))
   
   ## Derived Datasets
   dat$wildspawners = dat$Spawners*dat$Fracwild
