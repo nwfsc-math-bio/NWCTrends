@@ -53,6 +53,7 @@
 #' @param geomean.table.control A list with the adjustable variables for geomean_table(). See ?geomean_table
 #' @param trend.table.control A list with the adjustable variables for trend_15_table(). See ?trend_15_table
 #' @param output.type "html", "pdf", or "word" Format to produce the report in.
+#' @param output.dir Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.
 
 #' @return
 #' Plots and tables that are saved to doc/figures/ESU_figures.
@@ -66,17 +67,18 @@ NWCTrends_report=function(
   inputfile=NULL, 
   fit.min.year=1975, fit.max.year=2014,
   model=list(Z="identity", R="diagonal and equal", Q="equalvarcov", U="unequal"), 
-  logit.fw=FALSE,
+  logit.fw=c(FALSE,TRUE),
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
   geomean.table.control=list(min.year=1990, max.year=2014, lenbands=5, min.band.points=2, change.col="last.two"),
   trend.table.control=list(year.ranges=list(1990:2005,1999:2014)),
-  output.type = c("html", "pdf", "word")
+  output.type = c("html", "pdf", "word"),
+  output.dir="NWCTrend_output"
 ){
   output.type = tolower(output.type)
   output.type = match.arg(output.type)
+  logit.fw = match.arg(logit.fw)
   # Set up the directory locations
-  output.dir="NWCTrend_output"
   if(!dir.exists(output.dir)) dir.create(output.dir)
   instdocpath = system.file("doc", package="NWCTrends")
   texdir=system.file("doc", "report_files", package="NWCTrends") #where the tex wrappers are
