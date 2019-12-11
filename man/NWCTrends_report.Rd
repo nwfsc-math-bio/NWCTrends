@@ -10,7 +10,7 @@ NWCTrends_report(
   fit.max.year = 2014,
   model = list(Z = "identity", R = "diagonal and equal", Q = "equalvarcov", U =
     "unequal"),
-  logit.fw = c(FALSE, TRUE),
+  logit.fw = FALSE,
   plot.min.year = 1980,
   plot.max.year = 2014,
   min.data.points = 5,
