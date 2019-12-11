@@ -67,7 +67,7 @@ NWCTrends_report=function(
   inputfile=NULL, 
   fit.min.year=1975, fit.max.year=2014,
   model=list(Z="identity", R="diagonal and equal", Q="equalvarcov", U="unequal"), 
-  logit.fw=c(FALSE,TRUE),
+  logit.fw=FALSE,
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
   geomean.table.control=list(min.year=1990, max.year=2014, lenbands=5, min.band.points=2, change.col="last.two"),
@@ -77,7 +77,7 @@ NWCTrends_report=function(
 ){
   output.type = tolower(output.type)
   output.type = match.arg(output.type)
-  logit.fw = match.arg(logit.fw)
+  if(!is.logical(logit.fw)) stop("logit.fw must TRUE or FALSE")
   # Set up the directory locations
   if(!dir.exists(output.dir)) dir.create(output.dir)
   instdocpath = system.file("doc", package="NWCTrends")
