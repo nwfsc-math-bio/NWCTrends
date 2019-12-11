@@ -4,9 +4,17 @@
 \alias{geomean_table}
 \title{Create the geomean tables}
 \usage{
-geomean_table(pops, mpg, total.fit, fracwild.fit, min.year = 1990,
-  max.year = 2014, lenbands = 5, min.band.points = 2,
-  change.col = c("last.two", "first.last"))
+geomean_table(
+  pops,
+  mpg,
+  total.fit,
+  fracwild.fit,
+  min.year = 1990,
+  max.year = 2014,
+  lenbands = 5,
+  min.band.points = 2,
+  change.col = c("last.two", "first.last")
+)
 }
 \arguments{
 \item{pops}{which populations to include in the table}

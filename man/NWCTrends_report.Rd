@@ -4,14 +4,22 @@
 \alias{NWCTrends_report}
 \title{NWFSC Salmonid Status Review Table and Figures}
 \usage{
-NWCTrends_report(inputfile = NULL, fit.min.year = 1975,
-  fit.max.year = 2014, model = list(Z = "identity", R =
-  "diagonal and equal", Q = "equalvarcov", U = "unequal"),
-  logit.fw = FALSE, plot.min.year = 1980, plot.max.year = 2014,
-  min.data.points = 5, geomean.table.control = list(min.year = 1990,
-  max.year = 2014, lenbands = 5, min.band.points = 2, change.col =
-  "last.two"), trend.table.control = list(year.ranges = list(1990:2005,
-  1999:2014)), output.type = c("html", "pdf", "word"))
+NWCTrends_report(
+  inputfile = NULL,
+  fit.min.year = 1975,
+  fit.max.year = 2014,
+  model = list(Z = "identity", R = "diagonal and equal", Q = "equalvarcov", U =
+    "unequal"),
+  logit.fw = c(FALSE, TRUE),
+  plot.min.year = 1980,
+  plot.max.year = 2014,
+  min.data.points = 5,
+  geomean.table.control = list(min.year = 1990, max.year = 2014, lenbands = 5,
+    min.band.points = 2, change.col = "last.two"),
+  trend.table.control = list(year.ranges = list(1990:2005, 1999:2014)),
+  output.type = c("html", "pdf", "word"),
+  output.dir = "NWCTrend_output"
+)
 }
 \arguments{
 \item{inputfile}{comma-delimited data file (see demo files for the format). 
@@ -36,6 +44,8 @@ demofiles are in inst/doc/demodata.}
 \item{trend.table.control}{A list with the adjustable variables for trend_15_table(). See ?trend_15_table}
 
 \item{output.type}{"html", "pdf", or "word" Format to produce the report in.}
+
+\item{output.dir}{Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.}
 }
 \value{
 Plots and tables that are saved to doc/figures/ESU_figures.

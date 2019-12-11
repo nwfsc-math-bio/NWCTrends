@@ -4,8 +4,13 @@
 \alias{trend_15_table}
 \title{Create the trend tables}
 \usage{
-trend_15_table(pops, mpg, total.fit, fracwild.fit,
-  year.ranges = list(1990:2005, 1999:2014))
+trend_15_table(
+  pops,
+  mpg,
+  total.fit,
+  fracwild.fit,
+  year.ranges = list(1990:2005, 1999:2014)
+)
 }
 \arguments{
 \item{pops}{which populations to include in the table}

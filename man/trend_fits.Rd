@@ -4,8 +4,14 @@
 \alias{trend_fits}
 \title{Fit a MARSS model and store in a list}
 \usage{
-trend_fits(datalist, outputfile, wild = TRUE, model = NULL,
-  logit.fw = TRUE, min.years = 5)
+trend_fits(
+  datalist,
+  outputfile,
+  wild = TRUE,
+  model = NULL,
+  logit.fw = TRUE,
+  min.years = 5
+)
 }
 \arguments{
 \item{datalist}{The list output by data_detup()}
