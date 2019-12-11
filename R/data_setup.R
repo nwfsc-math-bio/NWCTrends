@@ -62,6 +62,11 @@ data_setup=function(inputfile, min.year, max.year){
   names(dat)[names(dat)=="ESU.Name"]="ESU"
   if(!("Run.Timing"%in%names(dat))) dat$Run.Timing=NA
   
+  #Check that all required columns are present
+  required <- c("BROOD_YEAR", "NUMBER_OF_SPAWNERS", "Species", "FRACWILD", "COMMON_POPULATION_NAME", 
+                "RUN_TIMING", "ESU", "MAJOR_POPULATION_GROUP")
+  if(!all(required %in% colnames(dat))) stop(paste("Your data file must have the following columns:", required,"."))
+  
   ## Derived Datasets
   dat$wildspawners = dat$Spawners*dat$Fracwild
   
@@ -72,14 +77,15 @@ data_setup=function(inputfile, min.year, max.year){
   }
   
   ## Do clean up on names
-  dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
-  #clean up the common names with run timing
-  for(i in c("Fall-run", "Winter-run", "Spring-run", "Summer-run", "Late-run", "Early-run", "Early-late-run")){
-    tmp = dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)]
-    tmp2 = stringr::str_sub(tmp, 1, stringr::str_locate(tmp, i)[,1]-1)
-    dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)] = tmp2
-  }
-  dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
+  ## Do not do this. It gets rid of everything past the run-timing in the name
+  # dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
+  # #clean up the common names with run timing
+  # for(i in c("Fall-run", "Winter-run", "Spring-run", "Summer-run", "Late-run", "Early-run", "Early-late-run")){
+  #   tmp = dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)]
+  #   tmp2 = stringr::str_sub(tmp, 1, stringr::str_locate(tmp, i)[,1]-1)
+  #   dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)] = tmp2
+  # }
+  # dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
   
   ## replace 0s with NAs
   dat$Spawners[dat$Spawners==0]=NA
