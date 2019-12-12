@@ -54,14 +54,6 @@ data_setup=function(inputfile, min.year, max.year){
   #read in the data
   dat = read.csv(inputfile,header=TRUE,na.strings=c('-99','-99.00','-99.0'),stringsAsFactors=FALSE)
     
-  #clean up some column names
-  names(dat) = toproper(names(dat))
-  names(dat)[names(dat)=="Brood.Year"]="Year"
-  names(dat)[names(dat)=="Number.Of.Spawners"]="Spawners"
-  names(dat)[names(dat)=="Catch"]="Effective.Catch"
-  names(dat)[names(dat)=="ESU.Name"]="ESU"
-  if(!("Run.Timing"%in%names(dat))) dat$Run.Timing=NA
-  
   #Check that all required columns are present
   required <- c("BROOD_YEAR", "NUMBER_OF_SPAWNERS", "Species", "FRACWILD", "COMMON_POPULATION_NAME", 
                 "RUN_TIMING", "ESU", "MAJOR_POPULATION_GROUP")
@@ -71,25 +63,30 @@ data_setup=function(inputfile, min.year, max.year){
     stop()
   }
   
+  #clean up some column names
+  names(dat) = toproper(names(dat))
+  names(dat)[names(dat)=="Brood.Year"]="Year"
+  names(dat)[names(dat)=="Number.Of.Spawners"]="Spawners"
+  names(dat)[names(dat)=="Catch"]="Effective.Catch"
+  names(dat)[names(dat)=="ESU.Name"]="ESU"
+  if(!("Run.Timing"%in%names(dat))) dat$Run.Timing=NA
+  
+
+  
   ## Derived Datasets
   dat$wildspawners = dat$Spawners*dat$Fracwild
   
-  # append run time to common name to make common names unique 
-  for(i in 1:nrow(dat)){
-    if(is.na(dat$Run.Timing[i])==FALSE){
-      dat$Common.Population.Name[i] = paste(dat$Common.Population.Name[i],dat$Run.Timing[i],sep=" ")}
+  ## Do clean up on names to get rid of duplicated run timing info
+  dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
+  for(i in c("Fall-run", "Winter-run", "Spring-run", "Summer-run", "Late-run", "Early-run", "Early-late-run",
+             "Spring", "Fall", "Winter", "Summer")){
+    tmp = dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)]
+    #tmp2 = stringr::str_sub(tmp, 1, stringr::str_locate(tmp, i)[,1]-1)
+    tmp2 = stringr::str_replace_all(tmp, i, "")
+    tmp2 = stringr::str_replace_all(tmp2, tolower(i), "")
+    dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)] = tmp2
   }
-  
-  ## Do clean up on names
-  ## Do not do this. It gets rid of everything past the run-timing in the name
-  # dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
-  # #clean up the common names with run timing
-  # for(i in c("Fall-run", "Winter-run", "Spring-run", "Summer-run", "Late-run", "Early-run", "Early-late-run")){
-  #   tmp = dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)]
-  #   tmp2 = stringr::str_sub(tmp, 1, stringr::str_locate(tmp, i)[,1]-1)
-  #   dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)] = tmp2
-  # }
-  # dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
+  dat$Common.Population.Name = stringr::str_trim(dat$Common.Population.Name)
   
   ## replace 0s with NAs
   dat$Spawners[dat$Spawners==0]=NA
