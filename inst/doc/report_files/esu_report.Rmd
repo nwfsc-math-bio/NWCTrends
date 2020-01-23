@@ -14,7 +14,7 @@ cat("\\renewcommand{\\floatpagefraction}{0.7}")
 cat("\\renewcommand{\\dblfloatpagefraction}{0.7}")
 }
 #figdir speced in NWCTrends_report()
-knitr::opts_chunk$set(fig.path=figdir,
+knitr::opts_chunk$set(fig.path=figdir, dpi=300,
                       echo=FALSE, warning=FALSE, message=FALSE)
 if(output.type == "word") options(knitr.table.format = 'markdown')
   
