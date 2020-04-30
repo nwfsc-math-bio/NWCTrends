@@ -1,4 +1,5 @@
 ---
+title: "NWCTrends"
 header-includes:
    - \usepackage{rotating}
    - \usepackage{pdflscape}

@@ -16,7 +16,7 @@
 #' @return A data frames with the estimates trend for each year range in a different column.
 #'
 trend_15_table = function(pops, mpg, total.fit, fracwild.fit, year.ranges=list(1990:2005,1999:2014)) {
-
+  
   n = length(pops)
   short.pops = clean.pops(pops)
   
@@ -37,11 +37,11 @@ trend_15_table = function(pops, mpg, total.fit, fracwild.fit, year.ranges=list(1
     
     data = rep(NA,nyr);names(data)=min.year:max.year
     states = rep(NA,nyr);names(states)=min.year:max.year
-      wild.states = total.fit$states[paste("X.",popname,sep=""),]+log(fracwild.fit$fracwild.states[popname, ])
-      names(wild.states)=colnames(total.fit$model$data)
-      wild.raw = total.fit$model$data[popname, ]+log(fracwild.fit$fracwild.raw[popname, ])
-      names(wild.raw)=colnames(total.fit$model$data)
-
+    wild.states = total.fit$states[paste("X.",popname,sep=""),]+log(fracwild.fit$fracwild.states[popname, ])
+    names(wild.states)=colnames(total.fit$model$data)
+    wild.raw = total.fit$model$data[popname, ]+log(fracwild.fit$fracwild.raw[popname, ])
+    names(wild.raw)=colnames(total.fit$model$data)
+    
     data[data.years]= wild.raw[data.years]
     states[data.years] = wild.states[data.years]
     
@@ -58,12 +58,12 @@ trend_15_table = function(pops, mpg, total.fit, fracwild.fit, year.ranges=list(1
       tabtrend[pop,(i+2)]=paste(round(trend, digits=2), " (", 
                                 round(confint(tmp.lm)[2,1], digits=2),", ", 
                                 round(confint(tmp.lm)[2,2], digits=2),")",sep="")
-      if(sum(!is.na(tmp.raw[1:5]))<2 | sum(!is.na(tmp.raw[11:15]))<2) tabtrend[pop,(i+2)] = ""
+      if(length(tmp)>4 && (sum(!is.na(tmp.raw[1:5]))<2 | sum(!is.na(tmp.raw[(length(tmp)-4):length(tmp)]))<2)) tabtrend[pop,(i+2)] = ""
       
     }
   }
   yrranges=paste(unlist(lapply(year.ranges,min)),
-    unlist(lapply(year.ranges,max)),sep="-")
+                 unlist(lapply(year.ranges,max)),sep="-")
   tmp.col=as.vector(sapply(yrranges,c,c("lowCI","upCI")))
   colnames(tabtrend)=c("Population", "MPG", yrranges)
   tabtrend
