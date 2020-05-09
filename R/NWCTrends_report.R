@@ -189,8 +189,8 @@ NWCTrends_report=function(
     #this will rename the figures made to the ESU specific name
     file.rename(paste0(paste0(instdocpath,"/report_files/esu_report"), outputfile.ext), outputfile)
     outnames <- paste(figdir, stringr::str_replace_all(esuname,"/","-"),"-",
-                   c("summary_fig.pdf","fracwild_fig.pdf","main_fig.pdf","productivity_fig.pdf"), sep="")
-    innames <- paste(figdir, c("summary_fig-1.pdf","fracwild_fig-1.pdf","main_fig-1.pdf","productivity_fig-1.pdf"),sep="")
+                   c("summary_fig.pdf","fracwild_fig.pdf","main_fig.pdf","productivity_fig.pdf", "main_fig.csv"), sep="")
+    innames <- paste(figdir, c("summary_fig-1.pdf","fracwild_fig-1.pdf","main_fig-1.pdf","productivity_fig-1.pdf", "main_fig.csv"),sep="")
     tabnames <- c("trend_15_table", "geomean_wild_table", "geomean_total_table", "fracwild_table")
     tabinnames <- paste0(texdir,"/wrapper_", tabnames, ".tex", sep="")
     #oddly pdf created at base level not in folder where tex is
@@ -199,8 +199,9 @@ NWCTrends_report=function(
                       tabnames, ".pdf")
     
     if(output.type=="latex"){
-      for(i in 1:4){
+      for(i in 1:length(outnames))
         file.rename(innames[i], outnames[i]) #rename the tmp fig to fig with ESU
+      for(i in 1:length(taboutnames)){
         texi2pdf(tabinnames[i], clean=TRUE) #create tables from tex
         file.remove(paste(figdir, tabnames[i], ".tex", sep="")) #remove the tex file (only wrapper needed it)
         file.rename(taboutnames.tmp[i], taboutnames[i]) #rename table pdf
@@ -209,10 +210,10 @@ NWCTrends_report=function(
     
     if(output.type=="html" | output.type=="word"){
       #rename the tmp fig to fig with ESU
-      innames <- paste(figdir, c("summary_fig-1.png","fracwild_fig-1.png","main_fig-1.png","productivity_fig-1.png"),sep="")
+      innames <- paste(figdir, c("summary_fig-1.png","fracwild_fig-1.png","main_fig-1.png","productivity_fig-1.png", "main_fig.csv"),sep="")
       outnames <- paste(figdir, stringr::str_replace_all(esuname,"/","-"),"-",
-                     c("summary_fig.png","fracwild_fig.png","main_fig.png","productivity_fig.png"), sep="")
-      for(i in 1:4) file.rename(innames[i], outnames[i]) 
+                     c("summary_fig.png","fracwild_fig.png","main_fig.png","productivity_fig.png","main_fig.csv"), sep="")
+      for(i in 1:length(outnames)) file.rename(innames[i], outnames[i]) 
     }
   }
   
