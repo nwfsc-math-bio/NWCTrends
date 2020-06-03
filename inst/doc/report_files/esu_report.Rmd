@@ -67,7 +67,8 @@ knitr::opts_chunk$set(fig.height=fig.height)
 
 ```{r productivity_fig, echo=FALSE,fig.width=8.5}
 #source("productivity_plot.R")
-coho.chum=any(stringr::str_detect(pops.to.plot.wild[1],c("Coho","Chum","coho", "chum")))
+coho.chum=any(metadat$Species %in% c("Coho", "Chum"))
+#coho.chum=any(stringr::str_detect(pops.to.plot.wild[1],c("Coho","Chum","coho", "chum")))
 lag=ifelse(coho.chum, 3, 4)
 productivity_plot(esuname, pops.to.plot.wild, ifit.total, ifit.fracwild,
                   min.year=plot.min.year, max.year=plot.max.year, type=1, lag=lag)
