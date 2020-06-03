@@ -75,6 +75,7 @@ at the command line or navigate to the "\inst\doc" folder on GitHub.
 
 ## Example output
 
+
 A report will be generated with figures and tables. [Example report](inst/doc/example.html)
 
 The main figure shows the estimated trends.
