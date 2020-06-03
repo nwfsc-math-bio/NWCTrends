@@ -159,6 +159,9 @@ trend_fits=function(datalist,
           fracwild.states=statesfw
           fracwild.raw=tmpfw
         }
+      }else{
+        #No fracwild info for ESU
+        fracwild.states <- tmpfw
       }
       fits[[this.esu.name]][["fwlogitfit"]] = list(fit=kem, fracwild.states=fracwild.states, fracwild.raw=fracwild.raw )
     }
