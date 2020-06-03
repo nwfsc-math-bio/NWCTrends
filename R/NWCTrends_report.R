@@ -47,6 +47,7 @@
 #' @param fit.max.year The latest year to use when fitting the models.
 #' @param model The structure of the MARSS model to use. Entered as a list specified as a \link[MARSS]{MARSS} model.
 #' @param logit.fw TRUE/FALSE whether to estimate the smoothed fraction wild from the logit of the fractions or from the raw (0,1) fractions.
+#' @param fit.wild fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Status Review analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.
 #' @param plot.min.year The earliest year to use when plotting the data.
 #' @param plot.max.year The latest year to use when plotting the data.
 #' @param min.data.points The minimum data points to require from a population (for fitting and plotting).
@@ -68,6 +69,7 @@ NWCTrends_report=function(
   fit.min.year=1975, fit.max.year=2014,
   model=list(Z="identity", R="diagonal and equal", Q="equalvarcov", U="unequal"), 
   logit.fw=FALSE,
+  fit.wild=FALSE,
   plot.min.year=1980, plot.max.year=2014,
   min.data.points=5,
   geomean.table.control=list(min.year=1990, max.year=2014, lenbands=5, min.band.points=2, change.col="last.two"),
@@ -118,7 +120,7 @@ NWCTrends_report=function(
     fits.file <- paste0(figdir,"NWCTrends_debug_file.RData")
     
     #then do multivariate analysis where
-    fitslist <- trend_fits(datalist, fits.file, wild=FALSE, 
+    fitslist <- trend_fits(datalist, fits.file, wild=fit.wild, 
                           model=model, logit.fw=logit.fw)
     
     #the below code to makes the ESU figures 
