@@ -1,29 +1,29 @@
-#' @title 
+#' @title
 #' NWFSC Salmonid Status Review Table and Figures
-#' @description 
-#' This package creates the ESU tables and figures from the 
-#' Northwest Fisheries Science Center's report: "2015 Status review 
-#' update for Pacific salmon and steelhead listed under the Endangered 
+#' @description
+#' This package creates the ESU tables and figures from the
+#' Northwest Fisheries Science Center's report: "2015 Status review
+#' update for Pacific salmon and steelhead listed under the Endangered
 #' Species Act: Pacific Northwest".
 #' @details
 #' The 2015 Status Review report can be viewed by typing
 #' \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
-#' at the command line. The report has a description of the 
+#' at the command line. The report has a description of the
 #' methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing
 #' \code{RShowDoc("Methods",package="NWCTrends")}
 #' at the command line.
-#' 
-#' The default model used to fit the data is that used in the 
-#' 2015 Status Update. This model uses information across the 
-#' populations in an ESU to estimate the process variance, 
-#' non-process variance (residuals 
-#' between smoothed fits and observed spawners), covariance in 
-#' process errors (good and bad year correlation). However it 
-#' allows each population to have a different trend.  This model is 
+#'
+#' The default model used to fit the data is that used in the
+#' 2015 Status Update. This model uses information across the
+#' populations in an ESU to estimate the process variance,
+#' non-process variance (residuals
+#' between smoothed fits and observed spawners), covariance in
+#' process errors (good and bad year correlation). However it
+#' allows each population to have a different trend.  This model is
 #' specified as \code{ model=list(Z="identity", R="diagonal and equal", U="unequal", Q="equalvarcov") }.
-#' 
+#'
 #' The main function that creates the reports and plots is \link{NWCTrends_report}.
-#' The internal functions are also documented: \link{data_setup}, 
+#' The internal functions are also documented: \link{data_setup},
 #' \link{trend_15_tables}, \link{trend_fits},
 #' \link{geomean_tables}.
 #' @keywords internal
@@ -31,4 +31,3 @@
 #' Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.
 #' Available from the NWFSC Publications page.
 "_PACKAGE"
-
