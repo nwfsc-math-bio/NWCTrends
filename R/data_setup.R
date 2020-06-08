@@ -19,15 +19,7 @@
 #' }
 #'
 data_setup <- function(inputfile, min.year, max.year) {
-  if (stringr::str_split(inputfile, "[.]")[[1]][2] != "csv") stop("Inputfile must be a .csv file.")
-
-  ####### Replace with shiny app #################
-  # This code is specific to my machine.  Replace
-  if (stringr::str_sub(inputfile, -4) == ".xls" | stringr::str_sub(inputfile, -5) == ".xlsx") {
-    require(XLConnect)
-    inputfile <- xls2csv(inputfile, sheet = 1, perl = "C:/Program Files (x86)/Perl/bin/perl.exe")
-  }
-  ####### Replace with shiny app #################
+  #if (stringr::str_split(inputfile, "[.]")[[1]][2] != "csv") stop("Inputfile must be a .csv file.")
 
   # toproper function; make column names nice
   toproper <- function(x) {
@@ -50,14 +42,22 @@ data_setup <- function(inputfile, min.year, max.year) {
   }
 
   # read in the data
-  dat <- read.csv(inputfile, header = TRUE, na.strings = c("-99", "-99.00", "-99.0"), stringsAsFactors = FALSE)
+  if (stringr::str_sub(inputfile, -4) == ".xls" | stringr::str_sub(inputfile, -5) == ".xlsx") {
+    dat <- gdata::read.xls(inputfile, na.strings = c("-99", "-99.00", "-99.0", "-99.000"), stringsAsFactors = FALSE)
+    dat <- dat[,!stringr::str_detect(colnames(dat), "X[.]")]
+  }
+  if (stringr::str_sub(inputfile, -4) == ".csv"){
+    dat <- read.csv(inputfile, header = TRUE, na.strings = c("-99", "-99.00", "-99.0", "-99.000"), stringsAsFactors = FALSE)
+  }
 
   # Check that all required columns are present
+  colnames(dat)[colnames(dat)=="BROOD_YEAR" | colnames(dat)=="Brood_Year"] <- "YEAR"
   required <- c(
-    "BROOD_YEAR", "NUMBER_OF_SPAWNERS", "Species", "FRACWILD", "COMMON_POPULATION_NAME",
+    "YEAR", "NUMBER_OF_SPAWNERS", "Species", "FRACWILD", "COMMON_POPULATION_NAME",
     "RUN_TIMING", "ESU", "MAJOR_POPULATION_GROUP"
   )
-  if (!all(required %in% colnames(dat) |
+  if (!all(
+    required %in% colnames(dat) |
     toproper(required) %in% colnames(dat) |
     required %in% toproper(colnames(dat)) |
     toproper(required) %in% toproper(colnames(dat)))) {
@@ -73,8 +73,6 @@ data_setup <- function(inputfile, min.year, max.year) {
   names(dat)[names(dat) == "Catch"] <- "Effective.Catch"
   names(dat)[names(dat) == "ESU.Name"] <- "ESU"
   if (!("Run.Timing" %in% names(dat))) dat$Run.Timing <- NA
-
-
 
   ## Derived Datasets
   dat$wildspawners <- dat$Spawners * dat$Fracwild
