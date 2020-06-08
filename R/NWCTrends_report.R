@@ -100,13 +100,12 @@ NWCTrends_report <- function(
       stop("The RData must contain datalist and fitslist.  Normally output from trend_fits().")
     }
 
-    ####### Replace with shiny app #################
     if (length(fits) > 1) {
       esu.choice <- choose.esu(names(fits))
       fits <- fits[esu.choice]
     }
-    ##############################################
-  } else { # need to read in data and fit
+
+      } else { # need to read in data and fit
     # This reads in the data file and creates the needed data objects
     if (filetype == "csv" | filetype == ".xls" | filetype == "xlsx") {
       datalist <- data_setup(inputfile = inputfile, min.year = fit.min.year, max.year = fit.max.year)
