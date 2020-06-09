@@ -179,6 +179,10 @@ NWCTrends_report <- function(
         }
       )
     ]
+    if(length(pops.to.plot.wild)==0){
+      cat(paste("No populations in", esuname, "have fracwild info. ESU is being skipped.\n"))
+      next
+    }
     # mpg.to.plot.wild used for mgp col in tables
     mpg.to.plot.wild <- sort(metadat$PopGroup[metadat$name %in% pops.to.plot.wild])
     mpg.to.plot.wild <- clean.mpg(mpg.to.plot.wild)
