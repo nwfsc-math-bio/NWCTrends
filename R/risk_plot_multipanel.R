@@ -1,4 +1,44 @@
-Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, silent = FALSE, CI.method = "hessian", CI.sim = 1000, log.scale = FALSE, same.scale = FALSE, type = "abundance") {
+#' @name
+#' Status_trendfigure_multipanel
+#' @title
+#' Main figure of estimated trends (wild and total spawners)
+#' @description
+#' This is the main figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/doc/report_files/esu_report.Rmd}. 
+#' 
+#' The dots are the raw spawner counts, the black
+#' line is the smoothed total spawners estimate, and the red line is the 
+#' smoothed wild spawners estimate which is 
+#' "smoothed total estimate x smoothed fracwild estimate".
+#' Note that the wild spawner estimate is only shown from 1 year before and one year after
+#' the last actual fracwild estimate (in the data file). This is done so that
+#' the wild estimate does not over-extend the fracwild data. Fracwild estimates can
+#' be interpolated for missing years, but would not be appropriate to extend much before
+#' or past actual observed (or expert) fracwild data.
+#' 
+#' For the smoothed total estimates, information from all populations (via a non-diagonal
+#' year-to-year variance matrix) is used to estimate missing values and to account for
+#' observation error in the total spawner count. Because data from all populations are used,
+#' estimates can be made even for missing years at the beginning of the time series if there
+#' is data for those early years in other populations.
+#'
+#' @param esu The name of the ESU
+#' @param pops The population names that will be plotted (populations with too few data are eliminated)
+#' @param total.fit total fit returned by `trend_fits()`
+#' @param fracwild.fit fracwild fit returned by `trend_fits()`
+#' @param min.year The earliest year to use when plotting the data.
+#' @param max.year The latest year to use when plotting the data.
+#' @param silent No output
+#' @param CI.method Method sent to \code{\link[MARSS]{MARSSparamCIs}}
+#' @param CI.sim If doing bootstrap CI, this is the number of bootstraps sent to \link[MARSS]{MARSSparamCIs}
+#' @param log.scale Put plot on log-scale versus the original raw scale
+#' @param same.scale Tweak the scale of wild and total in graph. Not used.
+
+#' @return
+#' A plot
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' 
+Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, silent = FALSE, CI.method = "hessian", CI.sim = 1000, log.scale = FALSE, same.scale = FALSE) {
   if (!(CI.method %in% c("hessian", "parametric", "innovations", "none"))) {
     stop("Stopped in CSEGriskfigure because allowed CI methods are none, hessian, parametric, and innovations.\n", call. = FALSE)
   }
@@ -44,14 +84,16 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, mi
       y.high.total <- total.states + 1.96 * total.fit$states.se[paste("X.", popname, sep = ""), ]
       y.low.total <- total.states - 1.96 * total.fit$states.se[paste("X.", popname, sep = ""), ]
     }
+    # total.states (and total.raw) are logged so total*fracwild = total.states + log(fracwild)
     wild.states <- total.states + log(fracwild.fit$fracwild.states[popname, ])
     wild.raw <- total.raw + log(fracwild.fit$fracwild.raw[popname, ])
+    fracwild.raw <- fracwild.fit$fracwild.raw[popname, ]
     if (all(is.na(wild.raw))) {
       wild.states[] <- NA
     } else {
-      n.start <- max(min(which(!is.na(wild.raw))), which(years == min.year))
+      n.start <- max(min(which(!is.na(fracwild.raw))-1), which(years == min.year))
       if (n.start > 1) wild.states[1:(n.start - 1)] <- NA
-      n.end <- min(max(which(!is.na(wild.raw))), which(years == max.year))
+      n.end <- min(max(which(!is.na(fracwild.raw))+1), which(years == max.year))
       if (n.end < length(wild.states)) wild.states[(n.end + 1):length(wild.states)] <- NA
     }
 
@@ -105,8 +147,8 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, mi
   }
   mtext(esu, side = 3, outer = TRUE, line = 0, cex = 1.5)
   if (log.scale) {
-    mtext(paste("Predicted log ", type, " and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
+    mtext(paste("Predicted log abudance and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
   } else {
-    mtext(paste("Predicted ", type, " and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
+    mtext(paste("Predicted abundance and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
   }
 }

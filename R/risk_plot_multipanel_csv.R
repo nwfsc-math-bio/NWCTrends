@@ -1,7 +1,40 @@
-Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, silent = FALSE, CI.method = "hessian", CI.sim = 1000, log.scale = FALSE, same.scale = FALSE, type = "abundance") {
-  if (!(CI.method %in% c("hessian", "parametric", "innovations", "none"))) {
-    stop("Stopped in Status_trendfigure_multipanel_csv because allowed CI methods are none, hessian, parametric, and innovations.\n", call. = FALSE)
-  }
+#' @name
+#' Status_trendfigure_multipanel_csv
+#' @title
+#' data frame of estimated trends (wild and total spawners)
+#' @description
+#' This returns a data frame that is written to a csv file. Not exported. It is used by 
+#' \code{inst/doc/report_files/esu_report.Rmd}. 
+#' 
+#' It returns the smoothed total spawners estimate and the 
+#' smoothed wild spawners estimate which is 
+#' "smoothed total estimate x smoothed fracwild estimate".
+#' The wild spawner estimate is only shown from 1 year before and one year after
+#' the last actual fracwild estimate (in the data file). This is done so that
+#' the wild estimate does not over-extend the fracwild data. Fracwild estimates can
+#' be interpolated for missing years, but would not be appropriate to extend much before
+#' or past actual observed (or expert) fracwild data.
+#' 
+#' For the smoothed total estimates, information from all populations (via a non-diagonal
+#' year-to-year variance matrix) is used to estimate missing values and to account for
+#' observation error in the total spawner count. Because data from all populations are used,
+#' estimates can be made even for missing years at the beginning of the time series if there
+#' is data for those early years in other populations.
+#'
+#' @param esu The name of the ESU
+#' @param pops The population names that will be plotted (populations with too few data are eliminated)
+#' @param total.fit total fit returned by `trend_fits()`
+#' @param fracwild.fit fracwild fit returned by `trend_fits()`
+#' @param min.year The earliest year to use when plotting the data.
+#' @param max.year The latest year to use when plotting the data.
+#' @param log.scale Return values on log-scale versus the original raw scale
+
+#' @return
+#' A plot
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' 
+Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, log.scale = FALSE) {
 
   # Set up the min and max years
   years <- as.numeric(colnames(total.fit$model$data))
@@ -31,19 +64,22 @@ Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit
     }
     wild.states <- total.states + log(fracwild.fit$fracwild.states[popname, ])
     wild.raw <- total.raw + log(fracwild.fit$fracwild.raw[popname, ])
+    fracwild.raw <- fracwild.fit$fracwild.raw[popname, ]
     if (all(is.na(wild.raw))) {
       wild.states[] <- NA
-    } else {
-      n.start <- max(min(which(!is.na(wild.raw))), which(years == min.year))
+    } else { 
+      # Only hindcast 1 year before last fracwild data
+      n.start <- max(min(which(!is.na(fracwild.raw))-1), which(years == min.year))
       if (n.start > 1) wild.states[1:(n.start - 1)] <- NA
-      n.end <- min(max(which(!is.na(wild.raw))), which(years == max.year))
+      # Only forecast 1 year past last fracwild data
+      n.end <- min(max(which(!is.na(fracwild.raw))+1), which(years == max.year))
       if (n.end < length(wild.states)) wild.states[(n.end + 1):length(wild.states)] <- NA
     }
-
-    if (all(is.na(total.raw))) {
+    
+    if (all(is.na(total.raw))) { # Don't show if no data
       min.year <- min.year
       n.start <- which(years == min.year)
-    } else {
+    } else { # Don't hindcast before the spawner data
       n.start <- max(min(which(!is.na(total.raw))), which(years == min.year))
     }
 
