@@ -36,7 +36,7 @@ esus=datalist$metadat$ESU
 ```{r main_fig, echo=FALSE,fig.width=8.5}
 #source("risk_plot_multipanel.R")
 Status_trendfigure_multipanel(esuname, pops.to.plot, ifit.total, ifit.fracwild, min.year=plot.min.year, max.year=plot.max.year, same.scale=FALSE)
-df <- Status_trendfigure_multipanel_csv(esuname, pops.to.plot, ifit.total, ifit.fracwild, min.year=plot.min.year, max.year=plot.max.year, same.scale=FALSE)
+df <- Status_trendfigure_multipanel_csv(esuname, pops.to.plot, ifit.total, ifit.fracwild, min.year=plot.min.year, max.year=plot.max.year)
 write.csv(df, file=paste0(figdir,"main_fig.csv"), row.names=FALSE)
 ```
 
