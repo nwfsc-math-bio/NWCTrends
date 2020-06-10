@@ -37,14 +37,14 @@ A list with three items:
 \description{
 Fis a MARSS model to data from each ESUs treating each population as a
 subpopulation. The structure of the variance-covariance matrix, the U matrix, the
-Z matrix, and the R matrix can be specified. If you want to fit a specific model, 
+Z matrix, and the R matrix can be specified. If you want to fit a specific model,
 then pass in model as a list as per a MARSS model. The populations in the ESU
  with < min.years
  of data points are not used in the fitting and no states are estimated for those.
 }
 \details{
 If model=NULL then a set of all possible models is fit. This takes awhile but will
-allow one to use AIC to compare the model set. wild=TRUE means to do the fit on 
+allow one to use AIC to compare the model set. wild=TRUE means to do the fit on
 fracwild*total versus on the total spawners.
 logit.fw says whether to fit to logit of fracwild or to the percentages.
 

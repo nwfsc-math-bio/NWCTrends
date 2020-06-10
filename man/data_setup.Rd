@@ -23,8 +23,8 @@ A list with four items:
 }
 }
 \description{
-Read in the csv inputfile and create the data frames and matrices needed for 
-the fitting, plots and tables: matdat.spawners, matdat.wildspawners, and metadata. 
+Read in the csv inputfile and create the data frames and matrices needed for
+the fitting, plots and tables: matdat.spawners, matdat.wildspawners, and metadata.
 Some clean up of names and runtiming is done.
 }
 \details{

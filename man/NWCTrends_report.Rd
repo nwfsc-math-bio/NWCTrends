@@ -11,6 +11,7 @@ NWCTrends_report(
   model = list(Z = "identity", R = "diagonal and equal", Q = "equalvarcov", U =
     "unequal"),
   logit.fw = FALSE,
+  fit.wild = FALSE,
   plot.min.year = 1980,
   plot.max.year = 2014,
   min.data.points = 5,
@@ -22,7 +23,7 @@ NWCTrends_report(
 )
 }
 \arguments{
-\item{inputfile}{comma-delimited data file (see demo files for the format). 
+\item{inputfile}{comma-delimited data file (see demo files for the format).
 demofiles are in inst/doc/demodata.}
 
 \item{fit.min.year}{The earliest year to use when fitting the models.}
@@ -32,6 +33,8 @@ demofiles are in inst/doc/demodata.}
 \item{model}{The structure of the MARSS model to use. Entered as a list specified as a \link[MARSS]{MARSS} model.}
 
 \item{logit.fw}{TRUE/FALSE whether to estimate the smoothed fraction wild from the logit of the fractions or from the raw (0,1) fractions.}
+
+\item{fit.wild}{fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Status Review analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.}
 
 \item{plot.min.year}{The earliest year to use when plotting the data.}
 
@@ -52,26 +55,26 @@ Plots and tables that are saved to doc/figures/ESU_figures.
 }
 \description{
 This is the main function in the NWCTrends package which
-creates the ESU tables and figures from the 
-Northwest Fisheries Science Center's report: "2015 Status review 
-update for Pacific salmon and steelhead listed under the Endangered 
+creates the ESU tables and figures from the
+Northwest Fisheries Science Center's report: "2015 Status review
+update for Pacific salmon and steelhead listed under the Endangered
 Species Act: Pacific Northwest".
 The 2015 Status Review report can be viewed by typing
 \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
-at the command line. The report has a description of the 
-methods used for computing the smoothed trend lines and the status metrics. 
+at the command line. The report has a description of the
+methods used for computing the smoothed trend lines and the status metrics.
 A pdf of the methods is also available by typing
 \code{RShowDoc("Methods",package="NWCTrends")}
 at the command line.
 }
 \details{
-The default model used to fit the data is that used in the 
-2015 Status Update. This model uses information across the 
-populations in an ESU to estimate the process variance, 
-non-process variance (residuals 
-between smoothed fits and observed spawners), covariance in 
-process errors (good and bad year correlation). However it 
-allows each population to have a different trend.  This model is 
+The default model used to fit the data is that used in the
+2015 Status Update. This model uses information across the
+populations in an ESU to estimate the process variance,
+non-process variance (residuals
+between smoothed fits and observed spawners), covariance in
+process errors (good and bad year correlation). However it
+allows each population to have a different trend.  This model is
 specified as \code{ model=list(Z="identity", R="diagonal and equal", U="unequal", Q="equalvarcov") }.
 
 This function does all the steps to create the trend plots and figures
@@ -82,11 +85,14 @@ This function does all the steps to create the trend plots and figures
 }
 By default, the plots and tables are saved in a directory
  named (and created if necessary) NWCTrend_output in your
- working directory. 
- 
+ working directory.
+
 The look of the tables can be adjusted by passing in geomean.tables.control. See ?geomean_tables
 for the elements that can be controlled. Note that if the defaults for
 geomean.table.control are changed, they must be also changed in geomean_tables.R
+
+See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of 
+smoothed total and wild spawners.
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.
