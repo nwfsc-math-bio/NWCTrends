@@ -46,16 +46,16 @@
 #'
 #' @param inputfile comma-delimited data file (see demo files for the format).
 #' demofiles are in inst/doc/demodata.
-#' @param fit.min.year The earliest year to use when fitting the models.
-#' @param fit.max.year The latest year to use when fitting the models.
+#' @param fit.min.year Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file.
+#' @param fit.max.year Optional. You can set the last year to use when fitting the models. If not passed in, then the max.year is the last year in the data file.
 #' @param model The structure of the MARSS model to use. Entered as a list specified as a \link[MARSS]{MARSS} model.
 #' @param logit.fw TRUE/FALSE whether to estimate the smoothed fraction wild from the logit of the fractions or from the raw (0,1) fractions.
 #' @param fit.wild fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Status Review analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.
-#' @param plot.min.year The earliest year to use when plotting the data.
-#' @param plot.max.year The latest year to use when plotting the data.
+#' @param plot.min.year Optional. The earliest year to use when plotting the data if different than the first year in the data set.
+#' @param plot.max.year Optional. The last year to use when plotting the data if different than the last year in the data set.
 #' @param min.data.points The minimum data points to require from a population (for fitting and plotting).
 #' @param geomean.table.control A list with the adjustable variables for geomean_table(). See ?geomean_table
-#' @param trend.table.control A list with the adjustable variables for trend_15_table(). See ?trend_15_table
+#' @param trend.table.control A list with the adjustable variables for trend_15_table(). See \code{\link{trend_15_table}}. The year.ranges are the years for the multi-year trends. If any years are missing in the data set, then those trends will be blank.
 #' @param output.type "html", "pdf", or "word" Format to produce the report in.
 #' @param output.dir Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.
 
@@ -69,11 +69,11 @@
 
 NWCTrends_report <- function(
                              inputfile = NULL,
-                             fit.min.year = 1975, fit.max.year = 2014,
+                             fit.min.year = NULL, fit.max.year = NULL,
                              model = list(Z = "identity", R = "diagonal and equal", Q = "equalvarcov", U = "unequal"),
                              logit.fw = FALSE,
                              fit.wild = FALSE,
-                             plot.min.year = 1980, plot.max.year = 2014,
+                             plot.min.year = NULL, plot.max.year = NULL,
                              min.data.points = 5,
                              geomean.table.control = list(min.year = 1990, max.year = 2014, lenbands = 5, min.band.points = 2, change.col = "last.two"),
                              trend.table.control = list(year.ranges = list(1990:2005, 1999:2014)),
@@ -115,6 +115,8 @@ NWCTrends_report <- function(
     } else {
       stop("The inputfile should be data (.csv or .xls) or an RData file from a fit.")
     }
+    if(!all(unlist(trend.table.control$year.ranges) %in% colnames(datalist$matdat.spawners)))
+      cat("Not all trend.table.control$year.ranges in the data set. No trends for those ranges. See ?NWCTrends_report. \n")
 
     # outputfile name
     # the outputfile is saved debugging purposes

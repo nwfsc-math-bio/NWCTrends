@@ -7,8 +7,8 @@
 #' NAs are specified with -99, -99.00 or -99.0.
 #'
 #' @param inputfile .csv file. See demofiles for the proper format.
-#' @param min.year The minumum year for the returned data frames.
-#' @param max.year The maximum year for the returned data frames.
+#' @param min.year The minimum year for the returned data frames. If left off, it will use the minimum year in the data set. You can set later to exclude data or set before to hindcast.
+#' @param max.year The maximum year for the returned data frames. If left off, it will use the maximum year in the data set. You can set earlier to exclude data or set later to forecast.
 #'
 #' @return A list with four items:
 #' \describe{
@@ -19,7 +19,6 @@
 #' }
 #'
 data_setup <- function(inputfile, min.year, max.year) {
-  #if (stringr::str_split(inputfile, "[.]")[[1]][2] != "csv") stop("Inputfile must be a .csv file.")
 
   # toproper function; make column names nice
   toproper <- function(x) {
@@ -97,9 +96,22 @@ data_setup <- function(inputfile, min.year, max.year) {
 
   dat$unique.name <- paste(dat$ESU, dat$Common.Population.Name, dat$Run.Timing, sep = "|")
 
-  # Set up the size of matricesx
-  min.yr <- min(dat[, "Year"], min.year)
-  max.yr <- max(dat[, "Year"], max.year)
+  # Set up the size of matrices
+  if(is.null(min.year)){ 
+    min.yr <- min(dat[!is.na(dat$Spawners), "Year"])
+  }else{
+    if(min.year > max(dat[!is.na(dat$Spawners), "Year"])) 
+      stop("fit.min.year is greater than max year in the data set.\n")
+    min.yr <- min.year
+  }
+  if(is.null(max.year)){ 
+    max.yr <- max(dat[!is.na(dat$Spawners), "Year"])
+  }else{
+    if(max.year < min(dat[!is.na(dat$Spawners), "Year"])) 
+      stop("fit.max.year is less than min year in the data set.\n")
+    max.yr <- max.year
+  }
+  if(min.yr > max.yr) stop("fit.max.year is less than fit.min.year.\n")
   years <- min.yr:max.yr
   nyr <- length(years)
 
@@ -117,13 +129,14 @@ data_setup <- function(inputfile, min.year, max.year) {
   metadat <- data.frame(
     name = pops, ESU = esus, Run = runtimings,
     Species = species, PopGroup = majorpopgroup,
+    min.year = min.yr, max.year = max.yr,
     stringsAsFactors = FALSE
   )
 
   npops <- length(pops)
 
   # create data matrices
-  matdat.spawners <- matdat.wildspawners <- recr <- recr2 <- matrix(NA, npops, nyr, dimnames = list(pops, years))
+  matdat.spawners <- matdat.wildspawners <- matdat.fracwild <- matrix(NA, npops, nyr, dimnames = list(pops, years))
 
   # check that there are no problems
   for (i in pops) {
@@ -136,17 +149,20 @@ data_setup <- function(inputfile, min.year, max.year) {
   for (i in pops) {
     matdat.spawners[i, match(dat$Year[dat$unique.name == i], years)] <- dat$Spawners[dat$unique.name == i]
     matdat.wildspawners[i, match(dat$Year[dat$unique.name == i], years)] <- dat$wildspawners[dat$unique.name == i]
+    matdat.fracwild[i, match(dat$Year[dat$unique.name == i], years)] <- dat$Fracwild[dat$unique.name == i]
   }
-  yr1 <- which(colnames(matdat.spawners) == min.year)
-  yr2 <- which(colnames(matdat.spawners) == max.year)
+  yr1 <- which(colnames(matdat.spawners) == min.yr)
+  yr2 <- which(colnames(matdat.spawners) == max.yr)
   matdat.spawners <- matdat.spawners[, yr1:yr2, drop = FALSE]
   matdat.wildspawners <- matdat.wildspawners[, yr1:yr2, drop = FALSE]
-
+  matdat.fracwild <- matdat.fracwild[, yr1:yr2, drop = FALSE]
+  
   return(
     list(
       dat = dat,
       matdat.spawners = matdat.spawners,
       matdat.wildspawners = matdat.wildspawners,
+      matdat.fracwild = matdat.fracwild,
       metadat = metadat
     )
   )
