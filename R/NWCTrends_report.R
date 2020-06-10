@@ -40,6 +40,9 @@
 #' The look of the tables can be adjusted by passing in geomean.tables.control. See ?geomean_tables
 #' for the elements that can be controlled. Note that if the defaults for
 #' geomean.table.control are changed, they must be also changed in geomean_tables.R
+#' 
+#' See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of 
+#' smoothed total and wild spawners.
 #'
 #' @param inputfile comma-delimited data file (see demo files for the format).
 #' demofiles are in inst/doc/demodata.
