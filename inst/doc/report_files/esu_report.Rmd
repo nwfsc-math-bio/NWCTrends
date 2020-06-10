@@ -31,12 +31,13 @@ knitr::opts_chunk$set(fig.height=fig.height)
 #data
 matdat.spawners=datalist$matdat.spawners
 matdat.wildspawners=datalist$matdat.wildspawners
+matdat.fracwild=datalist$matdat.fracwild
 esus=datalist$metadat$ESU
 ```
 ```{r main_fig, echo=FALSE,fig.width=8.5}
 #source("risk_plot_multipanel.R")
-Status_trendfigure_multipanel(esuname, pops.to.plot, ifit.total, ifit.fracwild, min.year=plot.min.year, max.year=plot.max.year, same.scale=FALSE)
-df <- Status_trendfigure_multipanel_csv(esuname, pops.to.plot, ifit.total, ifit.fracwild, min.year=plot.min.year, max.year=plot.max.year)
+Status_trendfigure_multipanel(esuname, pops.to.plot, ifit.total, ifit.fracwild, plot.min.year=plot.min.year, plot.max.year=plot.max.year, same.scale=FALSE)
+df <- Status_trendfigure_multipanel_csv(esuname, pops.to.plot, ifit.total, ifit.fracwild)
 write.csv(df, file=paste0(figdir,"main_fig.csv"), row.names=FALSE)
 ```
 
@@ -208,9 +209,9 @@ if(output.type=="latex")
       file=paste0(figdir,"/geomean_total_table.tex"))
 caption="5-year geometric mean of smoothed wild spawner estimate (smoothed total spawners times smoothed fracwild).  In parentheses, the 5-year geometric mean of smoothed total spawners (black thick line in graphs) is shown.  A row with only values in parentheses indicates that no fraction wild estimates were available for that population. Geometric mean was computed as the product of counts raised to the power 1/(number of values in band)."
 if(geomean.table.control$change.col=="first.last")
-  chg.col = "Percent change between first and last 5-year periods is shown on the far right."
+  chg.col = "Percent change between first and last 5-year periods is shown on the far right. This will be blank if either the first or last column is blank (meaning no data)."
 if(geomean.table.control$change.col=="last.two" | is.null(geomean.table.control$change.col))
-  chg.col = "Percent change between the most recent two 5-year periods is shown on the far right."
+  chg.col = "Percent change between the most recent two 5-year periods is shown on the far right. This will be blank if either column is blank (meaning no data)."
 caption <- paste(caption, chg.col)
 if(output.type=="latex"){
   cat("\\begin{landscape}")
