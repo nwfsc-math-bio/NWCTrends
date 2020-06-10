@@ -166,7 +166,10 @@ x = barplot(vals, xaxt="n",col=c(rep("red",6),rep("black",6)),ylab="Num of popul
 labs=paste(seq(-120,100,20)," to ",seq(-100,120,20),"%", sep="")
 labs[1]="       < -100%"; labs[12]="       > 100%"
 text(cex=1, x=x-1, y=-.1, labs, xpd=TRUE, srt=45,pos=1, offset=1.5)
-title("Percent change in 5-year geomean of smoothed\nlog wild spawners between last two 5-yr periods")
+if(geomean.table.control$change.col=="first.last")
+  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between first and last 5-yr periods")
+if(geomean.table.control$change.col=="last.two")
+  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between last two 5-yr periods")
 
 #source("trend_15_tables.R")
 #a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
