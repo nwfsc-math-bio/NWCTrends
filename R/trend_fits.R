@@ -37,13 +37,14 @@ trend_fits <- function(datalist,
 
   matdat.spawners <- datalist$matdat.spawners
   matdat.wildspawners <- datalist$matdat.wildspawners
-
+  matdat.fracwild <- datalist$matdat.fracwild
+  
   if (!wild) {
     good <- !(apply(matdat.spawners, 1, function(x) {
       sum(!is.na(x))
     }) < min.years)
     matdat.long.spawners <- matdat.spawners[good, , drop = FALSE]
-    fw <- matdat.wildspawners[good, , drop = FALSE] / matdat.spawners[good, , drop = FALSE]
+    fw <- matdat.fracwild[good, , drop = FALSE]
     pops.long.spawners <- datalist[["metadat"]]$name[good]
     esus.long.spawners <- datalist[["metadat"]]$ESU[good]
     esus.sub <- esus.long.spawners
@@ -76,9 +77,12 @@ trend_fits <- function(datalist,
     # set up data for esu
     this.esu.name <- unique(esus.sub)[this.esu.num]
     tmpdat <- kemdat[esus.sub == this.esu.name, , drop = FALSE]
+    first.n.spawner.data <- min(which(apply(tmpdat,2,function(x){!all(is.na(x))})))
+    last.n.spawner.data <- max(which(apply(tmpdat,2,function(x){!all(is.na(x))})))
+    tmpdat <- tmpdat[ , first.n.spawner.data:last.n.spawner.data, drop=FALSE]
     if (!wild) {
-      tmplogitfw <- logitfw[esus.sub == this.esu.name, , drop = FALSE]
-      tmpfw <- fw[esus.sub == this.esu.name, , drop = FALSE]
+      tmplogitfw <- logitfw[esus.sub == this.esu.name, first.n.spawner.data:last.n.spawner.data, drop = FALSE]
+      tmpfw <- fw[esus.sub == this.esu.name, first.n.spawner.data:last.n.spawner.data, drop = FALSE]
     }
     n <- dim(tmpdat)[1]
 
