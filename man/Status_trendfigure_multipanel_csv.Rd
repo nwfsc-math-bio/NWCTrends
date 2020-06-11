@@ -9,8 +9,6 @@ Status_trendfigure_multipanel_csv(
   pops,
   total.fit,
   fracwild.fit,
-  min.year = NULL,
-  max.year = NULL,
   log.scale = FALSE
 )
 }
@@ -22,10 +20,6 @@ Status_trendfigure_multipanel_csv(
 \item{total.fit}{total fit returned by `trend_fits()`}
 
 \item{fracwild.fit}{fracwild fit returned by `trend_fits()`}
-
-\item{min.year}{The earliest year to use when plotting the data.}
-
-\item{max.year}{The latest year to use when plotting the data.}
 
 \item{log.scale}{Return values on log-scale versus the original raw scale}
 }
