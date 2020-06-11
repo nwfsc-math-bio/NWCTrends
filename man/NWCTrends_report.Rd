@@ -6,14 +6,14 @@
 \usage{
 NWCTrends_report(
   inputfile = NULL,
-  fit.min.year = 1975,
-  fit.max.year = 2014,
+  fit.min.year = NULL,
+  fit.max.year = NULL,
   model = list(Z = "identity", R = "diagonal and equal", Q = "equalvarcov", U =
     "unequal"),
   logit.fw = FALSE,
   fit.wild = FALSE,
-  plot.min.year = 1980,
-  plot.max.year = 2014,
+  plot.min.year = NULL,
+  plot.max.year = NULL,
   min.data.points = 5,
   geomean.table.control = list(min.year = 1990, max.year = 2014, lenbands = 5,
     min.band.points = 2, change.col = "last.two"),
@@ -26,9 +26,9 @@ NWCTrends_report(
 \item{inputfile}{comma-delimited data file (see demo files for the format).
 demofiles are in inst/doc/demodata.}
 
-\item{fit.min.year}{The earliest year to use when fitting the models.}
+\item{fit.min.year}{Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file. This is use to used a subset of the full data set for fitting.}
 
-\item{fit.max.year}{The latest year to use when fitting the models.}
+\item{fit.max.year}{Optional. You can set the last year to use when fitting the models. If not passed in, then the max.year is the last year in the data file. This is used to use a subset of the full data set for fitting.}
 
 \item{model}{The structure of the MARSS model to use. Entered as a list specified as a \link[MARSS]{MARSS} model.}
 
@@ -36,15 +36,15 @@ demofiles are in inst/doc/demodata.}
 
 \item{fit.wild}{fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Status Review analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.}
 
-\item{plot.min.year}{The earliest year to use when plotting the data.}
+\item{plot.min.year}{Optional. The earliest year to use when plotting the data if different than the first year in the data set.}
 
-\item{plot.max.year}{The latest year to use when plotting the data.}
+\item{plot.max.year}{Optional. The last year to use when plotting the data if different than the last year in the data set.}
 
 \item{min.data.points}{The minimum data points to require from a population (for fitting and plotting).}
 
 \item{geomean.table.control}{A list with the adjustable variables for geomean_table(). See ?geomean_table}
 
-\item{trend.table.control}{A list with the adjustable variables for trend_15_table(). See ?trend_15_table}
+\item{trend.table.control}{A list with the adjustable variables for trend_15_table(). See \code{\link{trend_15_table}}. The year.ranges are the years for the multi-year trends. If any years are missing in the data set, then those trends will be blank.}
 
 \item{output.type}{"html", "pdf", or "word" Format to produce the report in.}
 

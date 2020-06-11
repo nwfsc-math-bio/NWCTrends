@@ -46,8 +46,8 @@
 #'
 #' @param inputfile comma-delimited data file (see demo files for the format).
 #' demofiles are in inst/doc/demodata.
-#' @param fit.min.year Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file.
-#' @param fit.max.year Optional. You can set the last year to use when fitting the models. If not passed in, then the max.year is the last year in the data file.
+#' @param fit.min.year Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file. This is use to used a subset of the full data set for fitting.
+#' @param fit.max.year Optional. You can set the last year to use when fitting the models. If not passed in, then the max.year is the last year in the data file. This is used to use a subset of the full data set for fitting.
 #' @param model The structure of the MARSS model to use. Entered as a list specified as a \link[MARSS]{MARSS} model.
 #' @param logit.fw TRUE/FALSE whether to estimate the smoothed fraction wild from the logit of the fractions or from the raw (0,1) fractions.
 #' @param fit.wild fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Status Review analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.
@@ -150,9 +150,7 @@ NWCTrends_report <- function(
     # Set up the min and max years
     years <- as.numeric(colnames(ifit.total$model$data))
     if (is.null(plot.min.year)) plot.min.year <- years[1]
-    if (plot.min.year < years[1]) plot.min.year <- years[1]
     if (is.null(plot.max.year)) plot.max.year <- max(years)
-    if (plot.max.year > max(years)) plot.max.year <- max(years)
 
     # Figure out the names of the populations to plot
     # it's the row in total.fit where there are enough data points for the min to max year range
@@ -160,7 +158,7 @@ NWCTrends_report <- function(
     mpg <- metadat$PopGroup[metadat$name %in% pops]
     pops.to.plot <- pops[
       apply(
-        ifit.total$model$data[, which(years == plot.min.year):which(years == plot.max.year), drop = FALSE], 1,
+        ifit.total$model$data, 1,
         function(x) {
           sum(!is.na(x)) >= min.data.points
         }
@@ -178,7 +176,7 @@ NWCTrends_report <- function(
 
     pops.to.plot.wild <- rownames(ifit.fracwild$fracwild.raw)[
       apply(
-        ifit.fracwild$fracwild.raw[, which(years == plot.min.year):which(years == plot.max.year), drop = FALSE], 1,
+        ifit.fracwild$fit$model$data, 1,
         function(x) {
           sum(!is.na(x)) >= min.data.points
         }
