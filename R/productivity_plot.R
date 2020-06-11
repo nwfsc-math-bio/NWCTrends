@@ -1,8 +1,8 @@
 productivity_plot <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, type = 1, lag = 4) {
   # Set up the min and max years
   years <- as.numeric(colnames(total.fit$model$data))
-  if (is.null(min.year)) min.year <- years[1]
-  if (min.year < years[1]) min.year <- years[1]
+  if (is.null(min.year)) min.year <- years[1] + lag
+  if (min.year < (years[1]+lag)) min.year <- years[1] + lag
   if (is.null(max.year)) max.year <- max(years)
   if (max.year > max(years)) max.year <- max(years)
   n.start <- which(years == min.year)
@@ -10,7 +10,7 @@ productivity_plot <- function(esu, pops, total.fit, fracwild.fit, min.year = NUL
   t <- n.start:n.end
 
   if ((min.year - lag) < years[1] & type == 1) {
-    stop(paste("Type=1 uses the min.year - ", lag, " (", min.year - lag, ") data point and your data do not include that."))
+    stop(paste0("Type=1 uses the min.year - ", lag, " (", min.year - lag, ") data point and your data do not include that."))
   }
 
   n <- length(pops)
