@@ -25,8 +25,8 @@
 #' @param pops The population names that will be plotted (populations with too few data are eliminated)
 #' @param total.fit total fit returned by `trend_fits()`
 #' @param fracwild.fit fracwild fit returned by `trend_fits()`
-#' @param min.year The earliest year to use when plotting the data.
-#' @param max.year The latest year to use when plotting the data.
+#' @param plot.min.year The x axis minimum.
+#' @param plot.max.year The x axis maximum.
 #' @param silent No output
 #' @param CI.method Method sent to \code{\link[MARSS]{MARSSparamCIs}}
 #' @param CI.sim If doing bootstrap CI, this is the number of bootstraps sent to \link[MARSS]{MARSSparamCIs}
@@ -38,18 +38,23 @@
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 #' 
-Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, silent = FALSE, CI.method = "hessian", CI.sim = 1000, log.scale = FALSE, same.scale = FALSE) {
+Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, plot.min.year = NULL, plot.max.year = NULL, silent = FALSE, CI.method = "hessian", CI.sim = 1000, log.scale = FALSE, same.scale = FALSE) {
   if (!(CI.method %in% c("hessian", "parametric", "innovations", "none"))) {
     stop("Stopped in CSEGriskfigure because allowed CI methods are none, hessian, parametric, and innovations.\n", call. = FALSE)
   }
 
   # Set up the min and max years
   years <- as.numeric(colnames(total.fit$model$data))
-  if (is.null(min.year)) min.year <- years[1]
-  if (min.year < years[1]) min.year <- years[1]
-  if (is.null(max.year)) max.year <- max(years)
-  if (max.year > max(years)) max.year <- max(years)
-
+  # These are min and max for the fits.
+  min.year <- years[1]
+  max.year <- max(years)
+  # column where spawner data begins and ends (across all populations)
+  first.n.spawner.data <- min(which(apply(total.fit$model$data,2,function(x){!all(is.na(x))})))
+  last.n.spawner.data <- max(which(apply(total.fit$model$data,2,function(x){!all(is.na(x))})))
+  # These are min and max for the plots
+  if(is.null(plot.min.year)) plot.min.year <- min.year
+  if(is.null(plot.max.year)) plot.max.year <- max.year
+  
   n <- length(pops)
   short.pops <- clean.pops(pops)
 
@@ -97,23 +102,22 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, mi
       if (n.end < length(wild.states)) wild.states[(n.end + 1):length(wild.states)] <- NA
     }
 
-    if (all(is.na(total.raw))) {
-      min.year <- min.year
-      n.start <- which(years == min.year)
-    } else {
-      n.start <- max(min(which(!is.na(total.raw))), which(years == min.year))
+    if (all(is.na(total.raw))) { # no data for this population, skip
+      next
     }
-
-    n.end <- which(years == max.year)
+    
+    # only show estimates within the data for the ESU
+      n.start <- first.n.spawner.data
+      n.end <- last.n.spawner.data
 
     # trim down the data
-    wild.raw <- wild.raw[n.start:n.end]
-    total.raw <- total.raw[n.start:n.end]
-    wild.states <- wild.states[n.start:n.end]
-    total.states <- total.states[n.start:n.end]
-    y.high.total <- y.high.total[n.start:n.end]
-    y.low.total <- y.low.total[n.start:n.end]
-    years.trim <- years[n.start:n.end]
+   wild.raw <- wild.raw[n.start:n.end]
+   total.raw <- total.raw[n.start:n.end]
+   wild.states <- wild.states[n.start:n.end]
+   total.states <- total.states[n.start:n.end]
+   y.high.total <- y.high.total[n.start:n.end]
+   y.low.total <- y.low.total[n.start:n.end]
+   years.trim <- years[n.start:n.end]
     if (!log.scale) {
       wild.raw <- exp(wild.raw)
       total.raw <- exp(total.raw)
@@ -134,7 +138,7 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, mi
     plot(years.trim, total.raw,
       type = "n", bty = "L", xlab = "", ylab = "",
       ylim = ylims,
-      xlim = c(min.year - 1, max.year + 1)
+      xlim = c(plot.min.year - 1, plot.max.year + 1)
     )
     polygon(c(years.trim, rev(years.trim)), c(y.high.total, rev(y.low.total)), col = "grey75", border = NA)
     lines(years.trim, total.states, col = "black", lwd = 4)

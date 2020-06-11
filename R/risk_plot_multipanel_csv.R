@@ -25,8 +25,6 @@
 #' @param pops The population names that will be plotted (populations with too few data are eliminated)
 #' @param total.fit total fit returned by `trend_fits()`
 #' @param fracwild.fit fracwild fit returned by `trend_fits()`
-#' @param min.year The earliest year to use when plotting the data.
-#' @param max.year The latest year to use when plotting the data.
 #' @param log.scale Return values on log-scale versus the original raw scale
 
 #' @return
@@ -34,15 +32,16 @@
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 #' 
-Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, log.scale = FALSE) {
+Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit, log.scale = FALSE) {
 
   # Set up the min and max years
   years <- as.numeric(colnames(total.fit$model$data))
-  if (is.null(min.year)) min.year <- years[1]
-  if (min.year < years[1]) min.year <- years[1]
-  if (is.null(max.year)) max.year <- max(years)
-  if (max.year > max(years)) max.year <- max(years)
-
+  min.year <- years[1]
+  max.year <- max(years)
+  # column where spawner data begins and ends (across all populations)
+  first.n.spawner.data <- min(which(apply(total.fit$model$data,2,function(x){!all(is.na(x))})))
+  last.n.spawner.data <- max(which(apply(total.fit$model$data,2,function(x){!all(is.na(x))})))
+  
   n <- length(pops)
   short.pops <- clean.pops(pops)
 
@@ -76,15 +75,10 @@ Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit
       if (n.end < length(wild.states)) wild.states[(n.end + 1):length(wild.states)] <- NA
     }
     
-    if (all(is.na(total.raw))) { # Don't show if no data
-      min.year <- min.year
-      n.start <- which(years == min.year)
-    } else { # Don't hindcast before the spawner data
-      n.start <- max(min(which(!is.na(total.raw))), which(years == min.year))
-    }
-
-    n.end <- which(years == max.year)
-
+    # only show estimates within the data for the ESU
+    n.start <- first.n.spawner.data
+    n.end <- last.n.spawner.data
+    
     # trim down the data
     wild.raw <- wild.raw[n.start:n.end]
     total.raw <- total.raw[n.start:n.end]
@@ -103,7 +97,7 @@ Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit
     }
 
     tmp <- data.frame(
-      pop = short.pops[pop], years = years.trim,
+      pop = short.pops[pop], years = years,
       total.raw = total.raw, total.smoothed = total.states, total.smoothed.high = y.high.total, total.smoothed.low = y.low.total, wild.smoothed = wild.states
     )
 
