@@ -42,7 +42,7 @@ Download the demo data files and duplicate the format. Do not rename the columns
 
 ## Modifying the tables
 
-Set the years to use for the analysis using `fit.min.year` and `fit.max.year`. 
+Optional. Set the years to use for the analysis using `fit.min.year` and `fit.max.year`. If you leave this off, it will use the first year in the data set and the last year in the data set.
 
 In the tables for the geometric means, you can control the table by passing in the list `geomean.table.control`. For example, you can set the beginning and ending years to be shown in the table. These can be different than `fit.min.year` and `fit.max.year`. For example, you may want to fit to 1990 to 2019 data but only show
 5-year geometric means for 1999 to 2018. To do this, you would call the report with
