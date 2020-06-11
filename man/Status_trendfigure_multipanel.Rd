@@ -9,8 +9,8 @@ Status_trendfigure_multipanel(
   pops,
   total.fit,
   fracwild.fit,
-  min.year = NULL,
-  max.year = NULL,
+  plot.min.year = NULL,
+  plot.max.year = NULL,
   silent = FALSE,
   CI.method = "hessian",
   CI.sim = 1000,
@@ -27,9 +27,9 @@ Status_trendfigure_multipanel(
 
 \item{fracwild.fit}{fracwild fit returned by `trend_fits()`}
 
-\item{min.year}{The earliest year to use when plotting the data.}
+\item{plot.min.year}{The x axis minimum.}
 
-\item{max.year}{The latest year to use when plotting the data.}
+\item{plot.max.year}{The x axis maximum.}
 
 \item{silent}{No output}
 
