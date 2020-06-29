@@ -9,9 +9,9 @@ data_setup(inputfile, min.year, max.year)
 \arguments{
 \item{inputfile}{.csv file. See demofiles for the proper format.}
 
-\item{min.year}{The minumum year for the returned data frames.}
+\item{min.year}{The minimum year for the returned data frames. If left off, it will use the minimum year in the data set. You can set later to exclude data or set before to hindcast.}
 
-\item{max.year}{The maximum year for the returned data frames.}
+\item{max.year}{The maximum year for the returned data frames. If left off, it will use the maximum year in the data set. You can set earlier to exclude data or set later to forecast.}
 }
 \value{
 A list with four items:
@@ -23,8 +23,8 @@ A list with four items:
 }
 }
 \description{
-Read in the csv inputfile and create the data frames and matrices needed for 
-the fitting, plots and tables: matdat.spawners, matdat.wildspawners, and metadata. 
+Read in the csv inputfile and create the data frames and matrices needed for
+the fitting, plots and tables: matdat.spawners, matdat.wildspawners, and metadata.
 Some clean up of names and runtiming is done.
 }
 \details{

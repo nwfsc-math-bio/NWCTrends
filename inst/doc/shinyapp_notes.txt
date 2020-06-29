@@ -23,6 +23,6 @@
   # In the function argument, inputfile is defined as file.choose()
   #demo file here
   # "inst/appdir/demofiles/PNW_Listed_Salmonids_2016.csv"
-  filetype=str_split(inputfile,"[.]")[[1]]
+  filetype=stringr::str_split(inputfile,"[.]")[[1]]
   filetype=filetype[length(filetype)]
   ##############################################

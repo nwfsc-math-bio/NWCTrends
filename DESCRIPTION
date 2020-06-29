@@ -1,15 +1,16 @@
 Package: NWCTrends
 Type: Package
 Title: Standardized Trend Metrics for Salmonid Populations
-Version: 1.7
-Date: 20202-05-08
+Version: 1.12
+Date: 20202-06-10
 Depends: R (>= 2.15.0), 
     stringr (>= 1.4.0), 
     rmarkdown (>= 1.12), 
     MARSS (>= 3.10.10), 
     xtable (>= 1.8-4), 
     knitr (>= 1.22), 
-    kableExtra (>= 1.1.0)
+    kableExtra (>= 1.1.0),
+    gdata
 Author: Eli Holmes, NOAA, Seattle, USA
 Maintainer: Elizabeth Holmes - NOAA Federal <eli.holmes@noaa.gov>
 Description: This is runs the standardized trends metrics used in the 2016 5-year Status Review Update for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().
@@ -17,4 +18,4 @@ License: GPL-2
 LazyData: yes
 BuildVignettes: yes
 ByteCompile: TRUE
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0

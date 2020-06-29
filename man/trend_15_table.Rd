@@ -31,6 +31,6 @@ Create the tables with the trends for different time periods using the smoothed 
 spawner estimates. Despite the name of the function, the range of years need not be 15 years.
 The years to show are specified
 by list `year.ranges`. The ranges are specified as `begin.year:end.year`, for example
-`1990:2005`. `year.ranges` can be padded into the NWCTrends_report() call by passing in 
+`1990:2005`. `year.ranges` can be padded into the NWCTrends_report() call by passing in
  trend.table.control as list.  For example `list(year.ranges=list(1990:2000,2000:2010))`.
 }
