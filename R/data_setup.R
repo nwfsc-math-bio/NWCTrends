@@ -20,14 +20,14 @@
 #'
 data_setup=function(inputfile, min.year, max.year){
   require(stringr)
-  
-  if(str_split(inputfile,"[.]")[[1]][2]!="csv") stop("Inputfile must be a .csv file.")
+  x <- stringr::str_split(inputfile,"[.]")[[1]]
+  if(x[length(x)]!="csv") stop("Inputfile must be a .csv file.")
   
   ####### Replace with shiny app #################
   # This code is specific to my machine.  Replace 
   if(stringr::str_sub(inputfile,-4)==".xls" | stringr::str_sub(inputfile,-5)==".xlsx"){
     require(XLConnect)    
-    inputfile = xls2csv(inputfile, sheet=1, perl="C:/Program Files (x86)/Perl/bin/perl.exe")
+    inputfile = XLConnect::xls2csv(inputfile, sheet=1, perl="C:/Program Files (x86)/Perl/bin/perl.exe")
   }
   ####### Replace with shiny app #################
   
