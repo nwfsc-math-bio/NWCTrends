@@ -1,6 +1,6 @@
 # NWCTrends
 
-This is runs the standardized trends metrics used in the 2015 5-year Status Review Update for listed PNW salmonids.  
+This is runs the standardized trends metrics used in the 2015 and 2020 5-year Status Review Update for listed PNW salmonids.  
 
 ## Installation
 
@@ -38,13 +38,15 @@ Type `?NWCTrends` for instructions for analyzing a data set. The data must be .c
 
 ## Instructions to run your own data
 
-Download the demo data files and duplicate the format. Do not rename the columns. Missing data are entered with a -99. An ESU name and a unique population name (COMMON_POPULATION_NAME) is required. The tables produced by **NWCTrends** only use the BROOD_YEAR, NUMBER_OF_SPAWNERS, and FRACWILD columns. An entry is required for each year. RUN_TIME, SPECIES and MAJOR_POPULATION_GROUP are used to adding labels to plots and tables.
+Download the demo data files and duplicate the format (csv or xls). Do not rename the columns. Missing data are entered with a -99. An ESU name and a unique population name (COMMON_POPULATION_NAME) are required. The tables produced by **NWCTrends** only use the BROOD_YEAR, NUMBER_OF_SPAWNERS, and FRACWILD columns. An entry is required for each year. RUN_TIME, SPECIES and MAJOR_POPULATION_GROUP are used to adding labels to plots and tables. BROOD_YEAR is mislabelled. This is simply the Year of sampling.
 
 ## Modifying the tables
 
 Optional. Set the years to use for the analysis using `fit.min.year` and `fit.max.year`. If you leave this off, it will use the first year in the data set and the last year in the data set.
 
-In the tables for the geometric means, you can control the table by passing in the list `geomean.table.control`. For example, you can set the beginning and ending years to be shown in the table. These can be different than `fit.min.year` and `fit.max.year`. For example, you may want to fit to 1990 to 2019 data but only show
+In the tables for the geometric means, you can control the table by passing in the list `geomean.table.control`. For example, you can set the beginning and ending years to be shown in the table. These can be different than `fit.min.year` and `fit.max.year`. 
+
+For example, you may want to fit to 1990 to 2019 data but only show
 5-year geometric means for 1999 to 2018. To do this, you would call the report with
 
 ```
@@ -58,6 +60,12 @@ would lead to a final band with less than 5 years, then the last band will not h
 years. If it has fewer than min.band.points, then the last band will be NA.
 You will need to properly choose min.year and max.year to get the table to look as you want.
 
+You customize the multi-year trend ranges. To do this, you would call the report with for example the following to show the 1990 to 2019 and 2015 to 2019 ranges.
+
+```
+NWCTrends_report(fit.min.year=1990, fit.max.year=2019,
+                 trend.table.control=list(year.ranges=list(1990:2019, 2015:2019)))
+```
 
 ## References
 
