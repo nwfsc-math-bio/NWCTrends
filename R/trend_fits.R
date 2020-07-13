@@ -177,9 +177,10 @@ trend_fits <- function(datalist,
           fracwild.raw <- tmpfw
         }
       } else {
-        # No fracwild info for ESU
+        # No fracwild info for ESU; all NAs
         fracwild.states <- statesfw
         fracwild.raw <- tmpfw
+        kem <- NA
       }
       fits[[this.esu.name]][["fwlogitfit"]] <- list(fit = kem, fracwild.states = fracwild.states, fracwild.raw = fracwild.raw)
     }

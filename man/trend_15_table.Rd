@@ -9,7 +9,8 @@ trend_15_table(
   mpg,
   total.fit,
   fracwild.fit,
-  year.ranges = list(1990:2005, 1999:2014)
+  year.ranges = list(1990:2005, 1999:2014),
+  wild = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ trend_15_table(
 \item{fracwild.fit}{The matrix of fraction wild associated with each total row.}
 
 \item{year.ranges}{The columns of years.}
+
+\item{wild}{Show smoothed wild or smoothed total.}
 }
 \value{
 A data frames with the estimates trend for each year range in a different column.

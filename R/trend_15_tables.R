@@ -12,10 +12,11 @@
 #' @param total.fit The matrix of total spawner estimates
 #' @param fracwild.fit The matrix of fraction wild associated with each total row.
 #' @param year.ranges The columns of years.
+#' @param wild Show smoothed wild or smoothed total.
 #'
 #' @return A data frames with the estimates trend for each year range in a different column.
 #'
-trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = list(1990:2005, 1999:2014)) {
+trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = list(1990:2005, 1999:2014), wild=TRUE) {
   n <- length(pops)
   short.pops <- clean.pops(pops)
   
@@ -38,13 +39,23 @@ trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = lis
     names(data) <- min.year:max.year
     states <- rep(NA, nyr)
     names(states) <- min.year:max.year
-    wild.states <- total.fit$states[paste("X.", popname, sep = ""), ] + log(fracwild.fit$fracwild.states[popname, ])
-    names(wild.states) <- colnames(total.fit$model$data)
-    wild.raw <- total.fit$model$data[popname, ] + log(fracwild.fit$fracwild.raw[popname, ])
-    names(wild.raw) <- colnames(total.fit$model$data)
-    
-    data[data.years] <- wild.raw[data.years]
-    states[data.years] <- wild.states[data.years]
+    if(wild){
+      wild.states <- total.fit$states[paste("X.", popname, sep = ""), ] + log(fracwild.fit$fracwild.states[popname, ])
+      names(wild.states) <- colnames(total.fit$model$data)
+      wild.raw <- total.fit$model$data[popname, ] + log(fracwild.fit$fracwild.raw[popname, ])
+      names(wild.raw) <- colnames(total.fit$model$data)
+      
+      data[data.years] <- wild.raw[data.years]
+      states[data.years] <- wild.states[data.years]
+    }else{
+      total.states <- total.fit$states[paste("X.", popname, sep = ""), ]
+      names(total.states) <- colnames(total.fit$model$data)
+      total.raw <- total.fit$model$data[popname, ]
+      names(total.raw) <- colnames(total.fit$model$data)
+      
+      data[data.years] <- total.raw[data.years]
+      states[data.years] <- total.states[data.years]
+    }
     
     for (i in 1:length(year.ranges)) {
       years <- year.ranges[[i]]

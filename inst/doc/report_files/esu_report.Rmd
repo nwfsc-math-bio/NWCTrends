@@ -47,7 +47,7 @@ if(output.type=="latex") cat("\\newpage")
 
 ```{r fracwild_fig, echo=FALSE,fig.width=8.5}
 #source("fracwild_plot_multipanel.R")
-fracwild_multipanel(esuname, pops.to.plot, ifit.fracwild, min.year=plot.min.year, max.year=plot.max.year)
+fracwild_multipanel(esuname, pops.to.plot, ifit.fracwild, min.year=plot.min.year, max.year=plot.max.year, show.all=FALSE)
 ```
 
 ```{r, results='asis', echo=FALSE}
@@ -227,7 +227,7 @@ if(output.type=="html"){
   cat(caption)
   clean.a = data.frame(lapply(a[[1]], function(x) {stringr::str_replace_all(x, "[)]", "\\\\)")} ))
   colnames(clean.a)=colnames(a[[2]])
-  knitr::kable(clean.a) %>% 
+  knitr::kable(clean.a, format="html") %>% 
     kableExtra::kable_styling(full_width = FALSE)
 }
 if(output.type=="word"){
@@ -261,7 +261,7 @@ if(output.type=="html"){
   cat(caption)
   clean.a = data.frame(lapply(a[[2]], function(x) {stringr::str_replace_all(x, "[)]", "\\\\)")} ))
   colnames(clean.a)=colnames(a[[2]])
-  knitr::kable(clean.a) %>% 
+  knitr::kable(clean.a, format="html") %>% 
     kableExtra::kable_styling(full_width = FALSE)
 }
 if(output.type=="word"){
@@ -295,7 +295,7 @@ if(output.type=="latex")
 if(output.type=="html"){
   cat("## Wild fracton\n\n")
   cat(caption)
-  knitr::kable(a, digits=2) %>%
+  knitr::kable(a, digits=2, format="html") %>%
     kableExtra::kable_styling(full_width = FALSE)
 }
 if(output.type=="word"){
@@ -305,31 +305,32 @@ if(output.type=="word"){
 }
 ```
 
-```{r trend15_table, results='asis', echo=FALSE}
+```{r trend15_table_wild, results='asis', echo=FALSE}
 #source("trend_15_tables.R")
 #a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
 a=do.call(trend_15_table, 
           c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild),trend.table.control))
-ntrend <- length(trend.table.control$year.ranges[[1]])-1
+ntrend.lens <- unlist(lapply(trend.table.control$year.ranges, length))
+if(all(ntrend.lens==ntrend.lens[1])) ntrend <- ntrend.lens[1]-1 else ntrend <- "Multi"
 nrange <- length(trend.table.control$year.ranges)
 if(output.type=="latex")
   print(xtable::xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2), 
       comment=FALSE, include.rownames=FALSE,
       table.placement="p", type=output.type,
       file=paste0(figdir,"/trend_15_table.tex")) 
-caption=paste0(ntrend,"-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates and with at least 2 data points (actual data not estimates) in the first 5 years and last 5 years of the ",ntrend,"-year ranges are shown.")
+caption=paste0(ntrend,"-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates and with at least 2 data points (actual data not estimates) in the first 5 years and last 5 years of the ",tolower(ntrend),"-year ranges are shown.")
 if(output.type=="latex")
   print(xtable::xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2, caption=caption), 
       comment=FALSE, include.rownames=FALSE,
       caption.placement="top", table.placement="p", type=output.type)
 if(output.type=="html"){
-  cat(paste0("## ",ntrend,"-year trends\n\n"))
+  cat(paste0("## ",ntrend,"-year trends in wild spawners\n\n"))
   cat(caption)
-  knitr::kable(a, digits=2) %>%
+  knitr::kable(a, digits=2, format="html") %>%
     kableExtra::kable_styling(full_width = FALSE)
 }
 if(output.type=="word"){
-  cat(paste0("## ",ntrend,"-year trends\n\n"))
+  cat(paste0("## ",ntrend,"-year trends in wild spawners\n\n"))
   cat(caption)
   knitr::kable(a, digits=2)
 }
@@ -355,6 +356,35 @@ for(i in 3:n){
 write.csv(a, file=paste0(figdir,"trend_table.csv"), row.names=FALSE)
 ```
 
+```{r trend15_table_total, results='asis', echo=FALSE}
+a=do.call(trend_15_table, 
+          c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total,
+                 ifit.fracwild),trend.table.control, wild=FALSE))
+ntrend.lens <- unlist(lapply(trend.table.control$year.ranges, length))
+if(all(ntrend.lens==ntrend.lens[1])) ntrend <- ntrend.lens[1]-1 else ntrend <- "Multi"
+nrange <- length(trend.table.control$year.ranges)
+if(output.type=="latex")
+  print(xtable::xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2), 
+      comment=FALSE, include.rownames=FALSE,
+      table.placement="p", type=output.type,
+      file=paste0(figdir,"/trend_15_table_total.tex")) 
+caption=paste0(ntrend,"-year trends (slope) in log total spawner abundance computed from a linear regression applied to the smoothed total spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates and with at least 2 data points (actual data not estimates) in the first 5 years and last 5 years of the ", tolower(ntrend),"-year ranges are shown.")
+if(output.type=="latex")
+  print(xtable::xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2, caption=caption), 
+      comment=FALSE, include.rownames=FALSE,
+      caption.placement="top", table.placement="p", type=output.type)
+if(output.type=="html"){
+  cat(paste0("## ",ntrend,"-year trends in total spawners\n\n"))
+  cat(caption)
+  knitr::kable(a, digits=2, format="html") %>%
+    kableExtra::kable_styling(full_width = FALSE)
+}
+if(output.type=="word"){
+  cat(paste0("## ",ntrend,"-year trends in total spawners\n\n"))
+  cat(caption)
+  knitr::kable(a, digits=2)
+}
+```
 
 \vfill
 \clearpage
