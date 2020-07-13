@@ -114,6 +114,9 @@ data_setup <- function(inputfile, min.year, max.year) {
   if(min.yr > max.yr) stop("fit.max.year is less than fit.min.year.\n")
   years <- min.yr:max.yr
   nyr <- length(years)
+  # clear out year before or after fit.min.year and fit.max.year
+  dat <- dat[dat$Year>=min.yr & dat$Year<=max.yr,]
+  
 
   ####### Replace with shiny app #################
   esu.names <- unique(dat$ESU)
