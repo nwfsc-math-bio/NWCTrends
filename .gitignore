@@ -7,3 +7,4 @@ inst/.DS_Store
 NWCTrends.Rproj
 .Rhistory
 .Rhistory
+NWCTrends_output/*.*
