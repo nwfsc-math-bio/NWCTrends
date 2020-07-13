@@ -26,7 +26,7 @@ NWCTrends_report(
 \item{inputfile}{comma-delimited data file (see demo files for the format).
 demofiles are in inst/doc/demodata.}
 
-\item{fit.min.year}{Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file. This is use to used a subset of the full data set for fitting.}
+\item{fit.min.year}{Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file. This is used to fit to a subset of the full data set.}
 
 \item{fit.max.year}{Optional. You can set the last year to use when fitting the models. If not passed in, then the max.year is the last year in the data file. This is used to use a subset of the full data set for fitting.}
 
