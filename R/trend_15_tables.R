@@ -74,6 +74,7 @@ trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = lis
         )
       }
       if (length(tmp) > 4 && (sum(!is.na(tmp.raw[1:5])) < 2 | sum(!is.na(tmp.raw[(length(tmp) - 4):length(tmp)])) < 2)) tabtrend[pop, (i + 2)] <- ""
+      if (length(tmp) <= 4) tabtrend[pop, (i + 2)] <- ""
     }
   }
   yrranges <- paste(unlist(lapply(year.ranges, min)),
