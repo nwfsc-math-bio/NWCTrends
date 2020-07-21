@@ -293,13 +293,13 @@ if(output.type=="latex")
       comment=FALSE, include.rownames=FALSE,
       caption.placement="top", table.placement="p", type=output.type)
 if(output.type=="html"){
-  cat("## Wild fracton\n\n")
+  cat("## Wild fraction\n\n")
   cat(caption)
   knitr::kable(a, digits=2, format="html") %>%
     kableExtra::kable_styling(full_width = FALSE)
 }
 if(output.type=="word"){
-  cat("## Wild fracton\n\n")
+  cat("## Wild fraction\n\n")
   cat(caption)
   knitr::kable(a, digits=2)
 }
@@ -358,7 +358,7 @@ write.csv(a, file=paste0(figdir,"trend_table.csv"), row.names=FALSE)
 
 ```{r trend15_table_total, results='asis', echo=FALSE}
 a=do.call(trend_15_table, 
-          c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total,
+          c(list(pops.to.plot, mpg.to.plot, ifit.total,
                  ifit.fracwild),trend.table.control, wild=FALSE))
 ntrend.lens <- unlist(lapply(trend.table.control$year.ranges, length))
 if(all(ntrend.lens==ntrend.lens[1])) ntrend <- ntrend.lens[1]-1 else ntrend <- "Multi"
@@ -368,7 +368,7 @@ if(output.type=="latex")
       comment=FALSE, include.rownames=FALSE,
       table.placement="p", type=output.type,
       file=paste0(figdir,"/trend_15_table_total.tex")) 
-caption=paste0(ntrend,"-year trends (slope) in log total spawner abundance computed from a linear regression applied to the smoothed total spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates and with at least 2 data points (actual data not estimates) in the first 5 years and last 5 years of the ", tolower(ntrend),"-year ranges are shown.")
+caption=paste0(ntrend,"-year trends (slope) in log total spawner abundance computed from a linear regression applied to the smoothed total spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 spawner estimates and with at least 2 data points (actual data not estimates) in the first 5 years and last 5 years of the ", tolower(ntrend),"-year ranges are shown.")
 if(output.type=="latex")
   print(xtable::xtable(a, align=paste0("rr|c|",rep("c",nrange)), digits=2, caption=caption), 
       comment=FALSE, include.rownames=FALSE,
