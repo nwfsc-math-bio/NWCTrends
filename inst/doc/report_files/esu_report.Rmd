@@ -68,8 +68,9 @@ knitr::opts_chunk$set(fig.height=fig.height)
 
 ```{r productivity_fig, echo=FALSE,fig.width=8.5}
 #source("productivity_plot.R")
-coho.chum=any(metadat$Species %in% c("Coho", "Chum"))
-#coho.chum=any(stringr::str_detect(pops.to.plot.wild[1],c("Coho","Chum","coho", "chum")))
+#coho.chum=any(metadat$Species %in% c("Coho", "Chum", "coho", "chum"))
+coho.chum=any(stringr::str_detect(tolower(metadat$Species),"coho")) |
+  any(stringr::str_detect(tolower(metadat$Species),"chum"))
 lag=ifelse(coho.chum, 3, 4)
 # This plot is only for wild spawners
 if(length(pops.to.plot.wild)!=0) 
