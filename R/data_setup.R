@@ -80,13 +80,15 @@ data_setup <- function(inputfile, min.year, max.year) {
   dat$Common.Population.Name <- stringr::str_trim(dat$Common.Population.Name)
   for (i in c(
     "Fall-run", "Winter-run", "Spring-run", "Summer-run", "Late-run", "Early-run", "Early-late-run",
-    "Spring", "Fall", "Winter", "Summer"
+    "Spring", "Fall", "Winter", "Summer", "SpR", "WR"
   )) {
-    tmp <- dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)]
-    # tmp2 = stringr::str_sub(tmp, 1, stringr::str_locate(tmp, i)[,1]-1)
+    bad <- stringr::str_detect(dat$Common.Population.Name, i)
+    if(i=="Fall") bad <- stringr::str_detect(dat$Common.Population.Name, i) & 
+        !stringr::str_detect(dat$Common.Population.Name, "Falls")
+    tmp <- dat$Common.Population.Name[bad]
     tmp2 <- stringr::str_replace_all(tmp, i, "")
     tmp2 <- stringr::str_replace_all(tmp2, tolower(i), "")
-    dat$Common.Population.Name[stringr::str_detect(dat$Common.Population.Name, i)] <- tmp2
+    dat$Common.Population.Name[bad] <- tmp2
   }
   dat$Common.Population.Name <- stringr::str_trim(dat$Common.Population.Name)
 
