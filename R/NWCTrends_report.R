@@ -165,14 +165,14 @@ NWCTrends_report <- function(
       )
     ]
     # mpg.to.plot used for mgp col in tables
-    mpg.to.plot <- sort(metadat$PopGroup[metadat$name %in% pops.to.plot])
+    mpg.to.plot <- metadat$PopGroup[metadat$name %in% pops.to.plot]
     mpg.to.plot <- clean.mpg(mpg.to.plot)
-    pops.to.plot <- pops.to.plot[order(metadat$PopGroup[metadat$name %in% pops.to.plot])]
-    if (esuname == "Salmon, Chinook (Puget Sound ESU)") {
-      ord <- sort.PSChinook(pops.to.plot)
-      pops.to.plot <- pops.to.plot[ord]
-      mpg.to.plot <- mpg.to.plot[ord]
-    }
+    # pops.to.plot <- pops.to.plot[order(metadat$PopGroup[metadat$name %in% pops.to.plot])]
+    # if (esuname == "Salmon, Chinook (Puget Sound ESU)") {
+    #   ord <- sort.PSChinook(pops.to.plot)
+    #   pops.to.plot <- pops.to.plot[ord]
+    #   mpg.to.plot <- mpg.to.plot[ord]
+    # }
 
     pops.to.plot.wild <- rownames(ifit.fracwild$fracwild.raw)[
       apply(
@@ -187,14 +187,14 @@ NWCTrends_report <- function(
       next
     }
     # mpg.to.plot.wild used for mgp col in tables
-    mpg.to.plot.wild <- sort(metadat$PopGroup[metadat$name %in% pops.to.plot.wild])
+    mpg.to.plot.wild <- metadat$PopGroup[metadat$name %in% pops.to.plot.wild]
     mpg.to.plot.wild <- clean.mpg(mpg.to.plot.wild)
-    pops.to.plot.wild <- pops.to.plot.wild[order(metadat$PopGroup[metadat$name %in% pops.to.plot.wild])]
-    if (esuname == "Salmon, Chinook (Puget Sound ESU)") {
-      ord <- sort.PSChinook(pops.to.plot.wild)
-      pops.to.plot.wild <- pops.to.plot.wild[ord]
-      mpg.to.plot.wild <- mpg.to.plot.wild[ord]
-    }
+    # pops.to.plot.wild <- pops.to.plot.wild[order(metadat$PopGroup[metadat$name %in% pops.to.plot.wild])]
+    # if (esuname == "Salmon, Chinook (Puget Sound ESU)") {
+    #   ord <- sort.PSChinook(pops.to.plot.wild)
+    #   pops.to.plot.wild <- pops.to.plot.wild[ord]
+    #   mpg.to.plot.wild <- mpg.to.plot.wild[ord]
+    # }
     outputfile <- stringr::str_replace_all(esuname, "/", "-")
     if (output.type == "latex") outputfile.ext <- ".pdf"
     if (output.type == "html") outputfile.ext <- ".html"
