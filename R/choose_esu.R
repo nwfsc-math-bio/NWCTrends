@@ -9,7 +9,7 @@ choose.esu <- function(esu.names) {
         paste(1:nesus, ". ", esu.names, collapse = "\n ", sep = "")
       ), "\n"
     )
-    esu.choice <- readline("Choose the ESU(s) by number: \n Enter single number or\n separate numbers by commas. ")
+    esu.choice <- readline("Choose the ESU(s) by number: \n Enter single number or\n separate numbers by commas or 0 for all. ")
     esu.choice <- as.numeric(stringr::str_split(esu.choice, ",")[[1]])
     if (all(esu.choice %in% (0:nesus))) {
       if (identical(esu.choice, 0)) esu.choice <- 1:nesus

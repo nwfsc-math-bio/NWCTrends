@@ -200,5 +200,7 @@ geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, m
   yrranges <- paste(start1, end1, sep = "-")
   colnames(tabgeomean1) <- c("Population", "MPG", yrranges, "% Change")
   colnames(tabgeomean2) <- c("Population", "MPG", yrranges, "% Change")
+  if(all(is.na(tabgeomean1$MPG)) || all(tabgeomean1$MPG=="")) tabgeomean1 <- tabgeomean1[,-2]
+  if(all(is.na(tabgeomean2$MPG)) || all(tabgeomean2$MPG=="")) tabgeomean2 <- tabgeomean2[,-2]
   list(statesgeomean = tabgeomean1, rawgeomean = tabgeomean2)
 }

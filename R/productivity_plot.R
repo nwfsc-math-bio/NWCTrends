@@ -104,11 +104,13 @@ productivity_plot <- function(esu, pops, total.fit, fracwild.fit, min.year = NUL
   }
   mtext(esu, side = 3, outer = TRUE, line = 0, cex = 1.5)
   if (type == 1) {
-    mtext(paste("log(total spawner t+", lag, ") - log(wild spawner t)", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
-    mtext("smoothed log wild spawners", side = 4, outer = TRUE, line = 0, cex = .8)
+    mtext(paste("log(wild spawner t+", lag, ") - log(total spawner t)", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
   }
   if (type == 2) {
     mtext(expression(lambda(t)), side = 2, outer = TRUE, line = 0, cex = .8)
     mtext("smoothed log wild spawners", side = 4, outer = TRUE, line = 0, cex = .8)
+  }
+  if (type == 3) {
+    mtext("log(wild spawner t+1) - log(wild spawner t)", side = 2, outer = TRUE, line = 0, cex = .8)
   }
 }

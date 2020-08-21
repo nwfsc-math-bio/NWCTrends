@@ -83,5 +83,6 @@ trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = lis
   )
   tmp.col <- as.vector(sapply(yrranges, c, c("lowCI", "upCI")))
   colnames(tabtrend) <- c("Population", "MPG", yrranges)
+  if(all(is.na(tabtrend$MPG)) || all(tabtrend$MPG=="")) tabtrend <- tabtrend[,-2]
   tabtrend
 }

@@ -3,7 +3,7 @@ fracwild_multipanel <- function(esu, pops, fracwild.fit, min.year = NULL, max.ye
   # Set up the min and max years
   years <- as.numeric(colnames(fracwild.fit$fracwild.states))
   if (is.null(min.year)) min.year <- years[1]
-  if (min.year < years[1]) min.year <- years[1]
+  # if (min.year < years[1]) min.year <- years[1]
   if (is.null(max.year)) max.year <- max(years)
   if (max.year > max(years)) max.year <- max(years)
 

@@ -51,8 +51,11 @@ data_setup <- function(inputfile, min.year, max.year) {
 
   # Check that all required columns are present
   colnames(dat)[colnames(dat)=="BROOD_YEAR" | colnames(dat)=="Brood_Year"] <- "YEAR"
+  colnames(dat)[colnames(dat)=="MPG"] <- "MAJOR_POPULATION_GROUP"
+  colnames(dat) <- toupper(colnames(dat))
+  
   required <- c(
-    "YEAR", "NUMBER_OF_SPAWNERS", "Species", "FRACWILD", "COMMON_POPULATION_NAME",
+    "YEAR", "NUMBER_OF_SPAWNERS", "SPECIES", "FRACWILD", "COMMON_POPULATION_NAME",
     "RUN_TIMING", "ESU", "MAJOR_POPULATION_GROUP"
   )
   if (!all(
@@ -64,7 +67,11 @@ data_setup <- function(inputfile, min.year, max.year) {
     cat(paste0("\n\nData file is missing: ", paste(required[!(required %in% colnames(dat))], collapse = ", "), "."))
     stop()
   }
-
+  if (any(duplicated(colnames(dat)))) {
+    cat("Duplicated colnames in", inputfile, "\n")
+    stop()
+  }
+  
   # clean up some column names
   names(dat) <- toproper(names(dat))
   names(dat)[names(dat) == "Brood.Year"] <- "Year"
