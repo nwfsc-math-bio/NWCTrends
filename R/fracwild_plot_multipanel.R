@@ -6,6 +6,12 @@ fracwild_multipanel <- function(esu, pops, fracwild.fit, min.year = NULL, max.ye
   # if (min.year < years[1]) min.year <- years[1]
   if (is.null(max.year)) max.year <- max(years)
   if (max.year > max(years)) max.year <- max(years)
+  
+  if(!show.all){
+    badrows <- apply(fracwild.fit$fracwild.raw, 1, function(x){ all(is.na(x)) })
+    badpops <- names(badrows)[badrows]
+    pops <- pops[!(pops %in% badpops)]
+  }
 
   n <- length(pops)
   short.pops <- clean.pops(pops)
