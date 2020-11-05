@@ -13,7 +13,8 @@ geomean_table(
   max.year = 2014,
   lenbands = 5,
   min.band.points = 2,
-  change.col = c("last.two", "first.last")
+  change.col = c("last.two", "first.last"),
+  navalue = " "
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ geomean_table(
 \item{min.band.points}{The minimum data points for the geomean to show in a band.}
 
 \item{change.col}{Either between last 2 bands or 1st and last.}
+
+\item{navalue}{value to show for NAs}
 }
 \value{
 A list with the statesgeomean and rawgeomean data frames (tables).

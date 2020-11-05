@@ -24,11 +24,12 @@
 #' @param lenbands How many years in each band. Default is 5-years.
 #' @param min.band.points The minimum data points for the geomean to show in a band.
 #' @param change.col Either between last 2 bands or 1st and last.
+#' @param navalue value to show for NAs
 #'
 #' @return A list with the statesgeomean and rawgeomean data frames (tables).
 #'
 geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, max.year = 2014,
-                          lenbands = 5, min.band.points = 2, change.col = c("last.two", "first.last")) {
+                          lenbands = 5, min.band.points = 2, change.col = c("last.two", "first.last"), navalue=" ") {
   change.col <- match.arg(change.col)
   n <- length(pops)
   short.pops <- clean.pops(pops)
@@ -113,10 +114,16 @@ geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, m
       }
       state.vals <- paste(round(state.vals.numeric, digits = 0), sep = "")
       raw.vals <- paste(round(raw.vals.numeric, digits = 0), sep = "")
-      raw.vals[raw.vals == "NA"] <- ""
-      raw.vals[raw.vals == "NaN"] <- ""
-      state.vals[state.vals == "NA"] <- ""
-      state.vals[state.vals == "NaN"] <- ""
+      # raw.vals[raw.vals == "NA"] <- navalue
+      # raw.vals[raw.vals == "NaN"] <- navalue
+      # state.vals[state.vals == "NA"] <- navalue
+      # state.vals[state.vals == "NaN"] <- navalue
+      navals <- c("NA", "NaN", "na", "nan")
+      for(naval in navals){
+        raw.vals[stringr::str_detect(raw.vals, naval)] <- navalue
+        state.vals[stringr::str_detect(state.vals, naval)] <- navalue
+      }
+      
     }
 
     # Part 2. Get the smoothed and raw TOTAL geomeans
@@ -182,14 +189,14 @@ geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, m
         raw.vals <- paste(raw.vals, " (", round(raw.vals.numeric, digits = 0), ")", sep = "")
       }
     }
-    raw.vals[raw.vals == "NA (NaN)"] <- ""
-    raw.vals[raw.vals == "NaN (NaN)"] <- ""
-    raw.vals[raw.vals == " (NaN)"] <- ""
-    raw.vals[raw.vals == " (NA)"] <- ""
-    state.vals[state.vals == "NA (NaN)"] <- ""
-    state.vals[state.vals == "NaN (NaN)"] <- ""
-    state.vals[state.vals == " (NaN)"] <- ""
-    state.vals[state.vals == " (NA)"] <- ""
+    #navals <- c("NA (NaN)", "NaN (NaN)", " (NaN)", "(NaN)", " (NA)", "(NA)")
+    navals <- c("NA", "NaN", "na", "nan")
+    for(naval in navals){
+      #raw.vals[raw.vals == naval] <- navalue
+      #state.vals[state.vals == naval] <- navalue
+      raw.vals[stringr::str_detect(raw.vals, naval)] <- navalue
+      state.vals[stringr::str_detect(state.vals, naval)] <- navalue
+    }
     tabgeomean1[pop, geo.start:(nbands + geo.start)] <- state.vals # smoothed
     tabgeomean2[pop, geo.start:(nbands + geo.start)] <- raw.vals
   }

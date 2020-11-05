@@ -10,7 +10,8 @@ trend_15_table(
   total.fit,
   fracwild.fit,
   year.ranges = list(1990:2005, 1999:2014),
-  wild = TRUE
+  wild = TRUE,
+  navalue = " "
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ trend_15_table(
 \item{year.ranges}{The columns of years.}
 
 \item{wild}{Show smoothed wild or smoothed total.}
+
+\item{navalue}{Value to use for NAs in the table. Default is a blank.}
 }
 \value{
 A data frames with the estimates trend for each year range in a different column.

@@ -118,6 +118,7 @@ for(i in 1:dim(a)[1]){
   vals1=rbind(vals1, as.numeric(apply(a[i,geo.start:geo.end],2,function(x){stringr::str_split(x," [(]")[[1]][1]})))
   vals=apply(a[i,geo.start:geo.end],2,function(x){stringr::str_split(x," [(]")[[1]][2]})
   vals=sapply(vals,function(x){stringr::str_split(x,"[)]")[[1]][1]})
+  vals[stringr::str_detect(vals, "NA") ] <- NA
   vals2=rbind(vals2, as.numeric(vals))
   }
 labs <- colnames(a)[geo.start:geo.end]

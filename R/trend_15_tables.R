@@ -13,10 +13,11 @@
 #' @param fracwild.fit The matrix of fraction wild associated with each total row.
 #' @param year.ranges The columns of years.
 #' @param wild Show smoothed wild or smoothed total.
+#' @param navalue Value to use for NAs in the table. Default is a blank.
 #'
 #' @return A data frames with the estimates trend for each year range in a different column.
 #'
-trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = list(1990:2005, 1999:2014), wild=TRUE) {
+trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = list(1990:2005, 1999:2014), wild=TRUE, navalue=" ") {
   n <- length(pops)
   short.pops <- clean.pops(pops)
   
@@ -63,7 +64,7 @@ trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = lis
       tmp <- states[as.character(years)]
       if (all(is.na(tmp)) | !all(years %in% names(states))) {
         trend <- NA
-        tabtrend[pop, (i + 2)] <- ""
+        tabtrend[pop, (i + 2)] <- navalue
       } else {
         tmp.lm <- lm(tmp ~ years)
         trend <- coef(tmp.lm)[2]
@@ -73,8 +74,8 @@ trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = lis
                                         sep = ""
         )
       }
-      if (length(tmp) > 4 && (sum(!is.na(tmp.raw[1:5])) < 2 | sum(!is.na(tmp.raw[(length(tmp) - 4):length(tmp)])) < 2)) tabtrend[pop, (i + 2)] <- ""
-      if (length(tmp) <= 4) tabtrend[pop, (i + 2)] <- ""
+      if (length(tmp) > 4 && (sum(!is.na(tmp.raw[1:5])) < 2 | sum(!is.na(tmp.raw[(length(tmp) - 4):length(tmp)])) < 2)) tabtrend[pop, (i + 2)] <- navalue
+      if (length(tmp) <= 4) tabtrend[pop, (i + 2)] <- navalue
     }
   }
   yrranges <- paste(unlist(lapply(year.ranges, min)),
