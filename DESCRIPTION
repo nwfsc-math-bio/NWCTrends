@@ -1,8 +1,8 @@
 Package: NWCTrends
 Type: Package
 Title: Standardized Trend Metrics for Salmonid Populations
-Version: 1.18
-Date: 2020-11-04
+Version: 1.19
+Date: 2021-03-17
 Depends: R (>= 2.15.0), 
     stringr (>= 1.4.0), 
     rmarkdown (>= 1.12), 

@@ -204,7 +204,7 @@ title(paste0(ntrend,"-year trends in log wild spawners"))
 if(output.type=="latex") cat("\\newpage")
 ```
 
-```{r, results='asis', echo=FALSE}
+```{r smooth-geomean-table, results='asis', echo=FALSE}
 #source("geomean_tables.R")
 #a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)
 a=do.call(geomean_table, 
@@ -245,6 +245,22 @@ if(output.type=="word"){
   colnames(clean.a)=colnames(a[[1]])
   knitr::kable(clean.a)
 }
+fun1 <- function(x){
+    tmp <- stringr::str_split(x, " [(]")[[1]][2]
+    stringr::str_split(tmp, "[)]")[[1]][1]
+}
+aa <- a[[1]]
+aa <- aa[, 1:(ncol(aa)-1)] # get rid of % change
+n <- ncol(aa)
+yr.start <- max(which(colnames(aa)%in%c("Population","MPG")))+1
+for(i in yr.start:n){
+  aa <- cbind(aa, unlist(lapply(aa[,i], function(x){stringr::str_split(x, " [(]")[[1]][1]})))
+  aa <- cbind(aa, unlist(lapply(aa[,i], fun1)))
+  colnames(aa)[ncol(aa)-1] <- paste(colnames(aa)[i], "wild")
+  colnames(aa)[ncol(aa)] <- paste(colnames(aa)[i], "total")
+}
+
+write.csv(aa, file=paste0(figdir,"smooth_geomean_table.csv"), row.names=FALSE)
 ```
 
 ```{r geomean_wild_table, results='asis', echo=FALSE}
@@ -284,6 +300,22 @@ if(output.type=="word"){
   colnames(clean.a)=colnames(a[[2]])
   knitr::kable(clean.a)
 }
+fun1 <- function(x){
+    tmp <- stringr::str_split(x, " [(]")[[1]][2]
+    stringr::str_split(tmp, "[)]")[[1]][1]
+}
+aa <- a[[2]]
+aa <- aa[, 1:(ncol(aa)-1)] # get rid of % change
+n <- ncol(aa)
+yr.start <- max(which(colnames(aa)%in%c("Population","MPG")))+1
+for(i in yr.start:n){
+  aa <- cbind(aa, unlist(lapply(aa[,i], function(x){stringr::str_split(x, " [(]")[[1]][1]})))
+  aa <- cbind(aa, unlist(lapply(aa[,i], fun1)))
+  colnames(aa)[ncol(aa)-1] <- paste(colnames(aa)[i], "wild")
+  colnames(aa)[ncol(aa)] <- paste(colnames(aa)[i], "total")
+}
+
+write.csv(aa, file=paste0(figdir,"raw_geomean_table.csv"), row.names=FALSE)
 ```
 
 ```{r frac_wild_table, results='asis', echo=FALSE}
@@ -322,6 +354,8 @@ if(output.type=="word"){
   cat(caption)
   knitr::kable(a, digits=2)
 }
+
+write.csv(a, file=paste0(figdir,"fracwild_table.csv"), row.names=FALSE)
 ```
 
 ```{r trend15_table_wild, results='asis', echo=FALSE}
@@ -379,7 +413,7 @@ for(i in yr.start:n){
   colnames(a)[ncol(a)] <- paste(colnames(a)[i], "up.ci")
 }
 
-write.csv(a, file=paste0(figdir,"trend_table.csv"), row.names=FALSE)
+write.csv(a, file=paste0(figdir,"wild_trend_table.csv"), row.names=FALSE)
 ```
 
 ```{r trend15_table_total, results='asis', echo=FALSE}
@@ -416,6 +450,27 @@ if(output.type=="word"){
   cat(caption)
   knitr::kable(a, digits=2)
 }
+fun1 <- function(x){
+    tmp <- stringr::str_split(x, " [(]")[[1]][2]
+    stringr::str_split(tmp, ", ")[[1]][1]
+}
+fun2 <- function(x){
+    tmp <- stringr::str_split(x, " [(]")[[1]][2]
+    tmp <- stringr::str_split(tmp, ", ")[[1]][2]
+    stringr::str_split(tmp, "[)]")[[1]][1]
+}
+n <- ncol(a)
+yr.start <- max(which(names(a)%in%c("Population","MPG")))+1
+for(i in yr.start:n){
+  a <- cbind(a, unlist(lapply(a[,i], function(x){stringr::str_split(x, " [(]")[[1]][1]})))
+  a <- cbind(a, unlist(lapply(a[,i], fun1)))
+  a <- cbind(a, unlist(lapply(a[,i], fun2)))
+  colnames(a)[ncol(a)-2] <- paste(colnames(a)[i], "trend")
+  colnames(a)[ncol(a)-1] <- paste(colnames(a)[i], "low.ci")
+  colnames(a)[ncol(a)] <- paste(colnames(a)[i], "up.ci")
+}
+
+write.csv(a, file=paste0(figdir,"total_trend_table.csv"), row.names=FALSE)
 ```
 
 \vfill

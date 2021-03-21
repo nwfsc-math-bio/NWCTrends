@@ -58,7 +58,8 @@
 #' @param trend.table.control A list with the adjustable variables for trend_15_table(). See \code{\link{trend_15_table}}. The year.ranges are the years for the multi-year trends. If any years are missing in the data set, then those trends will be blank.
 #' @param output.type "html", "pdf", or "word" Format to produce the report in.
 #' @param output.dir Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.
-
+#' @param fit.all If FALSE, then user can enter what ESUs to fun. 
+#' 
 #' @return
 #' Plots and tables that are saved to doc/figures/ESU_figures.
 #' @author
@@ -78,7 +79,8 @@ NWCTrends_report <- function(
                              geomean.table.control = list(min.year = 1990, max.year = 2014, lenbands = 5, min.band.points = 2, change.col = "last.two"),
                              trend.table.control = list(year.ranges = list(1990:2005, 1999:2014)),
                              output.type = c("html", "pdf", "word"),
-                             output.dir = "NWCTrend_output") {
+                             output.dir = "NWCTrend_output",
+                             fit.all = FALSE) {
   output.type <- tolower(output.type)
   output.type <- match.arg(output.type)
   if (!is.logical(logit.fw)) stop("logit.fw must TRUE or FALSE")
@@ -111,7 +113,7 @@ NWCTrends_report <- function(
       } else { # need to read in data and fit
     # This reads in the data file and creates the needed data objects
     if (filetype == "csv" | filetype == ".xls" | filetype == "xlsx") {
-      datalist <- data_setup(inputfile = inputfile, min.year = fit.min.year, max.year = fit.max.year)
+      datalist <- data_setup(inputfile = inputfile, min.year = fit.min.year, max.year = fit.max.year, fit.all = fit.all)
     } else {
       stop("The inputfile should be data (.csv or .xls) or an RData file from a fit.")
     }
@@ -209,10 +211,15 @@ NWCTrends_report <- function(
     # this will rename the figures made to the ESU specific name
     file.rename(paste0(paste0(instdocpath, "/report_files/esu_report"), outputfile.ext), outputfile)
     outnames <- paste(figdir, stringr::str_replace_all(esuname, "/", "-"), "-",
-      c("summary_fig.pdf", "fracwild_fig.pdf", "main_fig.pdf", "productivity_fig.pdf", "main_fig.csv", "trend_table.csv"),
+      c("summary_fig.pdf", "fracwild_fig.pdf", "main_fig.pdf", "productivity_fig.pdf", 
+        "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
+        "fracwild_table.csv", "smooth_geomean_table.csv", "raw_geomean_table.csv"),
       sep = ""
     )
-    innames <- paste(figdir, c("summary_fig-1.pdf", "fracwild_fig-1.pdf", "main_fig-1.pdf", "productivity_fig-1.pdf", "main_fig.csv", "trend_table.csv"), sep = "")
+    innames <- paste(figdir, c("summary_fig-1.pdf", "fracwild_fig-1.pdf", "main_fig-1.pdf", "productivity_fig-1.pdf", 
+                               "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
+                               "fracwild_table.csv", "smooth_geomean_table.csv",
+                               "raw_geomean_table.csv"), sep = "")
     tabnames <- c("trend_15_table", "geomean_wild_table", "geomean_total_table", "fracwild_table")
     tabinnames <- paste0(texdir, "/wrapper_", tabnames, ".tex", sep = "")
     # oddly pdf created at base level not in folder where tex is
@@ -235,11 +242,15 @@ NWCTrends_report <- function(
 
     if (output.type == "html" | output.type == "word") {
       # rename the tmp fig to fig with ESU
-      innames <- paste(figdir, c("summary_fig-1.png", "fracwild_fig-1.png", "main_fig-1.png", "productivity_fig-1.png", "main_fig.csv", "trend_table.csv"), sep = "")
+      innames <- paste(figdir, c("summary_fig-1.png", "fracwild_fig-1.png", "main_fig-1.png", "productivity_fig-1.png", 
+                                 "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
+                                 "fracwild_table.csv", "smooth_geomean_table.csv","raw_geomean_table.csv"), 
+                       sep = "")
       outnames <- paste(figdir, stringr::str_replace_all(esuname, "/", "-"), "-",
-        c("summary_fig.png", "fracwild_fig.png", "main_fig.png", "productivity_fig.png", "main_fig.csv", "trend_table.csv"),
-        sep = ""
-      )
+                        c("summary_fig.png", "fracwild_fig.png", "main_fig.png", "productivity_fig.png", 
+                          "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
+                          "fracwild_table.csv", "smooth_geomean_table.csv", "raw_geomean_table.csv"),
+                       sep = "")
       for (i in 1:length(outnames)) file.rename(innames[i], outnames[i])
     }
   }

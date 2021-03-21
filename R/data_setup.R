@@ -9,7 +9,8 @@
 #' @param inputfile .csv file. See demofiles for the proper format.
 #' @param min.year The minimum year for the returned data frames. If left off, it will use the minimum year in the data set. You can set later to exclude data or set before to hindcast.
 #' @param max.year The maximum year for the returned data frames. If left off, it will use the maximum year in the data set. You can set earlier to exclude data or set later to forecast.
-#'
+#' @param fit.all If TRUE, fit all and don't ask about names.
+#' 
 #' @return A list with four items:
 #' \describe{
 #'   \item{dat}{The raw data for the selected ESUs.}
@@ -18,7 +19,7 @@
 #'   \item{metadat}{A data.frame with all the metadata for each population: name = population name, ESU = ESU name, Species, Run = runtiming for population, PopGroup = name of the Major Population Group (within ESU).}
 #' }
 #'
-data_setup <- function(inputfile, min.year, max.year) {
+data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
 
   # toproper function; make column names nice
   toproper <- function(x) {
@@ -129,7 +130,8 @@ data_setup <- function(inputfile, min.year, max.year) {
 
   ####### Replace with shiny app #################
   esu.names <- unique(dat$ESU)
-  esu.choice <- choose.esu(esu.names)
+  if(fit.all) esu.choice <- 1:length(esu.names)
+  else esu.choice <- choose.esu(esu.names)
   dat <- dat[dat$ESU %in% esu.names[esu.choice], ]
   ##############################################
 
