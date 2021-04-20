@@ -112,8 +112,8 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit,
     
     # only show estimates within the data for the ESU
     # and within 5 years of the data for the population
-    first.n.spawner.data.pop <- min(which(apply(total.raw,2,function(x){!all(is.na(x))})))
-    last.n.spawner.data.pop <- max(which(apply(total.raw,2,function(x){!all(is.na(x))})))
+    first.n.spawner.data.pop <- min(which(!is.na(total.raw)))
+    last.n.spawner.data.pop <- max(which(!is.na(total.raw)))
     n.start <- max(first.n.spawner.data, first.n.spawner.data.pop-5, which(years==plot.min.year))
     n.end <- min(last.n.spawner.data, last.n.spawner.data.pop+5, which(years==plot.max.year))
 
