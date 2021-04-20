@@ -38,7 +38,10 @@
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 #' 
-Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, plot.min.year = NULL, plot.max.year = NULL, silent = FALSE, CI.method = "hessian", CI.sim = 1000, log.scale = FALSE, same.scale = FALSE) {
+Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, 
+                                          plot.min.year = NULL, plot.max.year = NULL, 
+                                          silent = FALSE, CI.method = "hessian", CI.sim = 1000, 
+                                          log.scale = FALSE, same.scale = FALSE) {
   if (!(CI.method %in% c("hessian", "parametric", "innovations", "none"))) {
     stop("Stopped in CSEGriskfigure because allowed CI methods are none, hessian, parametric, and innovations.\n", call. = FALSE)
   }
@@ -96,6 +99,7 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, pl
     if (all(is.na(wild.raw))) {
       wild.states[] <- NA
     } else {
+      # Put in NAs for wild.states where there is not fracwild data
       n.start <- max(min(which(!is.na(fracwild.raw))-1), which(years == min.year))
       if (n.start > 1) wild.states[1:(n.start - 1)] <- NA
       n.end <- min(max(which(!is.na(fracwild.raw))+1), which(years == max.year))
@@ -107,8 +111,11 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, pl
     }
     
     # only show estimates within the data for the ESU
-      n.start <- first.n.spawner.data
-      n.end <- last.n.spawner.data
+    # and within 5 years of the data for the population
+    first.n.spawner.data.pop <- min(which(apply(total.raw,2,function(x){!all(is.na(x))})))
+    last.n.spawner.data.pop <- max(which(apply(total.raw,2,function(x){!all(is.na(x))})))
+    n.start <- max(first.n.spawner.data, first.n.spawner.data.pop-5, which(years==plot.min.year))
+    n.end <- min(last.n.spawner.data, last.n.spawner.data.pop+5, which(years==plot.max.year))
 
     # trim down the data
    wild.raw <- wild.raw[n.start:n.end]
