@@ -110,13 +110,48 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit,
       next
     }
     
-    # only show estimates within the data for the ESU
-    # and within 5 years of the data for the population
+    n.start <- max(first.n.spawner.data, which(years==plot.min.year), 1)
+    n.end <- min(last.n.spawner.data, which(years==plot.max.year), length(years))
+    total.raw[years<plot.min.year] <- NA
     first.n.spawner.data.pop <- min(which(!is.na(total.raw)))
     last.n.spawner.data.pop <- max(which(!is.na(total.raw)))
-    n.start <- max(first.n.spawner.data, first.n.spawner.data.pop-5, which(years==plot.min.year))
-    n.end <- min(last.n.spawner.data, last.n.spawner.data.pop+5, which(years==plot.max.year))
-
+    
+   # Plot light the full data range
+    # trim down the data
+    wild.raw.trim <- wild.raw[n.start:n.end]
+    total.raw.trim <- total.raw[n.start:n.end]
+    total.states.trim <- total.states[n.start:n.end]
+    y.high.total.trim <- y.high.total[n.start:n.end]
+    y.low.total.trim <- y.low.total[n.start:n.end]
+    years.trim <- years[n.start:n.end]
+    if (!log.scale) {
+      wild.raw.trim <- exp(wild.raw.trim)
+      total.raw.trim <- exp(total.raw.trim)
+      total.states.trim <- exp(total.states.trim)
+      y.high.total.trim <- exp(y.high.total.trim)
+      y.low.total.trim <- exp(y.low.total.trim)
+    }
+    if (!same.scale) {
+      ylims <- c(
+        0.9 * min(0, wild.raw.trim, total.raw.trim, y.low.total.trim, na.rm = TRUE),
+        1.1 * max(.1, wild.raw.trim, total.raw.trim, y.high.total.trim, na.rm = TRUE)
+      )
+    }
+    
+    # plot the data
+    par(mar = c(2, 2, 2, 2) + 0.1)
+    plot(years.trim, total.raw.trim,
+         type = "n", bty = "L", xlab = "", ylab = "",
+         ylim = ylims,
+         xlim = c(plot.min.year - 1, plot.max.year + 1)
+    )
+    polygon(c(years.trim, rev(years.trim)), c(y.high.total.trim, rev(y.low.total.trim)), col = "grey95", border = NA)
+    lines(years.trim, total.states.trim, col = "grey", lwd = 3)
+    
+    # Plot dark the range -1 and +1 within the spawner counts
+    n.start <- max(first.n.spawner.data.pop-1, which(years==plot.min.year), 1)
+    n.end <- min(last.n.spawner.data.pop+1, which(years==plot.max.year), length(years))
+    
     # trim down the data
    wild.raw <- wild.raw[n.start:n.end]
    total.raw <- total.raw[n.start:n.end]
@@ -133,27 +168,10 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit,
       y.high.total <- exp(y.high.total)
       y.low.total <- exp(y.low.total)
     }
-    if (!same.scale) {
-      ylims <- c(
-        0.9 * min(0, wild.raw, total.raw, y.low.total, na.rm = TRUE),
-        1.1 * max(.1, wild.raw, total.raw, y.high.total, na.rm = TRUE)
-      )
-    }
-
-    # plot the data
-    par(mar = c(2, 2, 2, 2) + 0.1)
-    plot(years.trim, total.raw,
-      type = "n", bty = "L", xlab = "", ylab = "",
-      ylim = ylims,
-      xlim = c(plot.min.year - 1, plot.max.year + 1)
-    )
-    polygon(c(years.trim, rev(years.trim)), c(y.high.total, rev(y.low.total)), col = "grey75", border = NA)
-    lines(years.trim, total.states, col = "black", lwd = 4)
-
-    points(years.trim, total.raw)
-
+    polygon(c(years.trim, rev(years.trim), years.trim[1]), c(y.high.total, rev(y.low.total), y.high.total[1]), col = "grey75", border = NA)
+    lines(years.trim, total.states, col = "black", lwd = 3)
+    points(years.trim, total.raw, pch=19, col="blue")
     lines(years.trim, wild.states, col = "red", lwd = 1, lty = 1)
-
     title(short.pops[pop], cex.main = 1)
   }
   mtext(esu, side = 3, outer = TRUE, line = 0, cex = 1.5)
