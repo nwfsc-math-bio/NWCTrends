@@ -28,10 +28,10 @@ fracwild_table <- function(wild, total, min.year = NULL, max.year = 2014) {
     # done this way to be general in case I change the band length and number
     dat <- dat0 <- data
     dat[is.na(dat)] <- 0
-    rawmean <- filter(dat, rep(1, lenbands), sides = 1)
+    rawmean <- stats::filter(dat, rep(1, lenbands), sides = 1)
     dat0[!is.na(dat0)] <- 1
     dat0[is.na(dat0)] <- 0
-    not0 <- filter(dat0, rep(1, 5), sides = 1)
+    not0 <- stats::filter(dat0, rep(1, 5), sides = 1)
     rawmean <- rawmean / not0
 
     tab1[pop, 2:(nbands + 1)] <-

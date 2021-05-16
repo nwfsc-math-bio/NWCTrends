@@ -74,11 +74,11 @@ geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, m
       # before or after the data
       dat <- dat0 <- states
       dat[is.na(dat)] <- 0
-      statesgeomean <- filter(dat, rep(1, lenbands), sides = 1)
+      statesgeomean <- stats::filter(dat, rep(1, lenbands), sides = 1)
       # this sums up the number of non-zeros in each band
       dat0[!is.na(dat0)] <- 1
       dat0[is.na(dat0)] <- 0
-      not0 <- filter(dat0, rep(1, lenbands), sides = 1)
+      not0 <- stats::filter(dat0, rep(1, lenbands), sides = 1)
       # require min.band.points datapoints
       not0[not0 <= (min.band.points - 1)] <- NA
       statesgeomean <- round(exp(statesgeomean / not0), digits = 0)
@@ -86,11 +86,11 @@ geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, m
       # dat is the raw data with NAs replaced with 0 so the filter works
       dat <- dat0 <- data
       dat[is.na(dat)] <- 0
-      rawgeomean <- filter(dat, rep(1, lenbands), sides = 1)
+      rawgeomean <- stats::filter(dat, rep(1, lenbands), sides = 1)
       # this sums up the number of non-zeros in each band
       dat0[!is.na(dat0)] <- 1
       dat0[is.na(dat0)] <- 0
-      not0 <- filter(dat0, rep(1, lenbands), sides = 1)
+      not0 <- stats::filter(dat0, rep(1, lenbands), sides = 1)
       # require min.band.points datapoints
       not0[not0 <= (min.band.points - 1)] <- NA
       rawgeomean <- round(exp(rawgeomean / not0), digits = 0)
@@ -142,11 +142,11 @@ geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, m
         # before or after the data
         dat <- dat0 <- states
         dat[is.na(dat)] <- 0
-        total.statesgeomean <- filter(dat, rep(1, lenbands), sides = 1)
+        total.statesgeomean <- stats::filter(dat, rep(1, lenbands), sides = 1)
         # this sums up the number of non-zeros in each band
         dat0[!is.na(dat0)] <- 1
         dat0[is.na(dat0)] <- 0
-        not0 <- filter(dat0, rep(1, lenbands), sides = 1)
+        not0 <- stats::filter(dat0, rep(1, lenbands), sides = 1)
         # require min.band.points datapoints
         not0[not0 <= (min.band.points - 1)] <- NA
         total.statesgeomean <- round(exp(total.statesgeomean / not0), digits = 0)
@@ -155,10 +155,10 @@ geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, m
         data[data.years] <- total.fit$model$data[popname, data.years]
         dat <- dat0 <- data
         dat[is.na(dat)] <- 0
-        total.rawgeomean <- filter(dat, rep(1, lenbands), sides = 1)
+        total.rawgeomean <- stats::filter(dat, rep(1, lenbands), sides = 1)
         dat0[!is.na(dat0)] <- 1
         dat0[is.na(dat0)] <- 0
-        not0 <- filter(dat0, rep(1, lenbands), sides = 1)
+        not0 <- stats::filter(dat0, rep(1, lenbands), sides = 1)
         # require min.band.points datapoints
         not0[not0 <= (min.band.points - 1)] <- NA
         total.rawgeomean <- round(exp(total.rawgeomean / not0), digits = 0)
