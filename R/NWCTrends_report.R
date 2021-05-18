@@ -169,13 +169,9 @@ NWCTrends_report <- function(
     # mpg.to.plot used for mgp col in tables
     mpg.to.plot <- metadat$PopGroup[metadat$name %in% pops.to.plot]
     mpg.to.plot <- clean.mpg(mpg.to.plot)
-    # pops.to.plot <- pops.to.plot[order(metadat$PopGroup[metadat$name %in% pops.to.plot])]
-    # if (esuname == "Salmon, Chinook (Puget Sound ESU)") {
-    #   ord <- sort.PSChinook(pops.to.plot)
-    #   pops.to.plot <- pops.to.plot[ord]
-    #   mpg.to.plot <- mpg.to.plot[ord]
-    # }
-
+    # popid.to.plot used for popid col in tables
+    popid.to.plot <- metadat$PopID[metadat$name %in% pops.to.plot]
+    
     pops.to.plot.wild <- rownames(ifit.fracwild$fracwild.raw)[
       apply(
         ifit.fracwild$fracwild.raw, 1,
@@ -191,13 +187,10 @@ NWCTrends_report <- function(
     # mpg.to.plot.wild used for mgp col in tables
     mpg.to.plot.wild <- metadat$PopGroup[metadat$name %in% pops.to.plot.wild]
     mpg.to.plot.wild <- clean.mpg(mpg.to.plot.wild)
-    # pops.to.plot.wild <- pops.to.plot.wild[order(metadat$PopGroup[metadat$name %in% pops.to.plot.wild])]
-    # if (esuname == "Salmon, Chinook (Puget Sound ESU)") {
-    #   ord <- sort.PSChinook(pops.to.plot.wild)
-    #   pops.to.plot.wild <- pops.to.plot.wild[ord]
-    #   mpg.to.plot.wild <- mpg.to.plot.wild[ord]
-    # }
-    outputfile <- stringr::str_replace_all(esuname, "/", "-")
+    # mpg.to.plot.wild used for mgp col in tables
+    popid.to.plot.wild <- metadat$PopID[metadat$name %in% pops.to.plot.wild]
+
+        outputfile <- stringr::str_replace_all(esuname, "/", "-")
     if (output.type == "latex") outputfile.ext <- ".pdf"
     if (output.type == "html") outputfile.ext <- ".html"
     if (output.type == "word") outputfile.ext <- ".docx"
@@ -213,12 +206,14 @@ NWCTrends_report <- function(
     outnames <- paste(figdir, stringr::str_replace_all(esuname, "/", "-"), "-",
       c("summary_fig.pdf", "fracwild_fig.pdf", "main_fig.pdf", "productivity_fig.pdf", 
         "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
-        "fracwild_table.csv", "smooth_geomean_table.csv", "raw_geomean_table.csv"),
+        "fracwild_table.csv", "fracwild_geomean_table.csv",
+        "smooth_geomean_table.csv", "raw_geomean_table.csv"),
       sep = ""
     )
     innames <- paste(figdir, c("summary_fig-1.pdf", "fracwild_fig-1.pdf", "main_fig-1.pdf", "productivity_fig-1.pdf", 
                                "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
-                               "fracwild_table.csv", "smooth_geomean_table.csv",
+                               "fracwild_table.csv", "fracwild_geomean_table.csv",
+                               "smooth_geomean_table.csv",
                                "raw_geomean_table.csv"), sep = "")
     tabnames <- c("trend_15_table", "geomean_wild_table", "geomean_total_table", "fracwild_table")
     tabinnames <- paste0(texdir, "/wrapper_", tabnames, ".tex", sep = "")
@@ -244,12 +239,14 @@ NWCTrends_report <- function(
       # rename the tmp fig to fig with ESU
       innames <- paste(figdir, c("summary_fig-1.png", "fracwild_fig-1.png", "main_fig-1.png", "productivity_fig-1.png", 
                                  "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
-                                 "fracwild_table.csv", "smooth_geomean_table.csv","raw_geomean_table.csv"), 
+                                 "fracwild_table.csv", "fracwild_geomean_table.csv",
+                                 "smooth_geomean_table.csv","raw_geomean_table.csv"), 
                        sep = "")
       outnames <- paste(figdir, stringr::str_replace_all(esuname, "/", "-"), "-",
                         c("summary_fig.png", "fracwild_fig.png", "main_fig.png", "productivity_fig.png", 
                           "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
-                          "fracwild_table.csv", "smooth_geomean_table.csv", "raw_geomean_table.csv"),
+                          "fracwild_table.csv", "fracwild_geomean_table.csv", 
+                          "smooth_geomean_table.csv", "raw_geomean_table.csv"),
                        sep = "")
       for (i in 1:length(outnames)) file.rename(innames[i], outnames[i])
     }

@@ -52,8 +52,14 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
 
   # Check that all required columns are present
   colnames(dat)[colnames(dat)=="BROOD_YEAR" | colnames(dat)=="Brood_Year"] <- "YEAR"
-  colnames(dat)[colnames(dat)=="MPG"] <- "MAJOR_POPULATION_GROUP"
   colnames(dat) <- toupper(colnames(dat))
+  colnames(dat)[colnames(dat)=="MPG"] <- "MAJOR_POPULATION_GROUP"
+  colnames(dat)[stringr::str_detect(colnames(dat), "POPID")] <- "POPID"
+  if (length(which(colnames(dat)=="POPID"))>1) {
+    cat("Only one POPID column allowed in", inputfile, "\n")
+    stop()
+  }
+  
   
   required <- c(
     "YEAR", "NUMBER_OF_SPAWNERS", "SPECIES", "FRACWILD", "COMMON_POPULATION_NAME",
@@ -74,13 +80,14 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
   }
   
   # clean up some column names
-  names(dat) <- toproper(names(dat))
+  names(dat) <- toproper(names(dat)) # this names() call replaces " " with "."
   names(dat)[names(dat) == "Brood.Year"] <- "Year"
   names(dat)[names(dat) == "Number.Of.Spawners"] <- "Spawners"
   names(dat)[names(dat) == "Catch"] <- "Effective.Catch"
   names(dat)[names(dat) == "ESU.Name"] <- "ESU"
   if (!("Run.Timing" %in% names(dat))) dat$Run.Timing <- NA
-
+  if (!("Popid" %in% names(dat))) dat$Popid <- NA
+  
   ## Derived Datasets
   dat$wildspawners <- dat$Spawners * dat$Fracwild
 
@@ -139,9 +146,10 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
   esus <- dat$ESU[match(pops, dat$unique.name)]
   runtimings <- dat$Run.Timing[match(pops, dat$unique.name)]
   species <- dat$Species[match(pops, dat$unique.name)]
+  popids <- dat$Popid[match(pops, dat$unique.name)]
   majorpopgroup <- dat$Major.Population.Group[match(pops, dat$unique.name)]
   metadat <- data.frame(
-    name = pops, ESU = esus, Run = runtimings,
+    PopID = popids, name = pops, ESU = esus, Run = runtimings,
     Species = species, PopGroup = majorpopgroup,
     min.year = min.yr, max.year = max.yr,
     stringsAsFactors = FALSE

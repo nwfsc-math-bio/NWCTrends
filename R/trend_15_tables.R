@@ -1,7 +1,7 @@
 #' Create the trend tables
 #'
-#' Create the tables with the trends for different time periods using the smoothed wild
-#' spawner estimates. Despite the name of the function, the range of years need not be 15 years.
+#' Create the tables with the trends for different time periods using the smoothed 
+#' spawner estimates. The trend is the slope of a linear regression of the log spawner counts versus year. Despite the name of the function, the range of years need not be 15 years.
 #' The years to show are specified
 #' by list `year.ranges`. The ranges are specified as `begin.year:end.year`, for example
 #' `1990:2005`. `year.ranges` can be padded into the NWCTrends_report() call by passing in
