@@ -4,7 +4,7 @@ This is runs the standardized trends metrics used in the 2015 and 2020 5-year St
 
 ## Installation
 
-To install, install the **devtools** package (if needed) from CRAN and then use:
+To install, install the **devtools** package (if needed) and then use:
 ```
 library(devtools)
 devtools::install_github("nwfsc-timeseries/NWCTrends")
@@ -73,7 +73,7 @@ The 2015 Status Review report can be viewed from the R command line by typing
 ```
 RShowDoc("2015 Status Review Update",package="NWCTrends")
 ```
-after installing the NWCTrends package. Or go to the GitHub repository and navigate to the "\inst\doc" folder on GitHub.
+after installing the NWCTrends package. Or go to the GitHub repository and navigate to the "\inst\doc" folder on GitHub. The **NWCTrends** version used was v1.0.
 
 A pdf of the methods alone is also available by typing
 ```
