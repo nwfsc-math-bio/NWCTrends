@@ -44,17 +44,17 @@ A list with the statesgeomean and rawgeomean data frames (tables).
 \description{
 Create the tables with the geomeans for different time periods. Two tables are produced: one of the
 smoothed wild and total (total in parentheses) spawners. This function is called from esu_report.Rmd
- and is not exported. The min.year, max.year, lenbands, nbands, and min.band.points control the
- look of the table and can be controlled in the call to NWCTrends_report() by passing in
- geomean.table.control as list.  For example `list(min.year=1999)` to change the min year shown
- from the minimum in the dataset (the default) to 1999.
+and is not exported. The min.year, max.year, lenbands, nbands, and min.band.points control the
+look of the table and can be controlled in the call to NWCTrends_report() by passing in
+geomean.table.control as list.  For example \code{list(min.year=1999)} to change the min year shown
+from the minimum in the dataset (the default) to 1999.
 }
 \details{
 The code will create bands with lenbands years in each band starting with min.year. If max.year,
- would lead to a final band with less than lenbands years, then the last band will not have lenbands
- years. If it has fewer than min.band.points, then the last band will be NA.
- You will need to properly choose min.year and max.year to get the table to look as you want.
+would lead to a final band with less than lenbands years, then the last band will not have lenbands
+years. If it has fewer than min.band.points, then the last band will be NA.
+You will need to properly choose min.year and max.year to get the table to look as you want.
 
- The last column of the tables is the percent change. This can be over the last 2 bands or the first and last
- bands. The change.col argument determines which it is.
+The last column of the tables is the percent change. This can be over the last 2 bands or the first and last
+bands. The change.col argument determines which it is.
 }

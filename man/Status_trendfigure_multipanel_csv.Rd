@@ -17,9 +17,9 @@ Status_trendfigure_multipanel_csv(
 
 \item{pops}{The population names that will be plotted (populations with too few data are eliminated)}
 
-\item{total.fit}{total fit returned by `trend_fits()`}
+\item{total.fit}{total fit returned by \code{trend_fits()}}
 
-\item{fracwild.fit}{fracwild fit returned by `trend_fits()`}
+\item{fracwild.fit}{fracwild fit returned by \code{trend_fits()}}
 
 \item{log.scale}{Return values on log-scale versus the original raw scale}
 }
@@ -27,11 +27,11 @@ Status_trendfigure_multipanel_csv(
 A plot
 }
 \description{
-This returns a data frame that is written to a csv file. Not exported. It is used by 
-\code{inst/doc/report_files/esu_report.Rmd}. 
+This returns a data frame that is written to a csv file. Not exported. It is used by
+\code{inst/doc/report_files/esu_report.Rmd}.
 
-It returns the smoothed total spawners estimate and the 
-smoothed wild spawners estimate which is 
+It returns the smoothed total spawners estimate and the
+smoothed wild spawners estimate which is
 "smoothed total estimate x smoothed fracwild estimate".
 The wild spawner estimate is only shown from 1 year before and one year after
 the last actual fracwild estimate (in the data file). This is done so that

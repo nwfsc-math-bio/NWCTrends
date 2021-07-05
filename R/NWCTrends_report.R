@@ -42,7 +42,7 @@
 #' geomean.table.control are changed, they must be also changed in geomean_tables.R
 #' 
 #' See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of 
-#' smoothed total and wild spawners.
+#' smoothed total and wild spawners. See \code{\link{NWCTrends}} for a description of the package.
 #'
 #' @param inputfile comma-delimited data file (see demo files for the format).
 #' demofiles are in inst/doc/demodata.
@@ -134,6 +134,7 @@ NWCTrends_report <- function(
     fits <- fitslist$fits
   }
   metadat <- datalist$metadat
+  write.csv(metadat, file = paste0(figdir, "metadat.csv"), row.names = FALSE)
 
   if (output.type == "pdf") output.type <- "latex" # this is what R wants for pdf
   if (output.type == "latex") render.type <- "pdf_document"

@@ -19,7 +19,8 @@ NWCTrends_report(
     min.band.points = 2, change.col = "last.two"),
   trend.table.control = list(year.ranges = list(1990:2005, 1999:2014)),
   output.type = c("html", "pdf", "word"),
-  output.dir = "NWCTrend_output"
+  output.dir = "NWCTrend_output",
+  fit.all = FALSE
 )
 }
 \arguments{
@@ -49,6 +50,8 @@ demofiles are in inst/doc/demodata.}
 \item{output.type}{"html", "pdf", or "word" Format to produce the report in.}
 
 \item{output.dir}{Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.}
+
+\item{fit.all}{If FALSE, then user can enter what ESUs to fun.}
 }
 \value{
 Plots and tables that are saved to doc/figures/ESU_figures.
@@ -79,20 +82,20 @@ specified as \code{ model=list(Z="identity", R="diagonal and equal", U="unequal"
 
 This function does all the steps to create the trend plots and figures
 \enumerate{
-  \item Load data (.csv)
-  \item Fit model(s)
-  \item Make plots and tables and save as report
+\item Load data (.csv)
+\item Fit model(s)
+\item Make plots and tables and save as report
 }
 By default, the plots and tables are saved in a directory
- named (and created if necessary) NWCTrend_output in your
- working directory.
+named (and created if necessary) NWCTrend_output in your
+working directory.
 
 The look of the tables can be adjusted by passing in geomean.tables.control. See ?geomean_tables
 for the elements that can be controlled. Note that if the defaults for
 geomean.table.control are changed, they must be also changed in geomean_tables.R
 
-See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of 
-smoothed total and wild spawners.
+See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of
+smoothed total and wild spawners. See \code{\link{NWCTrends}} for a description of the package.
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.

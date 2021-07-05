@@ -29,9 +29,9 @@ trend_fits(
 \value{
 A list with three items:
 \describe{
-  \item{fits}{A list with the fits for each ESUs included.}
-  \item{aic.table}{If there are multiple models fit, then the AIC will be returned.}
-  \item{best.model}{If there are multiple models fit, then the best model is returned.}
+\item{fits}{A list with the fits for each ESUs included.}
+\item{aic.table}{If there are multiple models fit, then the AIC will be returned.}
+\item{best.model}{If there are multiple models fit, then the best model is returned.}
 }
 }
 \description{
@@ -39,8 +39,8 @@ Fis a MARSS model to data from each ESUs treating each population as a
 subpopulation. The structure of the variance-covariance matrix, the U matrix, the
 Z matrix, and the R matrix can be specified. If you want to fit a specific model,
 then pass in model as a list as per a MARSS model. The populations in the ESU
- with < min.years
- of data points are not used in the fitting and no states are estimated for those.
+with < min.years
+of data points are not used in the fitting and no states are estimated for those.
 }
 \details{
 If model=NULL then a set of all possible models is fit. This takes awhile but will

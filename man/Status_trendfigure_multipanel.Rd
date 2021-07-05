@@ -23,9 +23,9 @@ Status_trendfigure_multipanel(
 
 \item{pops}{The population names that will be plotted (populations with too few data are eliminated)}
 
-\item{total.fit}{total fit returned by `trend_fits()`}
+\item{total.fit}{total fit returned by \code{trend_fits()}}
 
-\item{fracwild.fit}{fracwild fit returned by `trend_fits()`}
+\item{fracwild.fit}{fracwild fit returned by \code{trend_fits()}}
 
 \item{plot.min.year}{The x axis minimum.}
 
@@ -45,11 +45,11 @@ Status_trendfigure_multipanel(
 A plot
 }
 \description{
-This is the main figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/doc/report_files/esu_report.Rmd}. 
+This is the main figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/doc/report_files/esu_report.Rmd}.
 
 The dots are the raw spawner counts, the black
-line is the smoothed total spawners estimate, and the red line is the 
-smoothed wild spawners estimate which is 
+line is the smoothed total spawners estimate, and the red line is the
+smoothed wild spawners estimate which is
 "smoothed total estimate x smoothed fracwild estimate".
 Note that the wild spawner estimate is only shown from 1 year before and one year after
 the last actual fracwild estimate (in the data file). This is done so that

@@ -16,7 +16,11 @@
 #'   \item{dat}{The raw data for the selected ESUs.}
 #'   \item{matdat.spawners}{A matrix of the total spawners with NAs for missing years. Each column is a year from min.year to max.year and each row is a population.}
 #'   \item{matdat.wildspawners}{A matrix of the the wildspawners using the fracwild data if included. NAs for years with either missing fracwild or missing spawner count. Each column is a year from min.year to max.year and each row is a population.}
-#'   \item{metadat}{A data.frame with all the metadata for each population: name = population name, ESU = ESU name, Species, Run = runtiming for population, PopGroup = name of the Major Population Group (within ESU).}
+#'   \item{metadat}{A data.frame with all the metadata for each population: 
+#'   name = population name, ESU = ESU name, Species, 
+#'   Run = run timing for population, PopGroup = name of the Major Population Group (within ESU), 
+#'   Method = data method (eg Survey or Model), 
+#'   Citation = citation, Contributor = Where the data come from.}
 #' }
 #'
 data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
@@ -87,6 +91,9 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
   names(dat)[names(dat) == "ESU.Name"] <- "ESU"
   if (!("Run.Timing" %in% names(dat))) dat$Run.Timing <- NA
   if (!("Popid" %in% names(dat))) dat$Popid <- NA
+  if (!("Method" %in% names(dat))) dat$Method <- "Survey"
+  if (!("Citation" %in% names(dat))) dat$Citation <- NA
+  if (!("Contributor" %in% names(dat))) dat$Contributor <- NA
   
   ## Derived Datasets
   dat$wildspawners <- dat$Spawners * dat$Fracwild
@@ -143,14 +150,19 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
   ##############################################
 
   pops <- unique(dat$unique.name)
-  esus <- dat$ESU[match(pops, dat$unique.name)]
-  runtimings <- dat$Run.Timing[match(pops, dat$unique.name)]
-  species <- dat$Species[match(pops, dat$unique.name)]
-  popids <- dat$Popid[match(pops, dat$unique.name)]
-  majorpopgroup <- dat$Major.Population.Group[match(pops, dat$unique.name)]
+  popsloc <- match(pops, dat$unique.name)
+  esus <- dat$ESU[popsloc]
+  runtimings <- dat$Run.Timing[popsloc]
+  species <- dat$Species[popsloc]
+  popids <- dat$Popid[popsloc]
+  citations <- dat$Citation[popsloc]
+  contributors <- dat$Contributor[popsloc]
+  methods <- dat$Method[popsloc]
+  majorpopgroup <- dat$Major.Population.Group[popsloc]
   metadat <- data.frame(
     PopID = popids, name = pops, ESU = esus, Run = runtimings,
     Species = species, PopGroup = majorpopgroup,
+    Method = methods, Citation = citations, Contributor = contributors,
     min.year = min.yr, max.year = max.yr,
     stringsAsFactors = FALSE
   )

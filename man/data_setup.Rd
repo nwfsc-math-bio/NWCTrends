@@ -4,7 +4,7 @@
 \alias{data_setup}
 \title{Read in the inputfile}
 \usage{
-data_setup(inputfile, min.year, max.year)
+data_setup(inputfile, min.year, max.year, fit.all = FALSE)
 }
 \arguments{
 \item{inputfile}{.csv file. See demofiles for the proper format.}
@@ -12,14 +12,20 @@ data_setup(inputfile, min.year, max.year)
 \item{min.year}{The minimum year for the returned data frames. If left off, it will use the minimum year in the data set. You can set later to exclude data or set before to hindcast.}
 
 \item{max.year}{The maximum year for the returned data frames. If left off, it will use the maximum year in the data set. You can set earlier to exclude data or set later to forecast.}
+
+\item{fit.all}{If TRUE, fit all and don't ask about names.}
 }
 \value{
 A list with four items:
 \describe{
-  \item{dat}{The raw data for the selected ESUs.}
-  \item{matdat.spawners}{A matrix of the total spawners with NAs for missing years. Each column is a year from min.year to max.year and each row is a population.}
-  \item{matdat.wildspawners}{A matrix of the the wildspawners using the fracwild data if included. NAs for years with either missing fracwild or missing spawner count. Each column is a year from min.year to max.year and each row is a population.}
-  \item{metadat}{A data.frame with all the metadata for each population: name = population name, ESU = ESU name, Species, Run = runtiming for population, PopGroup = name of the Major Population Group (within ESU).}
+\item{dat}{The raw data for the selected ESUs.}
+\item{matdat.spawners}{A matrix of the total spawners with NAs for missing years. Each column is a year from min.year to max.year and each row is a population.}
+\item{matdat.wildspawners}{A matrix of the the wildspawners using the fracwild data if included. NAs for years with either missing fracwild or missing spawner count. Each column is a year from min.year to max.year and each row is a population.}
+\item{metadat}{A data.frame with all the metadata for each population:
+name = population name, ESU = ESU name, Species,
+Run = run timing for population, PopGroup = name of the Major Population Group (within ESU),
+Method = data method (eg Survey or Model),
+Citation = citation, Contributor = Where the data come from.}
 }
 }
 \description{
