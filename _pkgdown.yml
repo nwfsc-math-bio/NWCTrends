@@ -1,3 +1,16 @@
+url: https://nwfsc-timeseries.github.io/NWCTrends/
+
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - articles
+    - tutorials
+    - news
+    right: github
+    
 reference:
 - title: Package overview
 - contents: 

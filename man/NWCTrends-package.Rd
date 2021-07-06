@@ -15,7 +15,7 @@ Species Act: Pacific Northwest".
 The 2015 Status Review report can be viewed by typing
 \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
 at the command line. The report has a description of the
-methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing \href{inst/doc/Methods.pdf}{Methods}
+methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing
 \code{RShowDoc("Methods",package="NWCTrends")}
 at the command line.
 

@@ -12,6 +12,8 @@ Depends: R (>= 2.15.0),
     kableExtra (>= 1.1.0),
     gdata
 Authors@R: person("Holmes", "Elizabeth", , "eli.holmes@noaa.gov", role = c("aut", "cre"))
+URL: https://nwfsc-timeseries.github.io/NWCTrends, https://github.com/nwfsc-timeseries/NWCTrends
+BugReports: https://github.com/nwfsc-timeseries/NWCTrends/issues
 Maintainer: Elizabeth Holmes - NOAA Federal <eli.holmes@noaa.gov>
 Description: This is runs the standardized trends metrics used in the 2016 and 2020 5-year Status Review Update for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().
 License: GPL-2
