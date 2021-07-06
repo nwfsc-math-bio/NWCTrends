@@ -27,7 +27,10 @@
 #' @param navalue value to show for NAs
 #'
 #' @return A list with the statesgeomean and rawgeomean data frames (tables).
-#'
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' @keywords report
+#' 
 geomean_table <- function(pops, mpg, total.fit, fracwild.fit, min.year = 1990, max.year = 2014,
                           lenbands = 5, min.band.points = 2, change.col = c("last.two", "first.last"), navalue=" ") {
   change.col <- match.arg(change.col)

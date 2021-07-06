@@ -24,7 +24,7 @@ Status_trendfigure_multipanel_csv(
 \item{log.scale}{Return values on log-scale versus the original raw scale}
 }
 \value{
-A plot
+A dataframe
 }
 \description{
 This returns a data frame that is written to a csv file. Not exported. It is used by
@@ -45,6 +45,10 @@ observation error in the total spawner count. Because data from all populations 
 estimates can be made even for missing years at the beginning of the time series if there
 is data for those early years in other populations.
 }
+\seealso{
+\code{\link{Status_trendfigure_multipanel}}
+}
 \author{
 Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 }
+\keyword{report}

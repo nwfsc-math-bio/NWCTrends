@@ -24,6 +24,9 @@ fracwild_table(
 
 \item{nbands}{Number of averages to show.}
 }
+\value{
+a data frame of the formatted table
+}
 \description{
 Takes the wild and total data and makes tables of fraction wild via wild/total
 and constructs averages for given number of years (typically 5 or 10).
@@ -35,3 +38,7 @@ The function wants the matrices where the rownames are the population names
 and the colnames are the years. In the package output, these are call
 total: \code{matdat.spawners} and wild: \code{matdat.wildspawners}.
 }
+\author{
+Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+}
+\keyword{report}

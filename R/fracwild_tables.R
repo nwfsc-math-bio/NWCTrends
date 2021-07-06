@@ -15,6 +15,12 @@
 #' @param max.year The last year to use when constructing the bands
 #' @param lenbands Number of years to average
 #' @param nbands Number of averages to show.
+#' 
+#' @return a data frame of the formatted table
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' @keywords report
+#' 
 fracwild_table <- function(wild, total, max.year = 2014, lenbands = 5, nbands = 5, type=c("mean", "geomean")) {
   type <- match.arg(type)
   pops <- rownames(wild)

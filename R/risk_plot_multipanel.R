@@ -37,6 +37,8 @@
 #' A plot
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' @keywords report
+#' @seealso \code{\link{Status_trendfigure_multipanel_csv}}
 #' 
 Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, 
                                           plot.min.year = NULL, plot.max.year = NULL, 

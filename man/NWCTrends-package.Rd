@@ -15,7 +15,7 @@ Species Act: Pacific Northwest".
 The 2015 Status Review report can be viewed by typing
 \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
 at the command line. The report has a description of the
-methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing
+methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing \href{inst/doc/Methods.pdf}{Methods}
 \code{RShowDoc("Methods",package="NWCTrends")}
 at the command line.
 
@@ -34,13 +34,13 @@ The data are input as a csv file and a folder is created with the name of this
 csv file. Within that folder is  a \verb{metadata.csv file} for the meta data from
 the csv file and then there are individual files for each ESU/DPS within
 the csv file.
-The internal functions are also documented: \link{data_setup},
-\link{trend_15_tables}, \link{trend_fits},
-\link{geomean_tables}.
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. National Marine Fisheries Service, Northwest Fisheries Science Center.
 Available from the NWFSC Publications page.
+}
+\seealso{
+\link{data_setup}, \link{trend_15_tables}, \link{trend_fits}, \link{geomean_tables}.
 }
 \author{
 \strong{Maintainer}: Holmes Elizabeth \email{eli.holmes@noaa.gov}

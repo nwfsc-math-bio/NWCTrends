@@ -22,7 +22,10 @@
 #'   Method = data method (eg Survey or Model), 
 #'   Citation = citation, Contributor = Where the data come from.}
 #' }
-#'
+#' @keywords report
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' 
 data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
 
   # toproper function; make column names nice

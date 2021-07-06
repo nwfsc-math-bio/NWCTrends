@@ -1,4 +1,12 @@
-# Utility function to read in a esu choice from a list
+#' Choose ESU
+#'
+#' Utility function to read in a esu choice from a list
+#'
+#' @param esu.names The ESUs/DPSs in the input csv file.
+#'
+#' @return A vector of ESU/DPS names.
+#' @keywords utility
+#'
 choose.esu <- function(esu.names) {
   done <- FALSE
   while (!done) {

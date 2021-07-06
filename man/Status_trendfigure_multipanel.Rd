@@ -63,6 +63,10 @@ observation error in the total spawner count. Because data from all populations 
 estimates can be made even for missing years at the beginning of the time series if there
 is data for those early years in other populations.
 }
+\seealso{
+\code{\link{Status_trendfigure_multipanel_csv}}
+}
 \author{
 Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 }
+\keyword{report}

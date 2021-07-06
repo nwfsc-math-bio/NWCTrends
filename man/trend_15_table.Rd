@@ -40,3 +40,7 @@ by list \code{year.ranges}. The ranges are specified as \code{begin.year:end.yea
 \code{1990:2005}. \code{year.ranges} can be padded into the NWCTrends_report() call by passing in
 trend.table.control as list.  For example \code{list(year.ranges=list(1990:2000,2000:2010))}.
 }
+\author{
+Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+}
+\keyword{report}

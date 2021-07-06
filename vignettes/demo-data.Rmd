@@ -1,0 +1,32 @@
+---
+title: "demo-data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{demo-data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = ""
+)
+```
+
+The required data columns are (formatted exactly like so): YEAR, NUMBER_OF_SPAWNERS, SPECIES, FRACWILD, COMMON_POPULATION_NAME, RUN_TIMING, ESU, MAJOR_POPULATION_GROUP. The following optional columns will also be used: Popid (NA is not present), Method (set to "Survey" if missing), Citation (set to NA if missing), and Contributor (set to NA if missing). Other columns may be included but will be ignored. 
+
+## Notes
+
+* NAs are entered as -99 for numbers and blanks for character columns.
+* The populations will be listed in the tables and figures in the same order that they appear in the input file
+* The spawner numbers should not have "," delimiters. For example "1000" not "1,000".
+
+## Example data file
+
+Example data files are in the "doc" folder of the installed package and in the "inst/doc" in the GitHub repository.
+
+```{r demo, echo=FALSE}
+fil <- system.file("doc", "demodata", "Demo_NWCTrends.csv", package="NWCTrends")
+cat(readLines(fil, n=5), sep="\n")
+```

@@ -36,3 +36,7 @@ Some clean up of names and runtiming is done.
 \details{
 NAs are specified with -99, -99.00 or -99.0.
 }
+\author{
+Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+}
+\keyword{report}

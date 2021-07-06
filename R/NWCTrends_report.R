@@ -62,6 +62,7 @@
 #' 
 #' @return
 #' Plots and tables that are saved to doc/figures/ESU_figures.
+#' @keywords report
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 #' @references

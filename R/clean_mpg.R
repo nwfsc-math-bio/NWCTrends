@@ -1,4 +1,14 @@
-# Utility function to clean up population names to make shorter
+#' Lighter clean up population names
+#'
+#' This is similar to \code{\link{clean.pops}} but does lighter cleaning.
+#'
+#' @param pops A vector of the population names from the input csv file.
+#'
+#' @return A vector of cleaned population names.
+#' @keywords utility
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' 
 clean.mpg <- function(pops) {
   pops <- as.character(pops)
   pops.trim <- stringr::str_trim(pops)

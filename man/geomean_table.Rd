@@ -58,3 +58,7 @@ You will need to properly choose min.year and max.year to get the table to look 
 The last column of the tables is the percent change. This can be over the last 2 bands or the first and last
 bands. The change.col argument determines which it is.
 }
+\author{
+Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+}
+\keyword{report}

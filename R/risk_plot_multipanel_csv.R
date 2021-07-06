@@ -28,9 +28,11 @@
 #' @param log.scale Return values on log-scale versus the original raw scale
 
 #' @return
-#' A plot
+#' A dataframe
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' @keywords report
+#' @seealso \code{\link{Status_trendfigure_multipanel}}
 #' 
 Status_trendfigure_multipanel_csv <- function(esu, pops, total.fit, fracwild.fit, log.scale = FALSE) {
 

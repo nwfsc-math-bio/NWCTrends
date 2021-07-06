@@ -1,4 +1,16 @@
-# Utility function to clean up the population names and strip run timing
+#' Clean up population names
+#'
+#' Utility function to clean up the population names and strip run timing
+#' in the population names in the input file. 
+#' Change this file if the abbreviations used need to be changed.
+#'
+#' @param pops A vector of the population names from the input csv file.
+#'
+#' @return A vector of cleaned population names.
+#' @keywords utility
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' 
 clean.pops <- function(pops) {
   pops.trim <- sapply(pops, function(x) {
     stringr::str_split(x, "[|]")[[1]][2]

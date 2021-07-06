@@ -50,3 +50,7 @@ logit.fw says whether to fit to logit of fracwild or to the percentages.
 
 This function produces a states estimate and a fracwild fit;
 }
+\author{
+Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+}
+\keyword{report}

@@ -1,3 +1,27 @@
+#' @name
+#' fracwild_multipanel
+#' @title
+#' Figure of the raw and smoothed fracwild estimates.
+#' @description
+#' This is the fracwild figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/doc/report_files/esu_report.Rmd}. 
+#' 
+#' The dots are the raw fracwild values, the black
+#' line is the smoothed fracwild estimate.
+#' For the smoothed fracwild estimates, there is no data sharing across populations.
+#'
+#' @param esu The name of the ESU
+#' @param pops The population names that will be plotted (populations with too few data are eliminated)
+#' @param total.fit total fit returned by `trend_fits()`
+#' @param fracwild.fit fracwild fit returned by `trend_fits()`
+#' @param min.year The x axis minimum.
+#' @param max.year The x axis maximum.
+#' @param show.all If there is no fracwild data for a population, should that population still have a fracwild plot, which will be blank.
+#' @return
+#' A plot
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' @keywords report
+#' 
 fracwild_multipanel <- function(esu, pops, fracwild.fit, min.year = NULL, max.year = NULL, show.all = TRUE) {
 
   # Set up the min and max years

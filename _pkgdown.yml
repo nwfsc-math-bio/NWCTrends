@@ -1,0 +1,30 @@
+reference:
+- title: Package overview
+- contents: 
+  - matches("NWCTrends-package", internal=TRUE)
+- title: Main report writing functions
+  desc: These are the functions that prepare the data, tables, figures and csv files.
+- contents:
+  - has_keyword("report")
+- title: Utility
+  desc: Utility functions
+  contents:
+  - has_keyword("utility")
+
+articles:
+- title: Status Review Documents
+  desc: Status Review 2015 [PDF](SR_2015.pdf)<br>Methods only [PDF](Methods.pdf)
+  contents:
+- title: Example analysis
+  desc: Example data and code
+  contents:
+  - demo-data
+  - demo-code
+
+news:
+  releases:
+  - text: "Version 1.0 2015 SR"
+    href: https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.0
+  - text: "Version 1.25 2020 SR"
+    href: https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.25
+

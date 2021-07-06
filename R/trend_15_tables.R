@@ -16,7 +16,10 @@
 #' @param navalue Value to use for NAs in the table. Default is a blank.
 #'
 #' @return A data frames with the estimates trend for each year range in a different column.
-#'
+#' @keywords report
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' 
 trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = list(1990:2005, 1999:2014), wild=TRUE, navalue=" ") {
   n <- length(pops)
   short.pops <- clean.pops(pops)

@@ -27,7 +27,10 @@
 #'   \item{aic.table}{If there are multiple models fit, then the AIC will be returned.}
 #'   \item{best.model}{If there are multiple models fit, then the best model is returned.}
 #' }
-#'
+#' @author
+#' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
+#' @keywords report
+
 trend_fits <- function(datalist,
                        outputfile,
                        wild = TRUE,
