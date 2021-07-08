@@ -8,7 +8,7 @@
 #' is smoothed total estimate times smoothed fracwild estimate and `total` is the smoothed total 
 #' estimate.
 #' 
-#' In the Status Review, `type=1`. And the lag is set to 3 or 4 (depending on species).
+#' In the Viability Report, `type=1` and the lag is set to 3 or 4 (depending on species).
 #'
 #' @param esu The name of the ESU
 #' @param pops The population names that will be plotted.

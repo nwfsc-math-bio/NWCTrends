@@ -4,15 +4,15 @@
 \name{NWCTrends-package}
 \alias{NWCTrends}
 \alias{NWCTrends-package}
-\title{NWFSC Salmonid Status Review Table and Figures}
+\title{NWFSC PNW Salmonid Viability Report Standardized Metrics}
 \description{
-This package creates the ESU tables and figures from the
-Northwest Fisheries Science Center's report: "2015 and 2020 Status review
-update for Pacific salmon and steelhead listed under the Endangered
-Species Act: Pacific Northwest".
+This package creates the ESU/DPS tables and figures for the standardized metrics used in the
+Northwest Fisheries Science Center's PNW Salmonid Viability Reports which support the 5-year
+Status Review updates (prepared by WRO) for Pacific salmon and steelhead listed
+under the Endangered Species Act: Pacific Northwest".
 }
 \details{
-The 2015 Status Review report can be viewed by typing
+The 2015 NWFSC PNW Salmonid Viability Report can be viewed by typing
 \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
 at the command line. The report has a description of the
 methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing

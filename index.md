@@ -1,6 +1,6 @@
 # NWCTrends <img src="man/figures/logo.png" align="right" style="padding: 10px"/>
 
-This is runs the standardized trends metrics used in the 2015 and 2020 5-year Status Review Update for listed PNW salmonids.  
+This is runs the standardized trends metrics used in the 2015 and 2020 5-year NWFSC PNW Salmonid Viability Report which support the 5-year Status Reviews prepared by WRO.
 
 ## Installation
 
@@ -69,7 +69,7 @@ NWCTrends_report(fit.min.year=1990, fit.max.year=2019,
 
 ## References
 
-The 2015 Status Review report can be viewed from the R command line by typing
+The 2015 NWFSC PNW Salmonid Viability Report can be viewed from the R command line by typing
 ```
 RShowDoc("2015 Status Review Update",package="NWCTrends")
 ```

@@ -25,8 +25,8 @@ reference:
   - has_keyword("utility")
 
 articles:
-- title: Status Review Documents
-  desc: Status Review 2015 [PDF](SR_2015.pdf)<br>Methods only [PDF](Methods.pdf)
+- title: Viability Report Documents
+  desc: NWFSC Viability Report 2015 [PDF](SR_2015.pdf)<br>Methods only [PDF](Methods.pdf)
   contents:
 - title: Example analysis
   desc: Example data and code

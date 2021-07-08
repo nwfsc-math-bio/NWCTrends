@@ -2,7 +2,7 @@
 % Please edit documentation in R/NWCTrends_report.R
 \name{NWCTrends_report}
 \alias{NWCTrends_report}
-\title{NWFSC Salmonid Status Review Table and Figures}
+\title{NWFSC PNW Salmonid Viability Report Table and Figures}
 \usage{
 NWCTrends_report(
   inputfile = NULL,
@@ -35,7 +35,7 @@ demofiles are in inst/doc/demodata.}
 
 \item{logit.fw}{TRUE/FALSE whether to estimate the smoothed fraction wild from the logit of the fractions or from the raw (0,1) fractions.}
 
-\item{fit.wild}{fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Status Review analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.}
+\item{fit.wild}{fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Viability Report analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.}
 
 \item{plot.min.year}{Optional. The earliest year to use when plotting the data if different than the first year in the data set.}
 
@@ -59,10 +59,10 @@ Plots and tables that are saved to doc/figures/ESU_figures.
 \description{
 This is the main function in the NWCTrends package which
 creates the ESU tables and figures from the
-Northwest Fisheries Science Center's report: "2015 Status review
+Northwest Fisheries Science Center's Viability Report: "2015 Status review
 update for Pacific salmon and steelhead listed under the Endangered
 Species Act: Pacific Northwest".
-The 2015 Status Review report can be viewed by typing
+The 2015 NWFSC Viability Report can be viewed by typing
 \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
 at the command line. The report has a description of the
 methods used for computing the smoothed trend lines and the status metrics.

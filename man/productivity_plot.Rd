@@ -41,7 +41,7 @@ productivity metric. Type 3: \code{wild(t+1)/wild(t)}. Type 1: \code{wild(t+lag)
 is smoothed total estimate times smoothed fracwild estimate and \code{total} is the smoothed total
 estimate.
 
-In the Status Review, \code{type=1}. And the lag is set to 3 or 4 (depending on species).
+In the Viability Report, \code{type=1} and the lag is set to 3 or 4 (depending on species).
 }
 \author{
 Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov

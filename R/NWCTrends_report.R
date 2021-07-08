@@ -1,15 +1,15 @@
 #' @name
 #' NWCTrends_report
 #' @title
-#' NWFSC Salmonid Status Review Table and Figures
+#' NWFSC PNW Salmonid Viability Report Table and Figures
 #' @description
 #' This is the main function in the NWCTrends package which
 #' creates the ESU tables and figures from the
-#' Northwest Fisheries Science Center's report: "2015 Status review
+#' Northwest Fisheries Science Center's Viability Report: "2015 Status review
 #' update for Pacific salmon and steelhead listed under the Endangered
 #' Species Act: Pacific Northwest".
 
-#' The 2015 Status Review report can be viewed by typing
+#' The 2015 NWFSC Viability Report can be viewed by typing
 #' \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
 #' at the command line. The report has a description of the
 #' methods used for computing the smoothed trend lines and the status metrics.
@@ -50,7 +50,7 @@
 #' @param fit.max.year Optional. You can set the last year to use when fitting the models. If not passed in, then the max.year is the last year in the data file. This is used to use a subset of the full data set for fitting.
 #' @param model The structure of the MARSS model to use. Entered as a list specified as a \link[MARSS]{MARSS} model.
 #' @param logit.fw TRUE/FALSE whether to estimate the smoothed fraction wild from the logit of the fractions or from the raw (0,1) fractions.
-#' @param fit.wild fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Status Review analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.
+#' @param fit.wild fit.wild=TRUE means to do the fit on fracwild*total versus on the total spawners. Note all the Viability Report analyses, use fit.wild=FALSE and the wild fit is total spawner fit x fracwild fit.
 #' @param plot.min.year Optional. The earliest year to use when plotting the data if different than the first year in the data set.
 #' @param plot.max.year Optional. The last year to use when plotting the data if different than the last year in the data set.
 #' @param min.data.points The minimum data points to require from a population (for fitting and plotting).
