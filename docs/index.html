@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Standardized Trend Metrics for Salmonid Populations">
-<meta property="og:description" content="This is runs the standardized trends metrics used in the 2016 and 2020 5-year Status Review Update for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().">
+<meta property="og:description" content="This is runs the standardized trends metrics used in the 2016 and 2020 5-year NWFSC Viability Reports for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().">
 <meta property="og:image" content="https://nwfsc-timeseries.github.io/NWCTrends/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -66,10 +66,10 @@
   <ul class="dropdown-menu" role="menu">
 <li class="dropdown-header">Releases</li>
     <li>
-      <a href="https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.0">Version 1.0 2015 SR</a>
+      <a href="https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.0">Version 1.0 2015 VR</a>
     </li>
     <li>
-      <a href="https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.25">Version 1.25 2020 SR</a>
+      <a href="https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.25">Version 1.25 2020 VR</a>
     </li>
     <li class="divider">
     <li>
@@ -105,10 +105,9 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>To install, install the <strong>devtools</strong> package (if needed) and then use:</p>
-<pre><code><a href="https://devtools.r-lib.org/">library(devtools)
-devtools::install_github("nwfsc-timeseries/NWCTrends")</a></code></pre>
-<p>To install an R package from Github, you need to be able to build an R package on your machine. If you are on Windows, that means you will need to install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. On a Mac, installation should work fine; you don’t need to install anything.</p>
+<p>To install, install the <strong>devtools</strong> package (if needed) and then to install the latest release use:</p>
+<pre><code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">devtools::install_github("nwfsc-timeseries/NWCTrends@*release")</a></code></pre>
+<p>To install an R package from Github, you need to be able to build an R package on your machine. If you are on Windows, that means you may need to install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. On a Mac, installation should work fine; you don’t need to install anything.</p>
 <p>The default is to create an html file with the tables and figures. You can also select Word or PDF output. In order to create PDF files and tables, you also need to install <strong>tinytex</strong> if you do not have a TeX installation. Code to install <strong>tinytex</strong> is below.</p>
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages('tinytex')
 tinytex::install_tinytex()</a></code></pre>

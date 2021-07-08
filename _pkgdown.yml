@@ -36,8 +36,8 @@ articles:
 
 news:
   releases:
-  - text: "Version 1.0 2015 SR"
+  - text: "Version 1.0 2015 VR"
     href: https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.0
-  - text: "Version 1.25 2020 SR"
+  - text: "Version 1.25 2020 VR"
     href: https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.25
 

@@ -15,7 +15,7 @@ Authors@R: person("Holmes", "Elizabeth", , "eli.holmes@noaa.gov", role = c("aut"
 URL: https://nwfsc-timeseries.github.io/NWCTrends, https://github.com/nwfsc-timeseries/NWCTrends
 BugReports: https://github.com/nwfsc-timeseries/NWCTrends/issues
 Maintainer: Elizabeth Holmes - NOAA Federal <eli.holmes@noaa.gov>
-Description: This is runs the standardized trends metrics used in the 2016 and 2020 5-year Status Review Update for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().
+Description: This is runs the standardized trends metrics used in the 2016 and 2020 5-year NWFSC Viability Reports for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().
 License: GPL-2
 LazyData: yes
 BuildVignettes: yes

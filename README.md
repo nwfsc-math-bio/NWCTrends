@@ -6,9 +6,14 @@ This is runs the standardized trends metrics used in the 2015 and 2020 5-year Vi
 
 To install, install the **devtools** package (if needed) and then use:
 ```
-library(devtools)
 devtools::install_github("nwfsc-timeseries/NWCTrends")
 ```
+to install the development version or
+```
+devtools::install_github("nwfsc-timeseries/NWCTrends@*release")
+```
+to install the latest release.
+
 To install an R package from Github, you need to be able to build an R package on your machine. If you are on Windows, that means you will need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/). On a Mac, installation should work fine; you don't need to install anything.
 
 The default is to create an html file with the tables and figures. You can also select Word or PDF output. In order to create PDF files and tables, you also need to install **tinytex** if you do not have a TeX installation. Code to install **tinytex** is below.  
