@@ -83,8 +83,7 @@ fracwild_multipanel <- function(esu, pops, fracwild.fit, min.year = NULL, max.ye
       type = "n", bty = "L", xlab = "", ylab = "",
       ylim = c(0, 1), xlim = c(min.year - 1, max.year + 1)
     )
-    lines(years.trim, fracwild.states, col = "blue", lwd = 2)
-    # if(!all((total.raw-wild.raw)>0.999, na.rm=TRUE))
+    lines(years.trim, fracwild.states, col = nwctrends.palette$blue, lwd = 2)
 
     points(years.trim, fracwild.raw)
 

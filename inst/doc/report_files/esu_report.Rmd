@@ -56,7 +56,7 @@ if (output.type == "latex") cat("\\newpage")
 
 ```{r fracwild_fig, echo=FALSE,fig.width=8.5}
 # source("fracwild_plot_multipanel.R")
-fracwild_multipanel(esuname, pops.to.plot, ifit.fracwild, min.year = plot.min.year, max.year = plot.max.year, show.all = FALSE)
+fracwild_multipanel(esuname, pops.to.plot, ifit.fracwild, min.year = plot.min.year, max.year = plot.max.year, show.all = show.all.fracwild)
 ```
 
 ```{r, results='asis', echo=FALSE}
@@ -162,7 +162,8 @@ n <- dim(vals2)[1] # n pops
 for (i in 1:(dim(vals1)[2] - 1)) {
   vals <- 100 * (vals1[, i + 1] - vals1[, i]) / vals1[, i]
   points(i + rnorm(n, 0, 0.01), ifelse(vals < 0, -1, 1) * log10(abs(vals)),
-    cex = 1.5, pch = 19, col = ifelse(vals < 0, "red", "black")
+    cex = 1.5, pch = 19, 
+    col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$black)
   )
 }
 axis(side = 1, at = 1:nlabs, label = labs, cex.axis = .9, padj = 0.5)
@@ -188,7 +189,8 @@ for (i in 1:(dim(vals1)[2] - 1)) {
   n <- dim(vals2)[1]
   vals <- 100 * (vals2[, i + 1] - vals2[, i]) / vals2[, i]
   points(i + rnorm(n, 0, 0.01), ifelse(vals < 0, -1, 1) * log10(abs(vals)),
-    cex = 1.5, pch = 19, col = ifelse(vals < 0, "red", "black")
+    cex = 1.5, pch = 19, 
+    col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$black)
   )
 }
 axis(side = 1, at = 1:nlabs, label = labs, cex.axis = .9, padj = 0.5)
@@ -208,7 +210,9 @@ vals <- sapply(a[, "% Change"], function(x) {
   stringr::str_split(x, " [(]")[[1]][1]
 })
 vals <- table(cut(as.numeric(vals), breaks = c(-5000, seq(-100, 100, 20), 5000)))
-x <- barplot(vals, xaxt = "n", col = c(rep("red", 6), rep("black", 6)), ylab = "Num of populations")
+x <- barplot(vals, xaxt = "n", 
+             col = c(rep(nwctrends.palette$red, 6), 
+                     rep(nwctrends.palette$black, 6)), ylab = "Num of populations")
 labs <- paste(seq(-120, 100, 20), " to ", seq(-100, 120, 20), "%", sep = "")
 labs[1] <- "       < -100%"
 labs[12] <- "       > 100%"
@@ -239,14 +243,16 @@ for (i in 1:nrange) {
 # ylims=c( 0.95*min(vals1, vals2, na.rm=TRUE), 1.05*max(vals1, vals2, na.rm=TRUE) )
 ylims <- c(0.95 * min(-.2, unlist(vals), na.rm = TRUE), 1.05 * max(0.2, unlist(vals), na.rm = TRUE))
 plot(rep(1, dim(a)[1]), vals[[1]],
-  xlim = c(0.5, nrange + 0.5), ylim = ylims, col = ifelse(a[, 3] < 0, "red", "black"),
+  xlim = c(0.5, nrange + 0.5), ylim = ylims, 
+  col = ifelse(a[, 3] < 0, nwctrends.palette$red, nwctrends.palette$black),
   axes = FALSE, ylab = paste0(ntrend, "-year trend in log abundance"), xlab = "", cex = 1.5, pch = 19
 )
 axis(side = 2)
 box()
 if (nrange > 1) {
   for (i in 2:nrange) {
-    points(rep(i, dim(a)[1]), vals[[i]], col = ifelse(a[, yr.start + i - 1] <= 0, "red", "black"), cex = 1.5, pch = 19)
+    points(rep(i, dim(a)[1]), vals[[i]], 
+           col = ifelse(a[, yr.start + i - 1] <= 0, nwctrends.palette$red, nwctrends.palette$black), cex = 1.5, pch = 19)
   }
 }
 abline(h = 0)

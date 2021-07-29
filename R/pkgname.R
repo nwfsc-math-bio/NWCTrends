@@ -28,6 +28,12 @@
 #' csv file. Within that folder is  a `metadata.csv file` for the meta data from
 #'  the csv file and then there are individual files for each ESU/DPS within 
 #'  the csv file.
+#'  
+#' The palette can be changed by changing the values in `nwctrends.palette`. Before
+#' calling functions, issue a command such as `nwctrends.palette$red <- "#FB04E7"` to
+#' change the red to a pinkish color. Currently the colors are set to NOAA Fisheries
+#'  branded colors.
+
 #' 
 #' @seealso \link{data_setup}, \link{trend_15_tables}, \link{trend_fits}, \link{geomean_tables}.
 #' @keywords internal

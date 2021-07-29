@@ -171,9 +171,9 @@ Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit,
       y.low.total <- exp(y.low.total)
     }
     polygon(c(years.trim, rev(years.trim), years.trim[1]), c(y.high.total, rev(y.low.total), y.high.total[1]), col = "grey75", border = NA)
-    lines(years.trim, total.states, col = "black", lwd = 3)
-    points(years.trim, total.raw, pch=19, col="blue")
-    lines(years.trim, wild.states, col = "red", lwd = 1, lty = 1)
+    lines(years.trim, total.states, col = nwctrends.palette$black, lwd = 3)
+    points(years.trim, total.raw, pch=19, col = nwctrends.palette$blue)
+    lines(years.trim, wild.states, col = nwctrends.palette$red, lwd = 1, lty = 1)
     title(short.pops[pop], cex.main = 1)
   }
   mtext(esu, side = 3, outer = TRUE, line = 0, cex = 1.5)

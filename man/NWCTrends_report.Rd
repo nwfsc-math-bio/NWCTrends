@@ -20,7 +20,8 @@ NWCTrends_report(
   trend.table.control = list(year.ranges = list(1990:2005, 1999:2014)),
   output.type = c("html", "pdf", "word"),
   output.dir = "NWCTrend_output",
-  fit.all = FALSE
+  fit.all = FALSE,
+  show.all.fracwild = FALSE
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ demofiles are in inst/doc/demodata.}
 \item{output.dir}{Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.}
 
 \item{fit.all}{If FALSE, then user can enter what ESUs to fun.}
+
+\item{show.all.fracwild}{If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.}
 }
 \value{
 Plots and tables that are saved to doc/figures/ESU_figures.
@@ -90,9 +93,14 @@ By default, the plots and tables are saved in a directory
 named (and created if necessary) NWCTrend_output in your
 working directory.
 
-The look of the tables can be adjusted by passing in geomean.tables.control. See ?geomean_tables
+The look of the tables can be adjusted by passing in \code{geomean.tables.control}. See \code{?geomean_tables}
 for the elements that can be controlled. Note that if the defaults for
-geomean.table.control are changed, they must be also changed in geomean_tables.R
+\code{geomean.table.control} are changed, they must be also changed in \code{geomean_tables.R}.
+
+The palette can be changed by changing the values in \code{nwctrends.palette}. Before
+calling functions, issue a command such as \code{nwctrends.palette$red <- "#FB04E7"} to
+change the red to a pinkish color. Currently the colors are set to NOAA Fisheries
+branded colors.
 
 See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of
 smoothed total and wild spawners. See \code{\link{NWCTrends}} for a description of the package.

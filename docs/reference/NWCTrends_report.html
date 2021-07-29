@@ -93,7 +93,7 @@ at the command line." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NWCTrends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.26</span>
       </span>
     </div>
 
@@ -188,7 +188,8 @@ at the command line.</p>
   trend.table.control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>year.ranges <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1990</span><span class='op'>:</span><span class='fl'>2005</span>, <span class='fl'>1999</span><span class='op'>:</span><span class='fl'>2014</span><span class='op'>)</span><span class='op'>)</span>,
   output.type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"html"</span>, <span class='st'>"pdf"</span>, <span class='st'>"word"</span><span class='op'>)</span>,
   output.dir <span class='op'>=</span> <span class='st'>"NWCTrend_output"</span>,
-  fit.all <span class='op'>=</span> <span class='cn'>FALSE</span>
+  fit.all <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show.all.fracwild <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -251,6 +252,10 @@ demofiles are in inst/doc/demodata.</p></td>
       <th>fit.all</th>
       <td><p>If FALSE, then user can enter what ESUs to fun.</p></td>
     </tr>
+    <tr>
+      <th>show.all.fracwild</th>
+      <td><p>If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -273,9 +278,13 @@ specified as <code> model=list(Z="identity", R="diagonal and equal", U="unequal"
 </ol><p>By default, the plots and tables are saved in a directory
 named (and created if necessary) NWCTrend_output in your
 working directory.</p>
-<p>The look of the tables can be adjusted by passing in geomean.tables.control. See ?geomean_tables
+<p>The look of the tables can be adjusted by passing in <code>geomean.tables.control</code>. See <code>?geomean_tables</code>
 for the elements that can be controlled. Note that if the defaults for
-geomean.table.control are changed, they must be also changed in geomean_tables.R</p>
+<code>geomean.table.control</code> are changed, they must be also changed in <code>geomean_tables.R</code>.</p>
+<p>The palette can be changed by changing the values in <code>nwctrends.palette</code>. Before
+calling functions, issue a command such as <code>nwctrends.palette$red &lt;- "#FB04E7"</code> to
+change the red to a pinkish color. Currently the colors are set to NOAA Fisheries
+branded colors.</p>
 <p>See <code><a href='Status_trendfigure_multipanel.html'>Status_trendfigure_multipanel</a></code> for details on the main plot of
 smoothed total and wild spawners. See <code><a href='NWCTrends-package.html'>NWCTrends</a></code> for a description of the package.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

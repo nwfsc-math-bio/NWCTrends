@@ -89,7 +89,7 @@ productivity_plot <- function(esu, pops, total.fit, fracwild.fit, min.year = NUL
       if (n.end.data != n.end) vals[(length(t) - (n.end - n.end.data) + 1):(length(t))] <- NA
 
       barplot(vals,
-        col = ifelse(vals < 0, "red", "green"),
+        col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$green),
         ylab = "", xlab = "", ylim = ylims
       )
       par(new = TRUE)
@@ -119,7 +119,7 @@ productivity_plot <- function(esu, pops, total.fit, fracwild.fit, min.year = NUL
       xlim2 <- length(year1:year2) - 1 + xlim1
       xlims <- c(xlim1, xlim2)
       x <- barplot(vals,
-        col = ifelse(vals < 0, "red", "green"),
+        col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$green),
         ylab = "", xlab = "", ylim = ylims, xlim = xlims,
         axisnames = FALSE, width = 1, space = 0
       )
