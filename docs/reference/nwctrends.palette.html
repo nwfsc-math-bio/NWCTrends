@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Figure of the raw and smoothed fracwild estimates. — fracwild_multipanel • NWCTrends</title>
+<title>Palette — nwctrends.palette • NWCTrends</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,11 +48,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Figure of the raw and smoothed fracwild estimates. — fracwild_multipanel" />
-<meta property="og:description" content="This is the fracwild figure function. Not exported. It is used by NWCTrends_report and inst/doc/report_files/esu_report.Rmd.
-The dots are the raw fracwild values, the black
-line is the smoothed fracwild estimate.
-For the smoothed fracwild estimates, there is no data sharing across populations." />
+<meta property="og:title" content="Palette — nwctrends.palette" />
+<meta property="og:description" content="Definition of the colors used in the plots. To change the
+colors issue a command such as nwctrends.palette$red &amp;lt;- &quot;pink&quot;." />
 <meta property="og:image" content="https://nwfsc-timeseries.github.io/NWCTrends/logo.png" />
 
 
@@ -144,63 +142,33 @@ For the smoothed fracwild estimates, there is no data sharing across populations
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Figure of the raw and smoothed fracwild estimates.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nwfsc-timeseries/NWCTrends/blob/master/R/fracwild_plot_multipanel.R'><code>R/fracwild_plot_multipanel.R</code></a></small>
-    <div class="hidden name"><code>fracwild_multipanel.Rd</code></div>
+    <h1>Palette</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nwfsc-timeseries/NWCTrends/blob/master/R/nwctrends_palette.R'><code>R/nwctrends_palette.R</code></a></small>
+    <div class="hidden name"><code>nwctrends.palette.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is the fracwild figure function. Not exported. It is used by <code><a href='NWCTrends_report.html'>NWCTrends_report</a></code> and <code>inst/doc/report_files/esu_report.Rmd</code>.</p>
-<p>The dots are the raw fracwild values, the black
-line is the smoothed fracwild estimate.
-For the smoothed fracwild estimates, there is no data sharing across populations.</p>
+    <p>Definition of the colors used in the plots. To change the
+colors issue a command such as <code>nwctrends.palette$red &lt;- "pink"</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fracwild_multipanel</span><span class='op'>(</span>
-  <span class='va'>esu</span>,
-  <span class='va'>pops</span>,
-  <span class='va'>fracwild.fit</span>,
-  min.year <span class='op'>=</span> <span class='cn'>NULL</span>,
-  max.year <span class='op'>=</span> <span class='cn'>NULL</span>,
-  show.all <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>esu</th>
-      <td><p>The name of the ESU</p></td>
-    </tr>
-    <tr>
-      <th>pops</th>
-      <td><p>The population names that will be plotted (populations with too few data are eliminated)</p></td>
-    </tr>
-    <tr>
-      <th>fracwild.fit</th>
-      <td><p>fracwild fit returned by <code><a href='trend_fits.html'>trend_fits()</a></code></p></td>
-    </tr>
-    <tr>
-      <th>min.year</th>
-      <td><p>The x axis minimum.</p></td>
-    </tr>
-    <tr>
-      <th>max.year</th>
-      <td><p>The x axis maximum.</p></td>
-    </tr>
-    <tr>
-      <th>show.all</th>
-      <td><p>If there is no fracwild data for a population, should that population still have a fracwild plot, which will be blank.</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A plot</p>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+    <p>A list.</p><dl>
+<dt>red</dt><dd><p>#D44045</p></dd>
+<dt>green</dt><dd><p>#007934</p></dd>
+<dt>blue</dt><dd><p>#00467F</p></dd>
+<dt>black</dt><dd><p>#000000</p></dd>
+<dt>white</dt><dd><p>#FFFFFF</p></dd>
 
-    <p>Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov</p>
+</dl>
 
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>'nwctrends.palette'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘nwctrends.palette’ not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

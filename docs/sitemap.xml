@@ -37,6 +37,9 @@
     <loc>https://nwfsc-timeseries.github.io/NWCTrends//reference/geomean_table.html</loc>
   </url>
   <url>
+    <loc>https://nwfsc-timeseries.github.io/NWCTrends//reference/nwctrends.palette.html</loc>
+  </url>
+  <url>
     <loc>https://nwfsc-timeseries.github.io/NWCTrends//reference/productivity_plot.html</loc>
   </url>
   <url>
@@ -44,9 +47,6 @@
   </url>
   <url>
     <loc>https://nwfsc-timeseries.github.io/NWCTrends//reference/trend_fits.html</loc>
-  </url>
-  <url>
-    <loc>https://nwfsc-timeseries.github.io/NWCTrends//articles/PDF.pdf</loc>
   </url>
   <url>
     <loc>https://nwfsc-timeseries.github.io/NWCTrends//articles/demo-code.html</loc>
