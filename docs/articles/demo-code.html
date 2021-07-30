@@ -112,13 +112,13 @@
 <h2 class="hasAnchor">
 <a href="#instructions-to-run-a-demo" class="anchor"></a>Instructions to run a demo</h2>
 <p>To download a set of demo files, run the following code.</p>
-<pre><code>fpath &lt;- system.file("doc","demodata",package="NWCTrends")
+<pre><code>fpath &lt;- system.file("extdata", package="NWCTrends")
 file.copy(fpath, ".",recursive=TRUE)</code></pre>
-<p>This will create a folder called <code>demodata</code> in your directory.</p>
+<p>This will create a folder called <code>extdata</code> in your directory.</p>
 <p>To run a demo analysis and create a report, type</p>
 <pre><code><a href="https://nwfsc-timeseries.github.io/NWCTrends">library(NWCTrends)
 NWCTrends_report()</a></code></pre>
-<p>You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the <code>demodata</code> folder.</p>
+<p>You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the <code>extdata</code> folder.</p>
 <p>Type <code><a href="../reference/NWCTrends-package.html">?NWCTrends</a></code> for instructions for analyzing a data set. The data must be .csv file. Figures will be saved in the <strong>NWCTrends_output</strong> folder, created in your working directory.</p>
 </div>
 <div id="instructions-to-run-your-own-data" class="section level2">

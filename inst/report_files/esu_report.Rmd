@@ -1,0 +1,587 @@
+---
+title: "NWCTrends"
+header-includes:
+   - \usepackage{rotating}
+   - \usepackage{pdflscape}
+   - \usepackage{lscape}
+   - \usepackage{caption}
+output:
+  pdf_document:
+    fig_caption: yes
+---
+```{r, results='asis', echo=FALSE}
+if (output.type == "latex") {
+  cat("\\renewcommand{\\floatpagefraction}{0.7}")
+  cat("\\renewcommand{\\dblfloatpagefraction}{0.7}")
+}
+# figdir speced in NWCTrends_report()
+knitr::opts_chunk$set(
+  fig.path = figdir, dpi = 300,
+  echo = FALSE, warning = FALSE, message = FALSE
+)
+if (output.type == "word") options(knitr.table.format = "markdown")
+
+# set the fig.height for the figs that use pops.to.plot
+n <- length(pops.to.plot)
+if (n == 1) {
+  nplotcol <- 1
+}
+if (n == 2) {
+  nplotcol <- 2
+}
+if (n > 2 & n < 5) {
+  nplotcol <- 2
+}
+if (n > 4) nplotcol <- 4
+nplotrow <- ceiling(n / nplotcol)
+fig.height <- 11 - max(0, (6 - nplotrow) * 1.5)
+knitr::opts_chunk$set(fig.height = fig.height)
+# data
+matdat.spawners <- datalist$matdat.spawners
+matdat.wildspawners <- datalist$matdat.wildspawners
+matdat.fracwild <- datalist$matdat.fracwild
+esus <- datalist$metadat$ESU
+```
+```{r main_fig, echo=FALSE,fig.width=8.5}
+# source("risk_plot_multipanel.R")
+Status_trendfigure_multipanel(esuname, pops.to.plot, ifit.total, ifit.fracwild, plot.min.year = plot.min.year, plot.max.year = plot.max.year, same.scale = FALSE)
+df <- Status_trendfigure_multipanel_csv(esuname, pops.to.plot, ifit.total, ifit.fracwild)
+df <- data.frame(PopID = popid.to.plot, df)
+write.csv(df, file = paste0(figdir, "main_fig.csv"), row.names = FALSE)
+```
+
+```{r, results='asis', echo=FALSE}
+if (output.type == "latex") cat("\\newpage")
+```
+
+```{r fracwild_fig, echo=FALSE,fig.width=8.5}
+# source("fracwild_plot_multipanel.R")
+fracwild_multipanel(esuname, pops.to.plot, ifit.fracwild, min.year = plot.min.year, max.year = plot.max.year, show.all = show.all.fracwild)
+```
+
+```{r, results='asis', echo=FALSE}
+if (output.type == "latex") cat("\\newpage")
+```
+
+```{r, echo=FALSE}
+# set the fig.height for the figs that use pops.to.plot.wild
+n <- length(pops.to.plot.wild)
+if (n == 1) {
+  nplotcol <- 1
+}
+if (n == 2) {
+  nplotcol <- 2
+}
+if (n > 2 & n < 5) {
+  nplotcol <- 2
+}
+if (n > 4) nplotcol <- 4
+nplotrow <- ceiling(n / nplotcol)
+fig.height <- 11 - max(0, (6 - nplotrow) * 1.5)
+knitr::opts_chunk$set(fig.height = fig.height)
+```
+
+```{r productivity_fig, echo=FALSE,fig.width=8.5}
+# source("productivity_plot.R")
+# coho.chum=any(metadat$Species %in% c("Coho", "Chum", "coho", "chum"))
+coho.chum <- any(stringr::str_detect(tolower(metadat$Species), "coho")) |
+  any(stringr::str_detect(tolower(metadat$Species), "chum"))
+lag <- ifelse(coho.chum, 3, 4)
+# This plot is only for wild spawners
+if (length(pops.to.plot.wild) != 0) {
+  productivity_plot(esuname, pops.to.plot.wild, ifit.total, ifit.fracwild,
+    min.year = plot.min.year, max.year = plot.max.year, type = 1, lag = lag
+  )
+}
+```
+
+```{r, results='asis', echo=FALSE}
+if (output.type == "latex") cat("\\newpage")
+```
+
+```{r summary_fig, echo=FALSE,fig.width=8.5,fig.height=11}
+par(mfrow = c(3, 2))
+# source("fracwild_tables.R")
+total.spawners <- matdat.spawners[esus == esuname, , drop = FALSE]
+wild.spawners <- matdat.wildspawners[esus == esuname, , drop = FALSE]
+a <- fracwild_table(
+  wild.spawners[pops.to.plot, , drop = FALSE],
+  total.spawners[pops.to.plot, , drop = FALSE],
+  max.year = plot.max.year
+)
+
+nc <- ncol(a)
+nr <- nrow(a)
+barplot(table(cut(as.numeric(as.character((a[, nc - 1]))), seq(0, 1, .2)), exclude = NULL, useNA = "always"),
+  names.arg = c(as.character(seq(0.1, .9, 0.2)), "NA"),
+  ylab = "Count",
+  ylim = c(0, nr)
+)
+title(paste("Fraction wild across populations", colnames(a)[nc - 1]))
+
+barplot(table(cut(as.numeric(as.character((a[, nc]))), seq(0, 1, .2)), exclude = NULL, useNA = "always"),
+  names.arg = c(as.character(seq(0.1, .9, 0.2)), "NA"), ylab = "Count",
+  ylim = c(0, nr)
+)
+title(paste("Fraction wild across populations", colnames(a)[nc]))
+
+# source("geomean_tables.R")
+# a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)[[1]]
+a <- do.call(
+  geomean_table,
+  c(list(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild), geomean.table.control)
+)[[1]]
+vals1 <- vals2 <- c()
+geo.start <- max(which(names(a) %in% c("Population", "MPG"))) + 1
+geo.end <- which(names(a) == "% Change") - 1
+# This gets the values from the tables; matrix npops x ngeomeans
+for (i in 1:dim(a)[1]) {
+  vals1 <- rbind(vals1, as.numeric(apply(a[i, geo.start:geo.end], 2, function(x) {
+    stringr::str_split(x, " [(]")[[1]][1]
+  })))
+  vals <- apply(a[i, geo.start:geo.end], 2, function(x) {
+    stringr::str_split(x, " [(]")[[1]][2]
+  })
+  vals <- sapply(vals, function(x) {
+    stringr::str_split(x, "[)]")[[1]][1]
+  })
+  vals[stringr::str_detect(vals, "NA")] <- NA
+  vals2 <- rbind(vals2, as.numeric(vals))
+}
+labs <- colnames(a)[geo.start:geo.end]
+labs <- cbind(labs[2:length(labs)], labs[1:(length(labs) - 1)])
+labs <- apply(labs, 1, function(x) {
+  paste(x, collapse = "\n")
+})
+nlabs <- length(labs)
+plot(0:(nlabs + 1), 0:(nlabs + 1),
+  xlim = c(0, nlabs + 0.5), ylim = c(-1 * log10(1000), log10(1000)), type = "n",
+  axes = FALSE, ylab = "percent change (log scale)", xlab = ""
+)
+n <- dim(vals2)[1] # n pops
+for (i in 1:(dim(vals1)[2] - 1)) {
+  vals <- 100 * (vals1[, i + 1] - vals1[, i]) / vals1[, i]
+  points(i + rnorm(n, 0, 0.01), ifelse(vals < 0, -1, 1) * log10(abs(vals)),
+    cex = 1.5, pch = 19, 
+    col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$black)
+  )
+}
+axis(side = 1, at = 1:nlabs, label = labs, cex.axis = .9, padj = 0.5)
+labs <- c("-1000%", "-100%", "-10%", "0", "10%", "100%", "1000%")
+axis(side = 2, at = c(-3:-1, 0, 1:3), label = labs, cex.axis = .9, padj = 0.5, las = 2)
+abline(h = 0)
+abline(h = 1:3, lty = 2, col = "grey")
+abline(h = -1:-3, lty = 2, col = "grey")
+box()
+title("% change in 5-year geomean of smoothed wild spawners")
+labs <- colnames(a)[geo.start:geo.end]
+labs <- cbind(labs[2:length(labs)], labs[1:(length(labs) - 1)])
+labs <- apply(labs, 1, function(x) {
+  paste(x, collapse = "\n")
+})
+nlabs <- length(labs)
+
+plot(0:(nlabs + 1), 0:(nlabs + 1),
+  xlim = c(0, nlabs + 0.5), ylim = c(-1 * log10(1000), log10(1000)), type = "n", axes = FALSE,
+  ylab = "percent change (log scale)", xlab = ""
+)
+for (i in 1:(dim(vals1)[2] - 1)) {
+  n <- dim(vals2)[1]
+  vals <- 100 * (vals2[, i + 1] - vals2[, i]) / vals2[, i]
+  points(i + rnorm(n, 0, 0.01), ifelse(vals < 0, -1, 1) * log10(abs(vals)),
+    cex = 1.5, pch = 19, 
+    col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$black)
+  )
+}
+axis(side = 1, at = 1:nlabs, label = labs, cex.axis = .9, padj = 0.5)
+labs <- c("-1000%", "-100%", "-10%", "0", "10%", "100%", "1000%")
+axis(side = 2, at = c(-3:-1, 0, 1:3), label = labs, cex.axis = .9, padj = 0.5, las = 2)
+abline(h = 0)
+abline(h = 1, lty = 2)
+abline(h = 2, lty = 2)
+abline(h = 3, lty = 2)
+abline(h = -1, lty = 2)
+abline(h = -2, lty = 2)
+abline(h = -3, lty = 2)
+box()
+title("% change in 5-year geomean of smoothed spawners")
+
+vals <- sapply(a[, "% Change"], function(x) {
+  stringr::str_split(x, " [(]")[[1]][1]
+})
+vals <- table(cut(as.numeric(vals), breaks = c(-5000, seq(-100, 100, 20), 5000)))
+x <- barplot(vals, xaxt = "n", 
+             col = c(rep(nwctrends.palette$red, 6), 
+                     rep(nwctrends.palette$black, 6)), ylab = "Num of populations")
+labs <- paste(seq(-120, 100, 20), " to ", seq(-100, 120, 20), "%", sep = "")
+labs[1] <- "       < -100%"
+labs[12] <- "       > 100%"
+text(cex = 1, x = x - 1, y = -.1, labs, xpd = TRUE, srt = 45, pos = 1, offset = 1.5)
+if (geomean.table.control$change.col == "first.last") {
+  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between first and last 5-yr periods")
+}
+if (geomean.table.control$change.col == "last.two") {
+  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between last two 5-yr periods")
+}
+
+# source("trend_15_tables.R")
+# a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
+a <- do.call(
+  trend_15_table,
+  c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild), trend.table.control)
+)
+ntrend <- length(trend.table.control$year.ranges[[1]]) - 1
+nrange <- length(trend.table.control$year.ranges)
+yr.start <- max(which(names(a) %in% c("Population", "MPG"))) + 1
+vals <- list()
+for (i in 1:nrange) {
+  vals[[i]] <- as.numeric(sapply(a[, yr.start + i - 1], function(x) {
+    stringr::str_split(x, " [(]")[[1]][1]
+  }))
+}
+
+# ylims=c( 0.95*min(vals1, vals2, na.rm=TRUE), 1.05*max(vals1, vals2, na.rm=TRUE) )
+ylims <- c(0.95 * min(-.2, unlist(vals), na.rm = TRUE), 1.05 * max(0.2, unlist(vals), na.rm = TRUE))
+plot(rep(1, dim(a)[1]), vals[[1]],
+  xlim = c(0.5, nrange + 0.5), ylim = ylims, 
+  col = ifelse(a[, 3] < 0, nwctrends.palette$red, nwctrends.palette$black),
+  axes = FALSE, ylab = paste0(ntrend, "-year trend in log abundance"), xlab = "", cex = 1.5, pch = 19
+)
+axis(side = 2)
+box()
+if (nrange > 1) {
+  for (i in 2:nrange) {
+    points(rep(i, dim(a)[1]), vals[[i]], 
+           col = ifelse(a[, yr.start + i - 1] <= 0, nwctrends.palette$red, nwctrends.palette$black), cex = 1.5, pch = 19)
+  }
+}
+abline(h = 0)
+labs <- lapply(trend.table.control$year.ranges, function(x) {
+  paste(x[1], x[length(x)], sep = "-")
+})
+axis(side = 1, at = 1:length(labs), label = unlist(labs))
+title(paste0(ntrend, "-year trends in log wild spawners"))
+```
+
+```{r, results='asis', echo=FALSE}
+if (output.type == "latex") cat("\\newpage")
+```
+
+```{r smooth-geomean-table, results='asis', echo=FALSE}
+# source("geomean_tables.R")
+# a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)
+a <- do.call(
+  geomean_table,
+  c(list(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild), geomean.table.control)
+)
+if (output.type == "latex") { # tex file
+  alg <- paste0("rr|", strrep("c", ncol(a[[1]]) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a[[1]])) alg <- paste0("rr|c|", strrep("c", ncol(a[[1]]) - 2))
+  print(xtable::xtable(a[[1]], align = alg, digits = 0),
+    comment = FALSE, include.rownames = FALSE, table.placement = "p", type = output.type,
+    file = paste0(figdir, "/geomean_total_table.tex")
+  )
+}
+caption <- "5-year geometric mean of smoothed wild spawner estimate (smoothed total spawners times smoothed fracwild).  In parentheses, the 5-year geometric mean of smoothed total spawners (black thick line in graphs) is shown.  A row with only values in parentheses indicates that no fraction wild estimates were available for that population. Geometric mean was computed as the product of counts raised to the power 1/(number of values in band)."
+if (geomean.table.control$change.col == "first.last") {
+  chg.col <- "Percent change between first and last 5-year periods is shown on the far right. This will be blank if either the first or last column is blank (meaning no data)."
+}
+if (geomean.table.control$change.col == "last.two" | is.null(geomean.table.control$change.col)) {
+  chg.col <- "Percent change between the most recent two 5-year periods is shown on the far right. This will be blank if either column is blank (meaning no data)."
+}
+caption <- paste(caption, chg.col)
+if (output.type == "latex") {
+  cat("\\begin{landscape}")
+  alg <- paste0("rr|", strrep("c", ncol(a[[1]]) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a[[1]])) alg <- paste0("rr|c|", strrep("c", ncol(a[[1]]) - 2))
+  print(xtable::xtable(a[[1]], align = alg, digits = 0, caption = caption),
+    comment = FALSE, include.rownames = FALSE,
+    caption.placement = "top", table.placement = "p", type = output.type
+  )
+  cat("\\end{landscape}")
+}
+if (output.type == "html") {
+  cat("## 5-year geometric mean of smoothed wild spawners\n\n")
+  cat(caption)
+  clean.a <- data.frame(lapply(a[[1]], function(x) {
+    stringr::str_replace_all(x, "[)]", "\\\\)")
+  }))
+  colnames(clean.a) <- colnames(a[[2]])
+  knitr::kable(clean.a, format = "html") %>%
+    kableExtra::kable_styling(full_width = FALSE)
+}
+if (output.type == "word") {
+  cat("## 5-year geometric mean of smoothed wild spawners\n\n")
+  cat(caption)
+  clean.a <- data.frame(lapply(a[[1]], function(x) {
+    stringr::str_replace_all(x, "[)]", "\\\\)")
+  }))
+  colnames(clean.a) <- colnames(a[[1]])
+  knitr::kable(clean.a)
+}
+fun1 <- function(x) {
+  tmp <- stringr::str_split(x, " [(]")[[1]][2]
+  stringr::str_split(tmp, "[)]")[[1]][1]
+}
+aa <- a[[1]]
+aa <- aa[, 1:(ncol(aa) - 1)] # get rid of % change
+n <- ncol(aa)
+yr.start <- max(which(colnames(aa) %in% c("Population", "MPG"))) + 1
+for (i in yr.start:n) {
+  aa <- cbind(aa, unlist(lapply(aa[, i], function(x) {
+    stringr::str_split(x, " [(]")[[1]][1]
+  })))
+  aa <- cbind(aa, unlist(lapply(aa[, i], fun1)))
+  colnames(aa)[ncol(aa) - 1] <- paste(colnames(aa)[i], "wild")
+  colnames(aa)[ncol(aa)] <- paste(colnames(aa)[i], "total")
+}
+aa <- data.frame(PopID = popid.to.plot, aa)
+write.csv(aa, file = paste0(figdir, "smooth_geomean_table.csv"), row.names = FALSE)
+```
+
+```{r geomean_wild_table, results='asis', echo=FALSE}
+if (output.type == "latex") { # tex file
+  alg <- paste0("rr|", strrep("c", ncol(a[[2]]) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a[[2]])) alg <- paste0("rr|c|", strrep("c", ncol(a[[2]]) - 2))
+  print(xtable::xtable(a[[2]], align = alg, digits = 0),
+    comment = FALSE, include.rownames = FALSE, table.placement = "p", type = output.type,
+    file = paste0(figdir, "/geomean_wild_table.tex")
+  )
+}
+caption <- "5-year geometric mean of raw wild spawner counts. This is the raw total spawner count times the fraction wild estimate, if available.  In parentheses, 5-year geometric mean of raw total spawner counts is shown. A value only in parentheses means that a total spawner count was available but no or only one estimate of wild spawners available. The geometric mean was computed as the product of counts raised to the power 1 over the number of counts available (2 to 5). A minimum of 2 values were used to compute the geometric mean."
+if (geomean.table.control$change.col == "first.last") {
+  chg.col <- "Percent change between first and last 5-year periods is shown on the far right."
+}
+if (geomean.table.control$change.col == "last.two" | is.null(geomean.table.control$change.col)) {
+  chg.col <- "Percent change between the most recent two 5-year periods is shown on the far right."
+}
+caption <- paste(caption, chg.col)
+if (output.type == "latex") {
+  cat("\\begin{landscape}")
+  alg <- paste0("rr|", strrep("c", ncol(a[[2]]) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a[[2]])) alg <- paste0("rr|c|", strrep("c", ncol(a[[2]]) - 2))
+  print(xtable::xtable(a[[2]], align = alg, digits = 0, caption = caption),
+    comment = FALSE, include.rownames = FALSE,
+    caption.placement = "top", table.placement = "p", type = output.type
+  )
+  cat("\\end{landscape}")
+}
+if (output.type == "html") {
+  cat("## 5-year geometric mean of raw wild spawners\n\n")
+  cat(caption)
+  clean.a <- data.frame(lapply(a[[2]], function(x) {
+    stringr::str_replace_all(x, "[)]", "\\\\)")
+  }))
+  colnames(clean.a) <- colnames(a[[2]])
+  knitr::kable(clean.a, format = "html") %>%
+    kableExtra::kable_styling(full_width = FALSE)
+}
+if (output.type == "word") {
+  cat("## 5-year geometric mean of raw wild spawners\n\n")
+  cat(caption)
+  clean.a <- data.frame(lapply(a[[2]], function(x) {
+    stringr::str_replace_all(x, "[)]", "\\\\)")
+  }))
+  colnames(clean.a) <- colnames(a[[2]])
+  knitr::kable(clean.a)
+}
+fun1 <- function(x) {
+  tmp <- stringr::str_split(x, " [(]")[[1]][2]
+  stringr::str_split(tmp, "[)]")[[1]][1]
+}
+aa <- a[[2]]
+aa <- aa[, 1:(ncol(aa) - 1)] # get rid of % change
+n <- ncol(aa)
+yr.start <- max(which(colnames(aa) %in% c("Population", "MPG"))) + 1
+for (i in yr.start:n) {
+  aa <- cbind(aa, unlist(lapply(aa[, i], function(x) {
+    stringr::str_split(x, " [(]")[[1]][1]
+  })))
+  aa <- cbind(aa, unlist(lapply(aa[, i], fun1)))
+  colnames(aa)[ncol(aa) - 1] <- paste(colnames(aa)[i], "wild")
+  colnames(aa)[ncol(aa)] <- paste(colnames(aa)[i], "total")
+}
+aa <- data.frame(PopID = popid.to.plot, aa)
+write.csv(aa, file = paste0(figdir, "raw_geomean_table.csv"), row.names = FALSE)
+```
+
+```{r frac_wild_table, results='asis', echo=FALSE}
+# source("fracwild_tables.R")
+total.spawners <- matdat.spawners[esus == esuname, , drop = FALSE]
+wild.spawners <- matdat.wildspawners[esus == esuname, , drop = FALSE]
+a <- fracwild_table(
+  wild.spawners[pops.to.plot, , drop = FALSE],
+  total.spawners[pops.to.plot, , drop = FALSE],
+  max.year = plot.max.year
+)
+if (output.type == "latex") { # tex file
+  alg <- paste0("rr|", strrep("c", ncol(a) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a)) alg <- paste0("rr|c|", strrep("c", ncol(a) - 2))
+  print(xtable::xtable(a, align = alg, digits = 2),
+    comment = FALSE, include.rownames = FALSE, table.placement = "p", type = output.type,
+    file = paste0(figdir, "/fracwild_table.tex")
+  )
+}
+caption <- "5-year mean of fraction wild (sum of all estimates divided by the number of estimates).  Blanks (or NaN) mean no estimate available in that 5-year range."
+if (output.type == "latex") {
+  alg <- paste0("rr|", strrep("c", ncol(a) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a)) alg <- paste0("rr|c|", strrep("c", ncol(a) - 2))
+  print(xtable::xtable(a, align = alg, digits = 2, caption = caption),
+    comment = FALSE, include.rownames = FALSE,
+    caption.placement = "top", table.placement = "p", type = output.type
+  )
+}
+if (output.type == "html") {
+  cat("## Wild fraction\n\n")
+  cat(caption)
+  knitr::kable(a, digits = 2, format = "html") %>%
+    kableExtra::kable_styling(full_width = FALSE)
+}
+if (output.type == "word") {
+  cat("## Wild fraction\n\n")
+  cat(caption)
+  knitr::kable(a, digits = 2)
+}
+a <- data.frame(PopID = popid.to.plot, a)
+write.csv(a, file = paste0(figdir, "fracwild_table.csv"), row.names = FALSE)
+a <- fracwild_table(
+  wild.spawners[pops.to.plot, , drop = FALSE],
+  total.spawners[pops.to.plot, , drop = FALSE],
+  max.year = plot.max.year,
+  type = "geomean"
+)
+a <- data.frame(PopID = popid.to.plot, a)
+write.csv(a, file = paste0(figdir, "fracwild_geomean_table.csv"), row.names = FALSE)
+```
+
+```{r trend15_table_wild, results='asis', echo=FALSE}
+# source("trend_15_tables.R")
+# a=trend_15_table(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild)
+a <- do.call(
+  trend_15_table,
+  c(list(pops.to.plot.wild, mpg.to.plot.wild, ifit.total, ifit.fracwild), trend.table.control)
+)
+ntrend.lens <- unlist(lapply(trend.table.control$year.ranges, length))
+if (all(ntrend.lens == ntrend.lens[1])) ntrend <- ntrend.lens[1] - 1 else ntrend <- "Multi"
+nrange <- length(trend.table.control$year.ranges)
+if (output.type == "latex") { # tex file
+  alg <- paste0("rr|", strrep("c", ncol(a) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a)) alg <- paste0("rr|c|", strrep("c", ncol(a) - 2))
+  print(xtable::xtable(a, align = alg, digits = 2),
+    comment = FALSE, include.rownames = FALSE,
+    table.placement = "p", type = output.type,
+    file = paste0(figdir, "/trend_15_table.tex")
+  )
+}
+caption <- paste0(ntrend, "-year trends (slope) in log wild spawner abundance computed from a linear regression applied to the smoothed wild spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 wild spawner estimates and with at least 2 data points (actual data not estimates) in the first 5 years and last 5 years of the ", tolower(ntrend), "-year ranges are shown.")
+if (output.type == "latex") {
+  alg <- paste0("rr|", strrep("c", ncol(a) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a)) alg <- paste0("rr|c|", strrep("c", ncol(a) - 2))
+  print(xtable::xtable(a, align = alg, digits = 2, caption = caption),
+    comment = FALSE, include.rownames = FALSE,
+    caption.placement = "top", table.placement = "p", type = output.type
+  )
+}
+if (output.type == "html") {
+  cat(paste0("## ", ntrend, "-year trends in wild spawners\n\n"))
+  cat(caption)
+  knitr::kable(a, digits = 2, format = "html") %>%
+    kableExtra::kable_styling(full_width = FALSE)
+}
+if (output.type == "word") {
+  cat(paste0("## ", ntrend, "-year trends in wild spawners\n\n"))
+  cat(caption)
+  knitr::kable(a, digits = 2)
+}
+fun1 <- function(x) {
+  tmp <- stringr::str_split(x, " [(]")[[1]][2]
+  stringr::str_split(tmp, ", ")[[1]][1]
+}
+fun2 <- function(x) {
+  tmp <- stringr::str_split(x, " [(]")[[1]][2]
+  tmp <- stringr::str_split(tmp, ", ")[[1]][2]
+  stringr::str_split(tmp, "[)]")[[1]][1]
+}
+n <- ncol(a)
+yr.start <- max(which(names(a) %in% c("Population", "MPG"))) + 1
+for (i in yr.start:n) {
+  a <- cbind(a, unlist(lapply(a[, i], function(x) {
+    stringr::str_split(x, " [(]")[[1]][1]
+  })))
+  a <- cbind(a, unlist(lapply(a[, i], fun1)))
+  a <- cbind(a, unlist(lapply(a[, i], fun2)))
+  colnames(a)[ncol(a) - 2] <- paste(colnames(a)[i], "trend")
+  colnames(a)[ncol(a) - 1] <- paste(colnames(a)[i], "low.ci")
+  colnames(a)[ncol(a)] <- paste(colnames(a)[i], "up.ci")
+}
+a <- data.frame(PopID = popid.to.plot.wild, a)
+write.csv(a, file = paste0(figdir, "wild_trend_table.csv"), row.names = FALSE)
+```
+
+```{r trend15_table_total, results='asis', echo=FALSE}
+a <- do.call(
+  trend_15_table,
+  c(list(
+    pops.to.plot, mpg.to.plot, ifit.total,
+    ifit.fracwild
+  ), trend.table.control, wild = FALSE)
+)
+ntrend.lens <- unlist(lapply(trend.table.control$year.ranges, length))
+if (all(ntrend.lens == ntrend.lens[1])) ntrend <- ntrend.lens[1] - 1 else ntrend <- "Multi"
+nrange <- length(trend.table.control$year.ranges)
+if (output.type == "latex") { # tex file
+  alg <- paste0("rr|", strrep("c", ncol(a) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a)) alg <- paste0("rr|c|", strrep("c", ncol(a) - 2))
+  print(xtable::xtable(a, align = alg, digits = 2),
+    comment = FALSE, include.rownames = FALSE,
+    table.placement = "p", type = output.type,
+    file = paste0(figdir, "/trend_15_table_total.tex")
+  )
+}
+caption <- paste0(ntrend, "-year trends (slope) in log total spawner abundance computed from a linear regression applied to the smoothed total spawner log abundance estimate versus year. In parentheses are the upper and lower 95\\% CIs. Only populations with at least 4 spawner estimates and with at least 2 data points (actual data not estimates) in the first 5 years and last 5 years of the ", tolower(ntrend), "-year ranges are shown.")
+if (output.type == "latex") {
+  alg <- paste0("rr|", strrep("c", ncol(a) - 1)) # no MPG; need r for rowname even if not there
+  if ("MPG" %in% colnames(a)) alg <- paste0("rr|c|", strrep("c", ncol(a) - 2))
+  print(xtable::xtable(a, align = alg, digits = 2, caption = caption),
+    comment = FALSE, include.rownames = FALSE,
+    caption.placement = "top", table.placement = "p", type = output.type
+  )
+}
+if (output.type == "html") {
+  cat(paste0("## ", ntrend, "-year trends in total spawners\n\n"))
+  cat(caption)
+  knitr::kable(a, digits = 2, format = "html") %>%
+    kableExtra::kable_styling(full_width = FALSE)
+}
+if (output.type == "word") {
+  cat(paste0("## ", ntrend, "-year trends in total spawners\n\n"))
+  cat(caption)
+  knitr::kable(a, digits = 2)
+}
+fun1 <- function(x) {
+  tmp <- stringr::str_split(x, " [(]")[[1]][2]
+  stringr::str_split(tmp, ", ")[[1]][1]
+}
+fun2 <- function(x) {
+  tmp <- stringr::str_split(x, " [(]")[[1]][2]
+  tmp <- stringr::str_split(tmp, ", ")[[1]][2]
+  stringr::str_split(tmp, "[)]")[[1]][1]
+}
+n <- ncol(a)
+yr.start <- max(which(names(a) %in% c("Population", "MPG"))) + 1
+for (i in yr.start:n) {
+  a <- cbind(a, unlist(lapply(a[, i], function(x) {
+    stringr::str_split(x, " [(]")[[1]][1]
+  })))
+  a <- cbind(a, unlist(lapply(a[, i], fun1)))
+  a <- cbind(a, unlist(lapply(a[, i], fun2)))
+  colnames(a)[ncol(a) - 2] <- paste(colnames(a)[i], "trend")
+  colnames(a)[ncol(a) - 1] <- paste(colnames(a)[i], "low.ci")
+  colnames(a)[ncol(a)] <- paste(colnames(a)[i], "up.ci")
+}
+a <- data.frame(PopID = popid.to.plot, a)
+write.csv(a, file = paste0(figdir, "total_trend_table.csv"), row.names = FALSE)
+```
+
+\vfill
+\clearpage

@@ -32,7 +32,8 @@
 #' @param CI.sim If doing bootstrap CI, this is the number of bootstraps sent to \link[MARSS]{MARSSparamCIs}
 #' @param log.scale Put plot on log-scale versus the original raw scale
 #' @param same.scale Tweak the scale of wild and total in graph. Not used.
-
+#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
+#' 
 #' @return
 #' A plot
 #' @author
@@ -40,10 +41,12 @@
 #' @keywords report
 #' @seealso \code{\link{Status_trendfigure_multipanel_csv}}
 #' 
-Status_trendfigure_multipanel <- function(esu, pops, total.fit, fracwild.fit, 
+Status_trendfigure_multipanel <- function(esu, pops, 
+                                          total.fit, fracwild.fit, 
                                           plot.min.year = NULL, plot.max.year = NULL, 
                                           silent = FALSE, CI.method = "hessian", CI.sim = 1000, 
-                                          log.scale = FALSE, same.scale = FALSE) {
+                                          log.scale = FALSE, same.scale = FALSE,
+                                          nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
   if (!(CI.method %in% c("hessian", "parametric", "innovations", "none"))) {
     stop("Stopped in CSEGriskfigure because allowed CI methods are none, hessian, parametric, and innovations.\n", call. = FALSE)
   }

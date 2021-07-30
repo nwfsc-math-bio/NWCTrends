@@ -21,12 +21,14 @@ NWCTrends_report(
   output.type = c("html", "pdf", "word"),
   output.dir = "NWCTrend_output",
   fit.all = FALSE,
-  show.all.fracwild = FALSE
+  show.all.fracwild = FALSE,
+  nwctrends.palette = list(red = "#D44045", white = "#FFFFFF", green = "#007934", blue
+    = "#00467F", black = "#000000")
 )
 }
 \arguments{
 \item{inputfile}{comma-delimited data file (see demo files for the format).
-demofiles are in inst/doc/demodata.}
+demofiles are in inst/extdata.}
 
 \item{fit.min.year}{Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file. This is used to fit to a subset of the full data set.}
 
@@ -55,6 +57,8 @@ demofiles are in inst/doc/demodata.}
 \item{fit.all}{If FALSE, then user can enter what ESUs to fun.}
 
 \item{show.all.fracwild}{If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.}
+
+\item{nwctrends.palette}{The colors to use for the plots. The default is \code{list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")}}
 }
 \value{
 Plots and tables that are saved to doc/figures/ESU_figures.
@@ -66,11 +70,11 @@ Northwest Fisheries Science Center's Viability Report: "2015 Status review
 update for Pacific salmon and steelhead listed under the Endangered
 Species Act: Pacific Northwest".
 The 2015 NWFSC Viability Report can be viewed by typing
-\code{RShowDoc("2015_Status_Review_Update",package="NWCTrends")}
+\code{RShowDoc("2015_Status_Review_Update", package="NWCTrends")}
 at the command line. The report has a description of the
 methods used for computing the smoothed trend lines and the status metrics.
 A pdf of the methods is also available by typing
-\code{RShowDoc("Methods",package="NWCTrends")}
+\code{RShowDoc("Methods", package="NWCTrends")}
 at the command line.
 }
 \details{
@@ -97,9 +101,8 @@ The look of the tables can be adjusted by passing in \code{geomean.tables.contro
 for the elements that can be controlled. Note that if the defaults for
 \code{geomean.table.control} are changed, they must be also changed in \code{geomean_tables.R}.
 
-The palette can be changed by changing the values in \code{nwctrends.palette}. Before
-calling functions, issue a command such as \code{nwctrends.palette$red <- "#FB04E7"} to
-change the red to a pinkish color. Currently the colors are set to NOAA Fisheries
+The palette can be changed by passing in \code{nwctrends.palette}.
+Currently the colors are set to NOAA Fisheries
 branded colors.
 
 See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of

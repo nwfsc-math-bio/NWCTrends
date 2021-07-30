@@ -55,11 +55,11 @@ Northwest Fisheries Science Center's Viability Report: &quot;2015 Status review
 update for Pacific salmon and steelhead listed under the Endangered
 Species Act: Pacific Northwest&quot;.
 The 2015 NWFSC Viability Report can be viewed by typing
-RShowDoc(&quot;2015_Status_Review_Update&quot;,package=&quot;NWCTrends&quot;)
+RShowDoc(&quot;2015_Status_Review_Update&quot;, package=&quot;NWCTrends&quot;)
 at the command line. The report has a description of the
 methods used for computing the smoothed trend lines and the status metrics.
 A pdf of the methods is also available by typing
-RShowDoc(&quot;Methods&quot;,package=&quot;NWCTrends&quot;)
+RShowDoc(&quot;Methods&quot;, package=&quot;NWCTrends&quot;)
 at the command line." />
 <meta property="og:image" content="https://nwfsc-timeseries.github.io/NWCTrends/logo.png" />
 
@@ -164,11 +164,11 @@ Northwest Fisheries Science Center's Viability Report: "2015 Status review
 update for Pacific salmon and steelhead listed under the Endangered
 Species Act: Pacific Northwest".
 The 2015 NWFSC Viability Report can be viewed by typing
-<code><a href='https://rdrr.io/r/utils/RShowDoc.html'>RShowDoc("2015_Status_Review_Update",package="NWCTrends")</a></code>
+<code><a href='https://rdrr.io/r/utils/RShowDoc.html'>RShowDoc("2015_Status_Review_Update", package="NWCTrends")</a></code>
 at the command line. The report has a description of the
 methods used for computing the smoothed trend lines and the status metrics.
 A pdf of the methods is also available by typing
-<code><a href='https://rdrr.io/r/utils/RShowDoc.html'>RShowDoc("Methods",package="NWCTrends")</a></code>
+<code><a href='https://rdrr.io/r/utils/RShowDoc.html'>RShowDoc("Methods", package="NWCTrends")</a></code>
 at the command line.</p>
     </div>
 
@@ -189,7 +189,9 @@ at the command line.</p>
   output.type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"html"</span>, <span class='st'>"pdf"</span>, <span class='st'>"word"</span><span class='op'>)</span>,
   output.dir <span class='op'>=</span> <span class='st'>"NWCTrend_output"</span>,
   fit.all <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  show.all.fracwild <span class='op'>=</span> <span class='cn'>FALSE</span>
+  show.all.fracwild <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  nwctrends.palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>red <span class='op'>=</span> <span class='st'>"#D44045"</span>, white <span class='op'>=</span> <span class='st'>"#FFFFFF"</span>, green <span class='op'>=</span> <span class='st'>"#007934"</span>, blue
+    <span class='op'>=</span> <span class='st'>"#00467F"</span>, black <span class='op'>=</span> <span class='st'>"#000000"</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -198,7 +200,7 @@ at the command line.</p>
     <tr>
       <th>inputfile</th>
       <td><p>comma-delimited data file (see demo files for the format).
-demofiles are in inst/doc/demodata.</p></td>
+demofiles are in inst/extdata.</p></td>
     </tr>
     <tr>
       <th>fit.min.year</th>
@@ -256,6 +258,10 @@ demofiles are in inst/doc/demodata.</p></td>
       <th>show.all.fracwild</th>
       <td><p>If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.</p></td>
     </tr>
+    <tr>
+      <th>nwctrends.palette</th>
+      <td><p>The colors to use for the plots. The default is <code><a href='https://rdrr.io/r/base/list.html'>list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")</a></code></p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -281,9 +287,8 @@ working directory.</p>
 <p>The look of the tables can be adjusted by passing in <code>geomean.tables.control</code>. See <code>?geomean_tables</code>
 for the elements that can be controlled. Note that if the defaults for
 <code>geomean.table.control</code> are changed, they must be also changed in <code>geomean_tables.R</code>.</p>
-<p>The palette can be changed by changing the values in <code>nwctrends.palette</code>. Before
-calling functions, issue a command such as <code>nwctrends.palette$red &lt;- "#FB04E7"</code> to
-change the red to a pinkish color. Currently the colors are set to NOAA Fisheries
+<p>The palette can be changed by passing in <code>nwctrends.palette</code>.
+Currently the colors are set to NOAA Fisheries
 branded colors.</p>
 <p>See <code><a href='Status_trendfigure_multipanel.html'>Status_trendfigure_multipanel</a></code> for details on the main plot of
 smoothed total and wild spawners. See <code><a href='NWCTrends-package.html'>NWCTrends</a></code> for a description of the package.</p>

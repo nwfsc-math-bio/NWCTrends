@@ -24,9 +24,9 @@ The required data columns are (formatted exactly like so): YEAR, NUMBER_OF_SPAWN
 
 ## Example data file
 
-Example data files are in the "doc" folder of the installed package and in the "inst/doc" in the GitHub repository.
+Example data files are in the "extdata" folder of the installed package and in the "inst/extdata" folder in the GitHub repository.
 
 ```{r demo, echo=FALSE}
-fil <- system.file("doc", "demodata", "Demo_NWCTrends.csv", package="NWCTrends")
+fil <- system.file("extdata", "Demo_NWCTrends.csv", package="NWCTrends")
 cat(readLines(fil, n=5), sep="\n")
 ```

@@ -3,4 +3,7 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
-index.md
+^inst/doc_remove$
+index.md$
+inst/shinyapp_notes.txt$
+local_build_instructions.txt$

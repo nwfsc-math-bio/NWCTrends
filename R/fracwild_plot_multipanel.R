@@ -15,13 +15,19 @@
 #' @param min.year The x axis minimum.
 #' @param max.year The x axis maximum.
 #' @param show.all If there is no fracwild data for a population, should that population still have a fracwild plot, which will be blank.
+#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
+#' 
 #' @return
 #' A plot
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 #' @keywords report
 #' 
-fracwild_multipanel <- function(esu, pops, fracwild.fit, min.year = NULL, max.year = NULL, show.all = TRUE) {
+fracwild_multipanel <- function(esu, pops, 
+                                fracwild.fit, 
+                                min.year = NULL, max.year = NULL, 
+                                show.all = TRUE,
+                                nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
 
   # Set up the min and max years
   years <- as.numeric(colnames(fracwild.fit$fracwild.states))

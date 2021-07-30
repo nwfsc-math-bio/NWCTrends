@@ -10,11 +10,11 @@
 #' Species Act: Pacific Northwest".
 
 #' The 2015 NWFSC Viability Report can be viewed by typing
-#' \code{RShowDoc("2015_Status_Review_Update",package="NWCTrends")}
+#' \code{RShowDoc("2015_Status_Review_Update", package="NWCTrends")}
 #' at the command line. The report has a description of the
 #' methods used for computing the smoothed trend lines and the status metrics.
 #' A pdf of the methods is also available by typing
-#' \code{RShowDoc("Methods",package="NWCTrends")}
+#' \code{RShowDoc("Methods", package="NWCTrends")}
 #' at the command line.
 #'
 #' @details
@@ -41,16 +41,15 @@
 #' for the elements that can be controlled. Note that if the defaults for
 #' `geomean.table.control` are changed, they must be also changed in `geomean_tables.R`.
 #' 
-#' The palette can be changed by changing the values in `nwctrends.palette`. Before
-#' calling functions, issue a command such as `nwctrends.palette$red <- "#FB04E7"` to
-#' change the red to a pinkish color. Currently the colors are set to NOAA Fisheries
+#' The palette can be changed by passing in `nwctrends.palette`. 
+#' Currently the colors are set to NOAA Fisheries
 #'  branded colors.
 #' 
 #' See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of 
 #' smoothed total and wild spawners. See \code{\link{NWCTrends}} for a description of the package.
 #'
 #' @param inputfile comma-delimited data file (see demo files for the format).
-#' demofiles are in inst/doc/demodata.
+#' demofiles are in inst/extdata.
 #' @param fit.min.year Optional. You can set the earliest year to use when fitting the models. If not passed in, then the min.year is the earliest year in the data file. This is used to fit to a subset of the full data set.
 #' @param fit.max.year Optional. You can set the last year to use when fitting the models. If not passed in, then the max.year is the last year in the data file. This is used to use a subset of the full data set for fitting.
 #' @param model The structure of the MARSS model to use. Entered as a list specified as a \link[MARSS]{MARSS} model.
@@ -64,7 +63,8 @@
 #' @param output.type "html", "pdf", or "word" Format to produce the report in.
 #' @param output.dir Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.
 #' @param fit.all If FALSE, then user can enter what ESUs to fun. 
-#' @param show.all.fracwild If FALSE, then the populations with no fracwild information are not shown on the fracwild plots. 
+#' @param show.all.fracwild If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.
+#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
 #' 
 #' @return
 #' Plots and tables that are saved to doc/figures/ESU_figures.
@@ -88,14 +88,14 @@ NWCTrends_report <- function(
                              output.type = c("html", "pdf", "word"),
                              output.dir = "NWCTrend_output",
                              fit.all = FALSE,
-                             show.all.fracwild = FALSE) {
+                             show.all.fracwild = FALSE,
+                             nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
   output.type <- tolower(output.type)
   output.type <- match.arg(output.type)
   if (!is.logical(logit.fw)) stop("logit.fw must TRUE or FALSE")
   # Set up the directory locations
   if (!dir.exists(output.dir)) dir.create(output.dir)
-  instdocpath <- system.file("doc", package = "NWCTrends")
-  texdir <- system.file("doc", "report_files", package = "NWCTrends") # where the tex wrappers are
+  reportpath <- system.file("report_files", package = "NWCTrends")
   figdir <- paste0(file.path(getwd(), output.dir), "/")
 
   # Get the input data
@@ -206,12 +206,12 @@ NWCTrends_report <- function(
     outputfile <- paste0(figdir, outputfile, outputfile.ext)
 
     # this Rmd file will make all the figures with a default name
-    rmarkdown::render(paste0(instdocpath, "/report_files/esu_report.Rmd"), render.type,
+    rmarkdown::render(paste0(reportpath, "/esu_report.Rmd"), render.type,
       output_options = list(fig_caption = TRUE), quiet = TRUE
     )
 
     # this will rename the figures made to the ESU specific name
-    file.rename(paste0(paste0(instdocpath, "/report_files/esu_report"), outputfile.ext), outputfile)
+    file.rename(paste0(paste0(reportpath, "/esu_report"), outputfile.ext), outputfile)
     outnames <- paste(figdir, stringr::str_replace_all(esuname, "/", "-"), "-",
       c("summary_fig.pdf", "fracwild_fig.pdf", "main_fig.pdf", "productivity_fig.pdf", 
         "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
@@ -225,7 +225,7 @@ NWCTrends_report <- function(
                                "smooth_geomean_table.csv",
                                "raw_geomean_table.csv"), sep = "")
     tabnames <- c("trend_15_table", "geomean_wild_table", "geomean_total_table", "fracwild_table")
-    tabinnames <- paste0(texdir, "/wrapper_", tabnames, ".tex", sep = "")
+    tabinnames <- paste0(reportpath, "/wrapper_", tabnames, ".tex", sep = "")
     # oddly pdf created at base level not in folder where tex is
     taboutnames.tmp <- paste("wrapper_", tabnames, ".pdf", sep = "")
     taboutnames <- paste0(

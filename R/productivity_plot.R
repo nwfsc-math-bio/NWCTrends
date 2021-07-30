@@ -18,13 +18,19 @@
 #' @param max.year The x axis maximum. Last year for numerator.
 #' @param type The type of plot. Type 3: wild(t+1)/wild(t). Type 1: wild(t+lag)/total(t)
 #' @param lag The number of years prior to use in the denominator, e.g. spawnwers(year-lag). Note not used if type=3.
+#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
+#' 
 #' @return
 #' A plot
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 #' @keywords report
 #' 
-productivity_plot <- function(esu, pops, total.fit, fracwild.fit, min.year = NULL, max.year = NULL, type = 1, lag = 4) {
+productivity_plot <- function(esu, pops, 
+                              total.fit, fracwild.fit, 
+                              min.year = NULL, max.year = NULL, 
+                              type = 1, lag = 4,
+                              nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
   # Set up the min and max years
   years <- as.numeric(colnames(total.fit$model$data))
   if (is.null(min.year)) min.year <- years[1] + lag

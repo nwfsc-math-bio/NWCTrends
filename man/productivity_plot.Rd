@@ -12,7 +12,9 @@ productivity_plot(
   min.year = NULL,
   max.year = NULL,
   type = 1,
-  lag = 4
+  lag = 4,
+  nwctrends.palette = list(red = "#D44045", white = "#FFFFFF", green = "#007934", blue
+    = "#00467F", black = "#000000")
 )
 }
 \arguments{
@@ -31,6 +33,8 @@ productivity_plot(
 \item{type}{The type of plot. Type 3: wild(t+1)/wild(t). Type 1: wild(t+lag)/total(t)}
 
 \item{lag}{The number of years prior to use in the denominator, e.g. spawnwers(year-lag). Note not used if type=3.}
+
+\item{nwctrends.palette}{The colors to use for the plots. The default is \code{list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")}}
 }
 \value{
 A plot

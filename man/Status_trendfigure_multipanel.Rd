@@ -15,7 +15,9 @@ Status_trendfigure_multipanel(
   CI.method = "hessian",
   CI.sim = 1000,
   log.scale = FALSE,
-  same.scale = FALSE
+  same.scale = FALSE,
+  nwctrends.palette = list(red = "#D44045", white = "#FFFFFF", green = "#007934", blue
+    = "#00467F", black = "#000000")
 )
 }
 \arguments{
@@ -40,6 +42,8 @@ Status_trendfigure_multipanel(
 \item{log.scale}{Put plot on log-scale versus the original raw scale}
 
 \item{same.scale}{Tweak the scale of wild and total in graph. Not used.}
+
+\item{nwctrends.palette}{The colors to use for the plots. The default is \code{list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")}}
 }
 \value{
 A plot

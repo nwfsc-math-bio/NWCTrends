@@ -7,10 +7,10 @@
 #' under the Endangered Species Act: Pacific Northwest".
 #' @details
 #' The 2015 NWFSC PNW Salmonid Viability Report can be viewed by typing
-#' \code{RShowDoc("2015_Status_Review_Update",package="NWCTrends")}
+#' \code{RShowDoc("2015_Status_Review_Update", package="NWCTrends")}
 #' at the command line. The report has a description of the
 #' methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing 
-#' \code{RShowDoc("Methods",package="NWCTrends")}
+#' \code{RShowDoc("Methods", package="NWCTrends")}
 #' at the command line.
 #'
 #' The default model used to fit the data is that used in the
@@ -29,9 +29,8 @@
 #'  the csv file and then there are individual files for each ESU/DPS within 
 #'  the csv file.
 #'  
-#' The palette can be changed by changing the values in `nwctrends.palette`. Before
-#' calling functions, issue a command such as `nwctrends.palette$red <- "#FB04E7"` to
-#' change the red to a pinkish color. Currently the colors are set to NOAA Fisheries
+#' The palette can be changed by passing in `nwctrends.palette` to
+#'  `NWCTrends()`. Currently the colors are set to NOAA Fisheries
 #'  branded colors.
 
 #' 

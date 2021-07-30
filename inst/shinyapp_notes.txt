@@ -1,0 +1,28 @@
+  ## For shiny app ##
+  # User will choose an input file
+  # Choose fit.min.year and fit.max.year (based on min and max in data)
+  # Choose plot.min.year and plot.max.year  (based on min and max in data)
+  # min.data.points (a number between 2 and 10)
+  # other arguments can be left at defaults for now
+  
+  ## Output
+  # The user will want to be able to download the files produced for each ESU
+  # There are 9 produced.  See inst/doc/figures/ESU_figures
+  # where I have left in results from running one ESU.
+  # inst/doc/figures/ESU_figures
+  #
+  # But we will also want to show the output in tabs.  Since the user might want
+  # to run multiple ESUs, I'm not sure how best to do this.
+  # Run this NWCTrends_report(output.type="html")
+  # An html file will appear in inst/doc/figures/ESU_figures
+  #  Look at that.  I could create a nicer version of that.
+  #  Maybe a tab for each ESU and show that html file in each?
+  #  Note, the .html file will use the .png files in inst/doc/figure in that case
+  
+  ####### Replace with shiny app #################
+  # In the function argument, inputfile is defined as file.choose()
+  #demo file here
+  # "inst/appdir/demofiles/PNW_Listed_Salmonids_2016.csv"
+  filetype=stringr::str_split(inputfile,"[.]")[[1]]
+  filetype=filetype[length(filetype)]
+  ##############################################

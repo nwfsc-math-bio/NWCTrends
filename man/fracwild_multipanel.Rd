@@ -10,7 +10,9 @@ fracwild_multipanel(
   fracwild.fit,
   min.year = NULL,
   max.year = NULL,
-  show.all = TRUE
+  show.all = TRUE,
+  nwctrends.palette = list(red = "#D44045", white = "#FFFFFF", green = "#007934", blue
+    = "#00467F", black = "#000000")
 )
 }
 \arguments{
@@ -25,6 +27,8 @@ fracwild_multipanel(
 \item{max.year}{The x axis maximum.}
 
 \item{show.all}{If there is no fracwild data for a population, should that population still have a fracwild plot, which will be blank.}
+
+\item{nwctrends.palette}{The colors to use for the plots. The default is \code{list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")}}
 }
 \value{
 A plot

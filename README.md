@@ -27,17 +27,17 @@ tinytex::install_tinytex()
 
 To download a set of demo files, run the following code.
 ```
-fpath <- system.file("doc","demodata",package="NWCTrends")
+fpath <- system.file("extdata", package="NWCTrends")
 file.copy(fpath, ".",recursive=TRUE)
 ```
-This will create a folder called `demodata` in your directory.
+This will create a folder called `extdata` in your directory.
 
 To run a demo analysis and create a report, type 
 ```
 library(NWCTrends)
 NWCTrends_report()
 ```
-You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the `demodata` folder.
+You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the `extdata` folder.
 
 Type `?NWCTrends` for instructions for analyzing a data set. The data must be .csv file. Figures will be saved in the **NWCTrends_output** folder, created in your working directory.  
 
@@ -76,24 +76,24 @@ NWCTrends_report(fit.min.year=1990, fit.max.year=2019,
 
 The 2015 Status Review report can be viewed from the R command line by typing
 ```
-RShowDoc("2015 Status Review Update",package="NWCTrends")
+RShowDoc("2015_Status_Review_Update", package="NWCTrends")
 ```
-after installing the NWCTrends package. Or go to the GitHub repository and navigate to the "\inst\doc" folder on GitHub. The **NWCTrends** version used was v1.0.
+after installing the NWCTrends package. Or go to the GitHub repository and navigate to the "vignettes" folder on GitHub. The **NWCTrends** version used was v1.0.
 
 A pdf of the methods alone is also available by typing
 ```
-RShowDoc("Methods",package="NWCTrends")
+RShowDoc("Methods", package="NWCTrends")
 ```
-at the command line or navigate to the "\inst\doc" folder on GitHub.
+at the command line or navigate to the "vignettes" folder on GitHub.
 
 ## Example output
 
 
-A report will be generated with figures and tables. [Example report](inst/doc/example.html)
+A report will be generated with figures and tables. [Example report](man/figures/example.html)
 
 The main figure shows the estimated trends.
 
-![](inst/doc/main_fig.jpg)
+![](man/figures/main_fig.jpg)
 
 ***
 
