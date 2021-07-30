@@ -69,11 +69,11 @@ trend_15_table <- function(pops, mpg, total.fit, fracwild.fit, year.ranges = lis
         trend <- NA
         tabtrend[pop, (i + 2)] <- navalue
       } else {
-        tmp.lm <- lm(tmp ~ years)
-        trend <- coef(tmp.lm)[2]
+        tmp.lm <- stats::lm(tmp ~ years)
+        trend <- stats::coef(tmp.lm)[2]
         tabtrend[pop, (i + 2)] <- paste(round(trend, digits = 2), " (",
-                                        round(confint(tmp.lm)[2, 1], digits = 2), ", ",
-                                        round(confint(tmp.lm)[2, 2], digits = 2), ")",
+                                        round(stats::confint(tmp.lm)[2, 1], digits = 2), ", ",
+                                        round(stats::confint(tmp.lm)[2, 2], digits = 2), ")",
                                         sep = ""
         )
       }

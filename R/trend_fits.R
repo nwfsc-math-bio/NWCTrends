@@ -15,7 +15,7 @@
 #' This function produces a states estimate and a fracwild fit;
 #'
 #' @param datalist The list output by data_detup()
-#' @param ouputfile The name of the RData file to save the results to.
+#' @param outputfile The name of the RData file to save the results to.
 #' @param wild wild=TRUE means to do the fit on fracwild*total versus on the total spawners.
 #' @param model If null, a set of models is fit. Otherwise pass in a model specified as a list in MARSS format.
 #' @param logit.fw If TRUE fit to logit of fracwild instead of the raw percentages.
@@ -209,7 +209,7 @@ trend_fits <- function(datalist,
     } else {
       Q.type <- "corr by run type"
     }
-    if (is.null(fit$num.params)) fit$num.params <- length(coef(fit, type = "vector"))
+    if (is.null(fit$num.params)) fit$num.params <- length(stats::coef(fit, type = "vector"))
     if (is.null(fit$AIC)) fit$AIC <- -2 * fit$logLik + 2 * fit$num.params
     if (is.null(fit$AICc)) fit$AICc <- fit$AIC + 2 * fit$num.params * (fit$num.params + 1) / (sum(!is.na(fit$model$data)) - fit$num.params - 1)
     tmp <- data.frame(model = 1, m = dim(fit$states)[1], n = dim(fit$model$data)[1], Q = Q.type, R = model$R, U = model$U, LL = fit$logLik, AICc = fit$AICc, k = fit$num.params, converg = fit$convergence)
@@ -217,7 +217,7 @@ trend_fits <- function(datalist,
     for (modn in 2:n.models) {
       fit <- fits[[i]][[modn]]$fit
       model <- fits[[i]][[modn]]$model
-      if (is.null(fit$num.params)) fit$num.params <- length(coef(fit, type = "vector"))
+      if (is.null(fit$num.params)) fit$num.params <- length(stats::coef(fit, type = "vector"))
       if (is.null(fit$AIC)) fit$AIC <- -2 * fit$logLik + 2 * fit$num.params
       if (is.null(fit$AICc)) fit$AICc <- fit$AIC + 2 * fit$num.params * (fit$num.params + 1) / (sum(!is.na(fit$model$data)) - fit$num.params - 1)
       if (!is.matrix(model$Q)) {

@@ -6,3 +6,5 @@ NWCTrends_report
 ## register S3 methods
 
 ## Imports
+importFrom("graphics", "axis", "barplot", "lines", "mtext", "par",
+               "points", "polygon", "title")

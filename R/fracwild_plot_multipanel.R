@@ -11,7 +11,6 @@
 #'
 #' @param esu The name of the ESU
 #' @param pops The population names that will be plotted (populations with too few data are eliminated)
-#' @param total.fit total fit returned by `trend_fits()`
 #' @param fracwild.fit fracwild fit returned by `trend_fits()`
 #' @param min.year The x axis minimum.
 #' @param max.year The x axis maximum.

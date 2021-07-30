@@ -54,7 +54,7 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
     dat <- dat[,!stringr::str_detect(colnames(dat), "X[.]")]
   }
   if (stringr::str_sub(inputfile, -4) == ".csv"){
-    dat <- read.csv(inputfile, header = TRUE, na.strings = c("-99", "-99.00", "-99.0", "-99.000"), stringsAsFactors = FALSE)
+    dat <- utils::read.csv(inputfile, header = TRUE, na.strings = c("-99", "-99.00", "-99.0", "-99.000"), stringsAsFactors = FALSE)
   }
 
   # Check that all required columns are present

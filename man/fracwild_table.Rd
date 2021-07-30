@@ -23,6 +23,8 @@ fracwild_table(
 \item{lenbands}{Number of years to average}
 
 \item{nbands}{Number of averages to show.}
+
+\item{type}{Type of average: mean or geomean.}
 }
 \value{
 a data frame of the formatted table

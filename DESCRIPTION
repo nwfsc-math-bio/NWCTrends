@@ -2,15 +2,20 @@ Package: NWCTrends
 Type: Package
 Title: Standardized Trend Metrics for Salmonid Populations
 Version: 1.26
-Date: 2021-07-04
-Depends: R (>= 2.15.0), 
+Date: 2021-07-27
+Depends: R (>= 3.5.0)
+Imports:
+    stats,
+    graphics,
+    utils,
+    tools,
     stringr (>= 1.4.0), 
-    rmarkdown (>= 1.12), 
     MARSS (>= 3.10.10), 
     xtable (>= 1.8-4), 
-    knitr (>= 1.22), 
     kableExtra (>= 1.1.0),
-    gdata
+    gdata,
+    knitr,
+    rmarkdown
 Authors@R: person("Holmes", "Elizabeth", , "eli.holmes@noaa.gov", role = c("aut", "cre"))
 URL: https://nwfsc-timeseries.github.io/NWCTrends, https://github.com/nwfsc-timeseries/NWCTrends
 BugReports: https://github.com/nwfsc-timeseries/NWCTrends/issues

@@ -16,6 +16,8 @@ trend_fits(
 \arguments{
 \item{datalist}{The list output by data_detup()}
 
+\item{outputfile}{The name of the RData file to save the results to.}
+
 \item{wild}{wild=TRUE means to do the fit on fracwild*total versus on the total spawners.}
 
 \item{model}{If null, a set of models is fit. Otherwise pass in a model specified as a list in MARSS format.}
@@ -23,8 +25,6 @@ trend_fits(
 \item{logit.fw}{If TRUE fit to logit of fracwild instead of the raw percentages.}
 
 \item{min.years}{Only populations with at least min.years will be used in the fitting.}
-
-\item{ouputfile}{The name of the RData file to save the results to.}
 }
 \value{
 A list with three items:

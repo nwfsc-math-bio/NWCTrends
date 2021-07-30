@@ -25,8 +25,6 @@ fracwild_multipanel(
 \item{max.year}{The x axis maximum.}
 
 \item{show.all}{If there is no fracwild data for a population, should that population still have a fracwild plot, which will be blank.}
-
-\item{total.fit}{total fit returned by \code{trend_fits()}}
 }
 \value{
 A plot

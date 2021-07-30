@@ -15,6 +15,7 @@
 #' @param max.year The last year to use when constructing the bands
 #' @param lenbands Number of years to average
 #' @param nbands Number of averages to show.
+#' @param type Type of average: mean or geomean.
 #' 
 #' @return a data frame of the formatted table
 #' @author

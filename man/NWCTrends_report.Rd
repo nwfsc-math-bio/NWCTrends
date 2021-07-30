@@ -66,7 +66,7 @@ Northwest Fisheries Science Center's Viability Report: "2015 Status review
 update for Pacific salmon and steelhead listed under the Endangered
 Species Act: Pacific Northwest".
 The 2015 NWFSC Viability Report can be viewed by typing
-\code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
+\code{RShowDoc("2015_Status_Review_Update",package="NWCTrends")}
 at the command line. The report has a description of the
 methods used for computing the smoothed trend lines and the status metrics.
 A pdf of the methods is also available by typing

@@ -10,7 +10,7 @@
 #' Species Act: Pacific Northwest".
 
 #' The 2015 NWFSC Viability Report can be viewed by typing
-#' \code{RShowDoc("2015 Status Review Update",package="NWCTrends")}
+#' \code{RShowDoc("2015_Status_Review_Update",package="NWCTrends")}
 #' at the command line. The report has a description of the
 #' methods used for computing the smoothed trend lines and the status metrics.
 #' A pdf of the methods is also available by typing
@@ -142,7 +142,7 @@ NWCTrends_report <- function(
     fits <- fitslist$fits
   }
   metadat <- datalist$metadat
-  write.csv(metadat, file = paste0(figdir, "metadat.csv"), row.names = FALSE)
+  utils::write.csv(metadat, file = paste0(figdir, "metadat.csv"), row.names = FALSE)
 
   if (output.type == "pdf") output.type <- "latex" # this is what R wants for pdf
   if (output.type == "latex") render.type <- "pdf_document"
@@ -238,7 +238,7 @@ NWCTrends_report <- function(
         file.rename(innames[i], outnames[i])
       } # rename the tmp fig to fig with ESU
       for (i in 1:length(taboutnames)) {
-        texi2pdf(tabinnames[i], clean = TRUE) # create tables from tex
+        tools::texi2pdf(tabinnames[i], clean = TRUE) # create tables from tex
         file.remove(paste(figdir, tabnames[i], ".tex", sep = "")) # remove the tex file (only wrapper needed it)
         file.rename(taboutnames.tmp[i], taboutnames[i]) # rename table pdf
       }
