@@ -22,3 +22,6 @@ This should still work
 remotes::install_github(build_vignettes = TRUE)
 ```
 It will warn that `inst/doc` will be deleted but I think I have the vignettes `.install_extras` set up so that the installed `inst/doc` will be the same as the `inst/doc` folder created by the above code.
+
+My post on this
+https://community.rstudio.com/t/browsevignettes-mypackage-saying-no-vignettes-found/68656
