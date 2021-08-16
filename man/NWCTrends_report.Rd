@@ -22,8 +22,7 @@ NWCTrends_report(
   output.dir = "NWCTrend_output",
   fit.all = FALSE,
   show.all.fracwild = FALSE,
-  nwctrends.palette = list(red = "#D44045", white = "#FFFFFF", green = "#007934", blue
-    = "#00467F", black = "#000000")
+  nwctrends.options = NULL
 )
 }
 \arguments{
@@ -58,7 +57,7 @@ demofiles are in inst/extdata.}
 
 \item{show.all.fracwild}{If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.}
 
-\item{nwctrends.palette}{The colors to use for the plots. The default is \code{list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")}}
+\item{nwctrends.options}{A list of plot options to change the appearance (colors, line types, line widths, point types, etc) in the plots. See \code{\link{nwctrends.options}} for a description of the options.}
 }
 \value{
 Plots and tables that are saved to doc/figures/ESU_figures.
@@ -101,12 +100,36 @@ The look of the tables can be adjusted by passing in \code{geomean.tables.contro
 for the elements that can be controlled. Note that if the defaults for
 \code{geomean.table.control} are changed, they must be also changed in \code{geomean_tables.R}.
 
-The palette can be changed by passing in \code{nwctrends.palette}.
-Currently the colors are set to NOAA Fisheries
-branded colors.
+The look of the plots (line widths, types, colors, point types, etc) can be changed by passing in \code{nwctrends.options}. These
+are passed in as a list, e.g. \code{nwctrends.options = list(main.total.col = "blue")}. See
+\code{\link{nwctrends.options}} for a list of the plot variables that can be changed.
 
 See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of
 smoothed total and wild spawners. See \code{\link{NWCTrends}} for a description of the package.
+}
+\examples{
+\dontrun{
+# Example of the typical arguments that you will want to set
+library(NWCTrends)
+NWCTrends_report(inputfile="thedata.csv",
+            fit.min.year=1949, fit.max.year = 2019,
+            plot.min.year=1980, plot.max.year = 2019,
+            geomean.table.control=list(
+                   min.year = 1990, max.year = 2019, lenbands = 5, 
+                   min.band.points = 2, change.col="last.two"), 
+            trend.table.control=list(
+                   year.ranges = list(1990:2005, 2004:2019)),
+            output.type = "word",
+            output.dir = "Output"
+            )
+     
+# Example of setting the plot variables to customize the look of the plots
+# Here the data points and wild line for the main plot are changed.
+NWCTrends_report(inputfile="thedata.csv",
+            nwctrends.options = list(main.raw.pch = 1, main.raw.col = "black",
+                                     main.wild.lty = 2, main.wild.col = "grey75")
+                )
+}
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.

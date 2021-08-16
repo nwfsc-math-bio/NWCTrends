@@ -13,8 +13,7 @@ productivity_plot(
   max.year = NULL,
   type = 1,
   lag = 4,
-  nwctrends.palette = list(red = "#D44045", white = "#FFFFFF", green = "#007934", blue
-    = "#00467F", black = "#000000")
+  nwctrends.options = NULL
 )
 }
 \arguments{
@@ -34,7 +33,9 @@ productivity_plot(
 
 \item{lag}{The number of years prior to use in the denominator, e.g. spawnwers(year-lag). Note not used if type=3.}
 
-\item{nwctrends.palette}{The colors to use for the plots. The default is \code{list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")}}
+\item{nwctrends.options}{A list of plot options to change the appearance (colors, line types, line widths, point types, etc)
+in the plots. See \code{\link{nwctrends.options}} for a description of the options. Note, if \code{risk_plot_multipanel()} is
+called from \code{\link{NWCTrends_report}()} then \code{nwctrends.options} has already been set and can be left at \code{NULL} in this call.}
 }
 \value{
 A plot

@@ -1,5 +1,11 @@
 # NWCTrends
 
+# Version 1.28
+
+I revamped how to customize plots and palettes. I no longer use `nwctrends.palette`. Instead I use `pkg_globals` in the package environment. The user passes in `nwctrends.options` as a list with any of the plot options that they want to update (e.g. line color or line type or point type). See the new `onLoad.R` file and the `nwctrends_options.R` file. None `.onLoad()` is run whether the package is loaded via `library()` or via `NWCTrends::`.
+
+Added some examples to `NWCTrends_report.R`.
+
 # Version 1.27
 
 I was overloading the `inst/doc` folder with non-vignette material. I moved the needed report files (Rmd and tex) to `inst/report_files` and the demo data to `inst/extdata`. The `inst/doc` folder now only has the two vignettes and the documentation PDFs. 

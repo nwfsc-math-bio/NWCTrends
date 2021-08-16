@@ -16,8 +16,7 @@ Status_trendfigure_multipanel(
   CI.sim = 1000,
   log.scale = FALSE,
   same.scale = FALSE,
-  nwctrends.palette = list(red = "#D44045", white = "#FFFFFF", green = "#007934", blue
-    = "#00467F", black = "#000000")
+  nwctrends.options = NULL
 )
 }
 \arguments{
@@ -43,7 +42,9 @@ Status_trendfigure_multipanel(
 
 \item{same.scale}{Tweak the scale of wild and total in graph. Not used.}
 
-\item{nwctrends.palette}{The colors to use for the plots. The default is \code{list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")}}
+\item{nwctrends.options}{A list of plot options to change the appearance (colors, line types, line widths, point types, etc)
+in the plots. See \code{\link{nwctrends.options}} for a description of the options. Note, if \code{risk_plot_multipanel()} is
+called from \code{\link{NWCTrends_report}()} then \code{nwctrends.options} has already been set and can be left at \code{NULL} in this call.}
 }
 \value{
 A plot
@@ -68,7 +69,7 @@ estimates can be made even for missing years at the beginning of the time series
 is data for those early years in other populations.
 }
 \seealso{
-\code{\link{Status_trendfigure_multipanel_csv}}
+\code{\link{Status_trendfigure_multipanel_csv}}, \code{\link{NWCTrends_report}()}
 }
 \author{
 Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov

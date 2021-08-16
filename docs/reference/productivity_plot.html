@@ -86,7 +86,7 @@ In the Viability Report, type=1 and the lag is set to 3 or 4 (depending on speci
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NWCTrends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.28</span>
       </span>
     </div>
 
@@ -167,8 +167,7 @@ estimate.</p>
   max.year <span class='op'>=</span> <span class='cn'>NULL</span>,
   type <span class='op'>=</span> <span class='fl'>1</span>,
   lag <span class='op'>=</span> <span class='fl'>4</span>,
-  nwctrends.palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>red <span class='op'>=</span> <span class='st'>"#D44045"</span>, white <span class='op'>=</span> <span class='st'>"#FFFFFF"</span>, green <span class='op'>=</span> <span class='st'>"#007934"</span>, blue
-    <span class='op'>=</span> <span class='st'>"#00467F"</span>, black <span class='op'>=</span> <span class='st'>"#000000"</span><span class='op'>)</span>
+  nwctrends.options <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -207,8 +206,10 @@ estimate.</p>
       <td><p>The number of years prior to use in the denominator, e.g. spawnwers(year-lag). Note not used if type=3.</p></td>
     </tr>
     <tr>
-      <th>nwctrends.palette</th>
-      <td><p>The colors to use for the plots. The default is <code><a href='https://rdrr.io/r/base/list.html'>list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")</a></code></p></td>
+      <th>nwctrends.options</th>
+      <td><p>A list of plot options to change the appearance (colors, line types, line widths, point types, etc)
+in the plots. See <code><a href='nwctrends.options.html'>nwctrends.options</a></code> for a description of the options. Note, if <code>risk_plot_multipanel()</code> is
+called from <code><a href='NWCTrends_report.html'>NWCTrends_report</a>()</code> then <code>nwctrends.options</code> has already been set and can be left at <code>NULL</code> in this call.</p></td>
     </tr>
     </table>
 

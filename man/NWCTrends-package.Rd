@@ -35,9 +35,9 @@ csv file. Within that folder is  a \verb{metadata.csv file} for the meta data fr
 the csv file and then there are individual files for each ESU/DPS within
 the csv file.
 
-The palette can be changed by passing in \code{nwctrends.palette} to
-\code{NWCTrends()}. Currently the colors are set to NOAA Fisheries
-branded colors.
+The look of the plots (line widths, types, colors, point types, etc) can be changed by
+passing in \code{\link{nwctrends.options}} to
+\code{\link{NWCTrends_report}()}.
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. National Marine Fisheries Service, Northwest Fisheries Science Center.

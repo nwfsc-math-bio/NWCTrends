@@ -29,10 +29,9 @@
 #'  the csv file and then there are individual files for each ESU/DPS within 
 #'  the csv file.
 #'  
-#' The palette can be changed by passing in `nwctrends.palette` to
-#'  `NWCTrends()`. Currently the colors are set to NOAA Fisheries
-#'  branded colors.
-
+#' The look of the plots (line widths, types, colors, point types, etc) can be changed by 
+#' passing in \code{\link{nwctrends.options}} to
+#' \code{\link{NWCTrends_report}()}.
 #' 
 #' @seealso \link{data_setup}, \link{trend_15_table}, \link{trend_fits}, \link{geomean_table}.
 #' @keywords internal

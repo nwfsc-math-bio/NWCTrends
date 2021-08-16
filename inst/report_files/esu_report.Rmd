@@ -42,7 +42,7 @@ matdat.wildspawners <- datalist$matdat.wildspawners
 matdat.fracwild <- datalist$matdat.fracwild
 esus <- datalist$metadat$ESU
 ```
-```{r main_fig, echo=FALSE,fig.width=8.5}
+```{r main_fig, echo=FALSE, fig.width=8.5}
 # source("risk_plot_multipanel.R")
 Status_trendfigure_multipanel(esuname, pops.to.plot, ifit.total, ifit.fracwild, plot.min.year = plot.min.year, plot.max.year = plot.max.year, same.scale = FALSE)
 df <- Status_trendfigure_multipanel_csv(esuname, pops.to.plot, ifit.total, ifit.fracwild)
@@ -54,7 +54,7 @@ write.csv(df, file = paste0(figdir, "main_fig.csv"), row.names = FALSE)
 if (output.type == "latex") cat("\\newpage")
 ```
 
-```{r fracwild_fig, echo=FALSE,fig.width=8.5}
+```{r fracwild_fig, echo=FALSE, fig.width=8.5}
 # source("fracwild_plot_multipanel.R")
 fracwild_multipanel(esuname, pops.to.plot, ifit.fracwild, min.year = plot.min.year, max.year = plot.max.year, show.all = show.all.fracwild)
 ```
@@ -125,8 +125,10 @@ barplot(table(cut(as.numeric(as.character((a[, nc]))), seq(0, 1, .2)), exclude =
 )
 title(paste("Fraction wild across populations", colnames(a)[nc]))
 
+# Plot the geomeans (green positive and red negative)
 # source("geomean_tables.R")
-# a=geomean_table(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild)[[1]]
+# do.call is used because all the table control arguments are in a list (geomean.table.control) and so
+# I want to pass in the args as a list
 a <- do.call(
   geomean_table,
   c(list(pops.to.plot, mpg.to.plot, ifit.total, ifit.fracwild), geomean.table.control)
@@ -163,15 +165,15 @@ for (i in 1:(dim(vals1)[2] - 1)) {
   vals <- 100 * (vals1[, i + 1] - vals1[, i]) / vals1[, i]
   points(i + rnorm(n, 0, 0.01), ifelse(vals < 0, -1, 1) * log10(abs(vals)),
     cex = 1.5, pch = 19, 
-    col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$black)
+    col = ifelse(vals < 0, nwctrends.options$geomean.col.neg, nwctrends.options$geomean.col.neg)
   )
 }
 axis(side = 1, at = 1:nlabs, label = labs, cex.axis = .9, padj = 0.5)
 labs <- c("-1000%", "-100%", "-10%", "0", "10%", "100%", "1000%")
 axis(side = 2, at = c(-3:-1, 0, 1:3), label = labs, cex.axis = .9, padj = 0.5, las = 2)
 abline(h = 0)
-abline(h = 1:3, lty = 2, col = "grey")
-abline(h = -1:-3, lty = 2, col = "grey")
+abline(h = 1:3, lty = nwctrends.options$geomean.abline.lty, col = nwctrends.options$geomean.abline.col)
+abline(h = -1:-3, lty = nwctrends.options$geomean.abline.lty, col = nwctrends.options$geomean.abline.col)
 box()
 title("% change in 5-year geomean of smoothed wild spawners")
 labs <- colnames(a)[geo.start:geo.end]
@@ -189,39 +191,38 @@ for (i in 1:(dim(vals1)[2] - 1)) {
   n <- dim(vals2)[1]
   vals <- 100 * (vals2[, i + 1] - vals2[, i]) / vals2[, i]
   points(i + rnorm(n, 0, 0.01), ifelse(vals < 0, -1, 1) * log10(abs(vals)),
-    cex = 1.5, pch = 19, 
-    col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$black)
+    cex = nwctrends.options$geomean.cex, 
+    pch = nwctrends.options$geomean.pch, 
+    col = ifelse(vals < 0, nwctrends.options$geomean.col.neg, nwctrends.options$geomean.col.pos)
   )
 }
-axis(side = 1, at = 1:nlabs, label = labs, cex.axis = .9, padj = 0.5)
+axis(side = 1, at = 1:nlabs, label = labs, cex.axis = nwctrends.options$geomean.xaxis.cex, padj = 0.5)
 labs <- c("-1000%", "-100%", "-10%", "0", "10%", "100%", "1000%")
-axis(side = 2, at = c(-3:-1, 0, 1:3), label = labs, cex.axis = .9, padj = 0.5, las = 2)
+axis(side = 2, at = c(-3:-1, 0, 1:3), label = labs, cex.axis = nwctrends.options$geomean.yaxis.cex, padj = 0.5, las = 2)
 abline(h = 0)
-abline(h = 1, lty = 2)
-abline(h = 2, lty = 2)
-abline(h = 3, lty = 2)
-abline(h = -1, lty = 2)
-abline(h = -2, lty = 2)
-abline(h = -3, lty = 2)
+abline(h = 1:3, lty = nwctrends.options$geomean.abline.lty, col = nwctrends.options$geomean.abline.col)
+abline(h = -1:-3, lty = nwctrends.options$geomean.abline.lty, col = nwctrends.options$geomean.abline.col)
 box()
-title("% change in 5-year geomean of smoothed spawners")
+title("% change in 5-year geomean of smoothed total spawners", cex.main = nwctrends.options$geomean.title.cex)
 
 vals <- sapply(a[, "% Change"], function(x) {
   stringr::str_split(x, " [(]")[[1]][1]
 })
 vals <- table(cut(as.numeric(vals), breaks = c(-5000, seq(-100, 100, 20), 5000)))
 x <- barplot(vals, xaxt = "n", 
-             col = c(rep(nwctrends.palette$red, 6), 
-                     rep(nwctrends.palette$black, 6)), ylab = "Num of populations")
+             col = c(rep(nwctrends.options$geomean.col.neg, 6), 
+                     rep(nwctrends.options$geomean.col.pos, 6)), ylab = "Num of populations")
 labs <- paste(seq(-120, 100, 20), " to ", seq(-100, 120, 20), "%", sep = "")
 labs[1] <- "       < -100%"
 labs[12] <- "       > 100%"
 text(cex = 1, x = x - 1, y = -.1, labs, xpd = TRUE, srt = 45, pos = 1, offset = 1.5)
 if (geomean.table.control$change.col == "first.last") {
-  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between first and last 5-yr periods")
+  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between first and last 5-yr periods",
+        cex.main = nwctrends.options$geomean.title.cex)
 }
 if (geomean.table.control$change.col == "last.two") {
-  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between last two 5-yr periods")
+  title("Percent change in 5-year geomean of smoothed\nlog wild spawners between last two 5-yr periods", 
+        cex.main = nwctrends.options$geomean.title.cex)
 }
 
 # source("trend_15_tables.R")
@@ -244,15 +245,21 @@ for (i in 1:nrange) {
 ylims <- c(0.95 * min(-.2, unlist(vals), na.rm = TRUE), 1.05 * max(0.2, unlist(vals), na.rm = TRUE))
 plot(rep(1, dim(a)[1]), vals[[1]],
   xlim = c(0.5, nrange + 0.5), ylim = ylims, 
-  col = ifelse(a[, 3] < 0, nwctrends.palette$red, nwctrends.palette$black),
-  axes = FALSE, ylab = paste0(ntrend, "-year trend in log abundance"), xlab = "", cex = 1.5, pch = 19
+  col = ifelse(a[, 3] < 0, nwctrends.options$trend.col.neg, nwctrends.options$trend.col.neg),
+  axes = FALSE, ylab = paste0(ntrend, "-year trend in log abundance"), xlab = "", 
+  cex = nwctrends.options$trend.cex, 
+  pch = nwctrends.options$trend.pch,
+  cex.lab = nwctrends.options$trend.ylabel.cex,
+  cex.axis = nwctrends.options$trend.axis.cex
 )
 axis(side = 2)
 box()
 if (nrange > 1) {
   for (i in 2:nrange) {
     points(rep(i, dim(a)[1]), vals[[i]], 
-           col = ifelse(a[, yr.start + i - 1] <= 0, nwctrends.palette$red, nwctrends.palette$black), cex = 1.5, pch = 19)
+           col = ifelse(a[, yr.start + i - 1] <= 0, nwctrends.options$trend.col.neg, nwctrends.options$trend.col.pos), 
+           cex = nwctrends.options$trend.cex, 
+           pch = nwctrends.options$trend.pch)
   }
 }
 abline(h = 0)
@@ -260,7 +267,7 @@ labs <- lapply(trend.table.control$year.ranges, function(x) {
   paste(x[1], x[length(x)], sep = "-")
 })
 axis(side = 1, at = 1:length(labs), label = unlist(labs))
-title(paste0(ntrend, "-year trends in log wild spawners"))
+title(paste0(ntrend, "-year trends in log wild spawners"), cex.main = nwctrends.options$trend.title.cex)
 ```
 
 ```{r, results='asis', echo=FALSE}

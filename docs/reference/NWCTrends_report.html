@@ -93,7 +93,7 @@ at the command line." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NWCTrends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.28</span>
       </span>
     </div>
 
@@ -190,8 +190,7 @@ at the command line.</p>
   output.dir <span class='op'>=</span> <span class='st'>"NWCTrend_output"</span>,
   fit.all <span class='op'>=</span> <span class='cn'>FALSE</span>,
   show.all.fracwild <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  nwctrends.palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>red <span class='op'>=</span> <span class='st'>"#D44045"</span>, white <span class='op'>=</span> <span class='st'>"#FFFFFF"</span>, green <span class='op'>=</span> <span class='st'>"#007934"</span>, blue
-    <span class='op'>=</span> <span class='st'>"#00467F"</span>, black <span class='op'>=</span> <span class='st'>"#000000"</span><span class='op'>)</span>
+  nwctrends.options <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -259,8 +258,8 @@ demofiles are in inst/extdata.</p></td>
       <td><p>If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.</p></td>
     </tr>
     <tr>
-      <th>nwctrends.palette</th>
-      <td><p>The colors to use for the plots. The default is <code><a href='https://rdrr.io/r/base/list.html'>list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")</a></code></p></td>
+      <th>nwctrends.options</th>
+      <td><p>A list of plot options to change the appearance (colors, line types, line widths, point types, etc) in the plots. See <code><a href='nwctrends.options.html'>nwctrends.options</a></code> for a description of the options.</p></td>
     </tr>
     </table>
 
@@ -287,9 +286,9 @@ working directory.</p>
 <p>The look of the tables can be adjusted by passing in <code>geomean.tables.control</code>. See <code>?geomean_tables</code>
 for the elements that can be controlled. Note that if the defaults for
 <code>geomean.table.control</code> are changed, they must be also changed in <code>geomean_tables.R</code>.</p>
-<p>The palette can be changed by passing in <code>nwctrends.palette</code>.
-Currently the colors are set to NOAA Fisheries
-branded colors.</p>
+<p>The look of the plots (line widths, types, colors, point types, etc) can be changed by passing in <code>nwctrends.options</code>. These
+are passed in as a list, e.g. <code>nwctrends.options = list(main.total.col = "blue")</code>. See
+<code><a href='nwctrends.options.html'>nwctrends.options</a></code> for a list of the plot variables that can be changed.</p>
 <p>See <code><a href='Status_trendfigure_multipanel.html'>Status_trendfigure_multipanel</a></code> for details on the main plot of
 smoothed total and wild spawners. See <code><a href='NWCTrends-package.html'>NWCTrends</a></code> for a description of the package.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -300,6 +299,30 @@ Available from the NWFSC Publications page.</p>
 
     <p>Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># Example of the typical arguments that you will want to set</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://nwfsc-timeseries.github.io/NWCTrends'>NWCTrends</a></span><span class='op'>)</span>
+<span class='fu'>NWCTrends_report</span><span class='op'>(</span>inputfile<span class='op'>=</span><span class='st'>"thedata.csv"</span>,
+            fit.min.year<span class='op'>=</span><span class='fl'>1949</span>, fit.max.year <span class='op'>=</span> <span class='fl'>2019</span>,
+            plot.min.year<span class='op'>=</span><span class='fl'>1980</span>, plot.max.year <span class='op'>=</span> <span class='fl'>2019</span>,
+            geomean.table.control<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+                   min.year <span class='op'>=</span> <span class='fl'>1990</span>, max.year <span class='op'>=</span> <span class='fl'>2019</span>, lenbands <span class='op'>=</span> <span class='fl'>5</span>, 
+                   min.band.points <span class='op'>=</span> <span class='fl'>2</span>, change.col<span class='op'>=</span><span class='st'>"last.two"</span><span class='op'>)</span>, 
+            trend.table.control<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+                   year.ranges <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>1990</span><span class='op'>:</span><span class='fl'>2005</span>, <span class='fl'>2004</span><span class='op'>:</span><span class='fl'>2019</span><span class='op'>)</span><span class='op'>)</span>,
+            output.type <span class='op'>=</span> <span class='st'>"word"</span>,
+            output.dir <span class='op'>=</span> <span class='st'>"Output"</span>
+            <span class='op'>)</span>
+     
+<span class='co'># Example of setting the plot variables to customize the look of the plots</span>
+<span class='co'># Here the data points and wild line for the main plot are changed.</span>
+<span class='fu'>NWCTrends_report</span><span class='op'>(</span>inputfile<span class='op'>=</span><span class='st'>"thedata.csv"</span>,
+            nwctrends.options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>main.raw.pch <span class='op'>=</span> <span class='fl'>1</span>, main.raw.col <span class='op'>=</span> <span class='st'>"black"</span>,
+                                     main.wild.lty <span class='op'>=</span> <span class='fl'>2</span>, main.wild.col <span class='op'>=</span> <span class='st'>"grey75"</span><span class='op'>)</span>
+                <span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

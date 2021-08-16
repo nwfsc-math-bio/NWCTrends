@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NWCTrends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.28</span>
       </span>
     </div>
 
@@ -144,6 +144,19 @@
       <small>Source: <a href='https://github.com/nwfsc-timeseries/NWCTrends/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="version-128" class="section level1">
+<h1 class="page-header" data-toc-text="1.28">
+<a href="#version-128" class="anchor"></a>Version 1.28</h1>
+<p>I revamped how to customize plots and palettes. I no longer use <code>nwctrends.palette</code>. Instead I use <code>pkg_globals</code> in the package environment. The user passes in <code>nwctrends.options</code> as a list with any of the plot options that they want to update (e.g. line color or line type or point type). See the new <code>onLoad.R</code> file and the <code>nwctrends_options.R</code> file. None <code><a href="https://rdrr.io/r/base/ns-hooks.html">.onLoad()</a></code> is run whether the package is loaded via <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> or via <code>NWCTrends::</code>.</p>
+<p>Added some examples to <code>NWCTrends_report.R</code>.</p>
+</div>
+    <div id="version-127" class="section level1">
+<h1 class="page-header" data-toc-text="1.27">
+<a href="#version-127" class="anchor"></a>Version 1.27</h1>
+<p>I was overloading the <code>inst/doc</code> folder with non-vignette material. I moved the needed report files (Rmd and tex) to <code>inst/report_files</code> and the demo data to <code>inst/extdata</code>. The <code>inst/doc</code> folder now only has the two vignettes and the documentation PDFs.</p>
+<p>I also updated the <code>vignettes</code> folder such that if <code>install_local()</code> or <code>install_github()</code> with <code>build_vignettes=TRUE</code> is used, the <code>inst/doc</code> created will match that on GitHub. Note, the user would have to accept <code>inst/doc</code> will be delected. It doesn’t delete the files in the repo, just re-creates <code>inst/doc</code> in the installed version in the user library.</p>
+<p>I added a file <code>local_build_instructions.txt</code> to the repo to remind me how to build the vignettes and how to deal with <code><a href="https://devtools.r-lib.org//reference/check.html">devtools::check()</a></code> deleting the <code>inst/doc</code> folder.</p>
+</div>
     <div id="version-126" class="section level1">
 <h1 class="page-header" data-toc-text="1.26">
 <a href="#version-126" class="anchor"></a>Version 1.26</h1>

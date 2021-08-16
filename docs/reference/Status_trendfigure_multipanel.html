@@ -96,7 +96,7 @@ is data for those early years in other populations." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NWCTrends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.28</span>
       </span>
     </div>
 
@@ -190,8 +190,7 @@ is data for those early years in other populations.</p>
   CI.sim <span class='op'>=</span> <span class='fl'>1000</span>,
   log.scale <span class='op'>=</span> <span class='cn'>FALSE</span>,
   same.scale <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  nwctrends.palette <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>red <span class='op'>=</span> <span class='st'>"#D44045"</span>, white <span class='op'>=</span> <span class='st'>"#FFFFFF"</span>, green <span class='op'>=</span> <span class='st'>"#007934"</span>, blue
-    <span class='op'>=</span> <span class='st'>"#00467F"</span>, black <span class='op'>=</span> <span class='st'>"#000000"</span><span class='op'>)</span>
+  nwctrends.options <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -242,8 +241,10 @@ is data for those early years in other populations.</p>
       <td><p>Tweak the scale of wild and total in graph. Not used.</p></td>
     </tr>
     <tr>
-      <th>nwctrends.palette</th>
-      <td><p>The colors to use for the plots. The default is <code><a href='https://rdrr.io/r/base/list.html'>list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")</a></code></p></td>
+      <th>nwctrends.options</th>
+      <td><p>A list of plot options to change the appearance (colors, line types, line widths, point types, etc)
+in the plots. See <code><a href='nwctrends.options.html'>nwctrends.options</a></code> for a description of the options. Note, if <code>risk_plot_multipanel()</code> is
+called from <code><a href='NWCTrends_report.html'>NWCTrends_report</a>()</code> then <code>nwctrends.options</code> has already been set and can be left at <code>NULL</code> in this call.</p></td>
     </tr>
     </table>
 
@@ -252,7 +253,7 @@ is data for those early years in other populations.</p>
     <p>A plot</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='Status_trendfigure_multipanel_csv.html'>Status_trendfigure_multipanel_csv</a></code></p></div>
+    <div class='dont-index'><p><code><a href='Status_trendfigure_multipanel_csv.html'>Status_trendfigure_multipanel_csv</a></code>, <code><a href='NWCTrends_report.html'>NWCTrends_report</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov</p>

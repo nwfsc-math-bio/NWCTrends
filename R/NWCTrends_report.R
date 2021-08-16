@@ -41,9 +41,9 @@
 #' for the elements that can be controlled. Note that if the defaults for
 #' `geomean.table.control` are changed, they must be also changed in `geomean_tables.R`.
 #' 
-#' The palette can be changed by passing in `nwctrends.palette`. 
-#' Currently the colors are set to NOAA Fisheries
-#'  branded colors.
+#' The look of the plots (line widths, types, colors, point types, etc) can be changed by passing in `nwctrends.options`. These
+#' are passed in as a list, e.g. `nwctrends.options = list(main.total.col = "blue")`. See
+#' \code{\link{nwctrends.options}} for a list of the plot variables that can be changed.
 #' 
 #' See \code{\link{Status_trendfigure_multipanel}} for details on the main plot of 
 #' smoothed total and wild spawners. See \code{\link{NWCTrends}} for a description of the package.
@@ -64,7 +64,7 @@
 #' @param output.dir Directory (in the working directory) where the output will be saved. Defaults to "NWCTrend_output". The directory will be created if it does not exist.
 #' @param fit.all If FALSE, then user can enter what ESUs to fun. 
 #' @param show.all.fracwild If FALSE, then the populations with no fracwild information are not shown on the fracwild plots.
-#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
+#' @param nwctrends.options A list of plot options to change the appearance (colors, line types, line widths, point types, etc) in the plots. See \code{\link{nwctrends.options}} for a description of the options.
 #' 
 #' @return
 #' Plots and tables that are saved to doc/figures/ESU_figures.
@@ -74,7 +74,29 @@
 #' @references
 #' Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.
 #' Available from the NWFSC Publications page.
-
+#' @examples
+#' \dontrun{
+#' # Example of the typical arguments that you will want to set
+#' library(NWCTrends)
+#' NWCTrends_report(inputfile="thedata.csv",
+#'             fit.min.year=1949, fit.max.year = 2019,
+#'             plot.min.year=1980, plot.max.year = 2019,
+#'             geomean.table.control=list(
+#'                    min.year = 1990, max.year = 2019, lenbands = 5, 
+#'                    min.band.points = 2, change.col="last.two"), 
+#'             trend.table.control=list(
+#'                    year.ranges = list(1990:2005, 2004:2019)),
+#'             output.type = "word",
+#'             output.dir = "Output"
+#'             )
+#'      
+#' # Example of setting the plot variables to customize the look of the plots
+#' # Here the data points and wild line for the main plot are changed.
+#' NWCTrends_report(inputfile="thedata.csv",
+#'             nwctrends.options = list(main.raw.pch = 1, main.raw.col = "black",
+#'                                      main.wild.lty = 2, main.wild.col = "grey75")
+#'                 )
+#' }
 NWCTrends_report <- function(
                              inputfile = NULL,
                              fit.min.year = NULL, fit.max.year = NULL,
@@ -89,7 +111,7 @@ NWCTrends_report <- function(
                              output.dir = "NWCTrend_output",
                              fit.all = FALSE,
                              show.all.fracwild = FALSE,
-                             nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
+                             nwctrends.options = NULL) {
   output.type <- tolower(output.type)
   output.type <- match.arg(output.type)
   if (!is.logical(logit.fw)) stop("logit.fw must TRUE or FALSE")
@@ -98,6 +120,19 @@ NWCTrends_report <- function(
   reportpath <- system.file("report_files", package = "NWCTrends")
   figdir <- paste0(file.path(getwd(), output.dir), "/")
 
+  # Set-up the package globals (for plotting)
+  nwctrends.options.user <- nwctrends.options
+  nwctrends.options <- get("nwctrends.options", envir = pkg_globals) # the defaults
+  if(!is.null(nwctrends.options.user)){
+    if(!is.list(nwctrends.options.user)) stop("nwctrends.options must be a list.")
+    for(i in names(nwctrends.options.user)[names(nwctrends.options.user) %in% names(nwctrends.options)]){
+      nwctrends.options[[i]] <- nwctrends.options.user[[i]]
+    }
+    # nwctrends.options now has any values that the user passed in set.
+    # So assign that back to pkg_globals for use in plotting functions
+    assign("nwctrends.options", nwctrends.options, pkg_globals)
+  }
+  
   # Get the input data
   if (missing(inputfile)) {
     cat("Select a data file (.csv or .RData).\n")

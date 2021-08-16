@@ -15,7 +15,9 @@
 #' @param min.year The x axis minimum.
 #' @param max.year The x axis maximum.
 #' @param show.all If there is no fracwild data for a population, should that population still have a fracwild plot, which will be blank.
-#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
+#' @param nwctrends.options A list of plot options to change the appearance (colors, line types, line widths, point types, etc)
+#' in the plots. See \code{\link{nwctrends.options}} for a description of the options. Note, if `risk_plot_multipanel()` is 
+#' called from \code{\link{NWCTrends_report}()} then `nwctrends.options` has already been set and can be left at `NULL` in this call.
 #' 
 #' @return
 #' A plot
@@ -27,8 +29,21 @@ fracwild_multipanel <- function(esu, pops,
                                 fracwild.fit, 
                                 min.year = NULL, max.year = NULL, 
                                 show.all = TRUE,
-                                nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
+                                nwctrends.options = NULL) {
 
+  # Set-up the package globals (for plotting); Normally this has already been done via the NWCTrends_report() call
+  nwctrends.options.user <- nwctrends.options
+  nwctrends.options <- get("nwctrends.options", envir = pkg_globals) # the defaults
+  if(!is.null(nwctrends.options.user)){
+    if(!is.list(nwctrends.options.user)) stop("nwctrends.options must be a list.")
+    for(i in names(nwctrends.options.user)[names(nwctrends.options.user) %in% names(nwctrends.options)]){
+      nwctrends.options[[i]] <- nwctrends.options.user[[i]]
+    }
+    # nwctrends.options now has any values that the user passed in set.
+    # So assign that back to pkg_globals for use in plotting functions
+    assign("nwctrends.options", nwctrends.options, pkg_globals)
+  }
+  
   # Set up the min and max years
   years <- as.numeric(colnames(fracwild.fit$fracwild.states))
   if (is.null(min.year)) min.year <- years[1]
@@ -88,12 +103,14 @@ fracwild_multipanel <- function(esu, pops,
       type = "n", bty = "L", xlab = "", ylab = "",
       ylim = c(0, 1), xlim = c(min.year - 1, max.year + 1)
     )
-    lines(years.trim, fracwild.states, col = nwctrends.palette$blue, lwd = 2)
+    lines(years.trim, fracwild.states, col = nwctrends.options$fracwild.col, 
+          lwd = nwctrends.options$fracwild.lwd,
+          lty = nwctrends.options$fracwild.lty)
 
-    points(years.trim, fracwild.raw)
+    points(years.trim, fracwild.raw, pch = nwctrends.options$fracwild.raw.pch, col = nwctrends.options$fracwild.raw.col)
 
-    title(short.pops[pop], cex.main = 1)
+    title(short.pops[pop], cex.main = nwctrends.options$fracwild.poptitle.cex)
   }
-  mtext(esu, side = 3, outer = TRUE, line = 0, cex = 1.5)
-  mtext("Raw and smoothed fracwild estimates", side = 2, outer = TRUE, line = 0, cex = .8)
+  mtext(esu, side = 3, outer = TRUE, line = 0, cex = nwctrends.options$fracwild.title.cex)
+  mtext("Raw and smoothed fracwild estimates", side = 2, outer = TRUE, line = 0, cex = nwctrends.options$fracwild.ylabel.cex)
 }

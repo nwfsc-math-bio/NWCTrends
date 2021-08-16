@@ -32,25 +32,40 @@
 #' @param CI.sim If doing bootstrap CI, this is the number of bootstraps sent to \link[MARSS]{MARSSparamCIs}
 #' @param log.scale Put plot on log-scale versus the original raw scale
 #' @param same.scale Tweak the scale of wild and total in graph. Not used.
-#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
+#' @param nwctrends.options A list of plot options to change the appearance (colors, line types, line widths, point types, etc)
+#' in the plots. See \code{\link{nwctrends.options}} for a description of the options. Note, if `risk_plot_multipanel()` is 
+#' called from \code{\link{NWCTrends_report}()} then `nwctrends.options` has already been set and can be left at `NULL` in this call.
 #' 
 #' @return
 #' A plot
 #' @author
 #' Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov
 #' @keywords report
-#' @seealso \code{\link{Status_trendfigure_multipanel_csv}}
+#' @seealso \code{\link{Status_trendfigure_multipanel_csv}}, \code{\link{NWCTrends_report}()}
 #' 
 Status_trendfigure_multipanel <- function(esu, pops, 
                                           total.fit, fracwild.fit, 
                                           plot.min.year = NULL, plot.max.year = NULL, 
                                           silent = FALSE, CI.method = "hessian", CI.sim = 1000, 
                                           log.scale = FALSE, same.scale = FALSE,
-                                          nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
+                                          nwctrends.options = NULL) {
   if (!(CI.method %in% c("hessian", "parametric", "innovations", "none"))) {
     stop("Stopped in CSEGriskfigure because allowed CI methods are none, hessian, parametric, and innovations.\n", call. = FALSE)
   }
-
+  
+  # Set-up the package globals (for plotting); Normally this has already been done via the NWCTrends_report() call
+  nwctrends.options.user <- nwctrends.options
+  nwctrends.options <- get("nwctrends.options", envir = pkg_globals) # the defaults
+  if(!is.null(nwctrends.options.user)){
+    if(!is.list(nwctrends.options.user)) stop("nwctrends.options must be a list.")
+    for(i in names(nwctrends.options.user)[names(nwctrends.options.user) %in% names(nwctrends.options)]){
+      nwctrends.options[[i]] <- nwctrends.options.user[[i]]
+    }
+    # nwctrends.options now has any values that the user passed in set.
+    # So assign that back to pkg_globals for use in plotting functions
+    assign("nwctrends.options", nwctrends.options, pkg_globals)
+  }
+  
   # Set up the min and max years
   years <- as.numeric(colnames(total.fit$model$data))
   # These are min and max for the fits.
@@ -114,7 +129,6 @@ Status_trendfigure_multipanel <- function(esu, pops,
     if (all(is.na(total.raw))) { # no data for this population, skip
       next
     }
-    
     n.start <- max(first.n.spawner.data, which(years==plot.min.year), 1)
     n.end <- min(last.n.spawner.data, which(years==plot.max.year), length(years))
     total.raw[years<plot.min.year] <- NA
@@ -150,8 +164,12 @@ Status_trendfigure_multipanel <- function(esu, pops,
          ylim = ylims,
          xlim = c(plot.min.year - 1, plot.max.year + 1)
     )
-    polygon(c(years.trim, rev(years.trim)), c(y.high.total.trim, rev(y.low.total.trim)), col = "grey95", border = NA)
-    lines(years.trim, total.states.trim, col = "grey", lwd = 3)
+    polygon(c(years.trim, rev(years.trim)), c(y.high.total.trim, rev(y.low.total.trim)), 
+            col = nwctrends.options$main.NAci.col, border = nwctrends.options$main.NAci.border)
+    lines(years.trim, total.states.trim, 
+          col = nwctrends.options$main.NAtotal.col, 
+          lwd = nwctrends.options$main.NAtotal.lwd,
+          lty = nwctrends.options$main.NAtotal.lty)
     
     # Plot dark the range -1 and +1 within the spawner counts
     n.start <- max(first.n.spawner.data.pop-1, which(years==plot.min.year), 1)
@@ -173,16 +191,23 @@ Status_trendfigure_multipanel <- function(esu, pops,
       y.high.total <- exp(y.high.total)
       y.low.total <- exp(y.low.total)
     }
-    polygon(c(years.trim, rev(years.trim), years.trim[1]), c(y.high.total, rev(y.low.total), y.high.total[1]), col = "grey75", border = NA)
-    lines(years.trim, total.states, col = nwctrends.palette$black, lwd = 3)
-    points(years.trim, total.raw, pch=19, col = nwctrends.palette$blue)
-    lines(years.trim, wild.states, col = nwctrends.palette$red, lwd = 1, lty = 1)
-    title(short.pops[pop], cex.main = 1)
+    polygon(c(years.trim, rev(years.trim), years.trim[1]), c(y.high.total, rev(y.low.total), y.high.total[1]), 
+            col = nwctrends.options$main.ci.col, border = nwctrends.options$main.ci.border)
+    lines(years.trim, total.states, col = nwctrends.options$main.total.col, 
+          lwd = nwctrends.options$main.total.lwd,
+          lty = nwctrends.options$main.total.lty)
+    points(years.trim, total.raw, pch = nwctrends.options$main.raw.pch, col = nwctrends.options$main.raw.col)
+    lines(years.trim, wild.states, col = nwctrends.options$main.wild.col, 
+          lwd = nwctrends.options$main.wild.lwd,
+          lty = nwctrends.options$main.wild.lty)
+    title(short.pops[pop], cex.main = nwctrends.options$main.poptitle.cex)
   }
-  mtext(esu, side = 3, outer = TRUE, line = 0, cex = 1.5)
+  mtext(esu, side = 3, outer = TRUE, line = 0, cex = nwctrends.options$main.title.cex)
   if (log.scale) {
-    mtext(paste("Predicted log abudance and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
+    mtext(paste("Predicted log abudance and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, 
+          cex = nwctrends.options$main.ylabel.cex)
   } else {
-    mtext(paste("Predicted abundance and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
+    mtext(paste("Predicted abundance and 95% CIs", sep = ""), side = 2, outer = TRUE, line = 0, 
+          cex = nwctrends.options$main.ylabel.cex)
   }
 }

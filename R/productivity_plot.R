@@ -18,7 +18,9 @@
 #' @param max.year The x axis maximum. Last year for numerator.
 #' @param type The type of plot. Type 3: wild(t+1)/wild(t). Type 1: wild(t+lag)/total(t)
 #' @param lag The number of years prior to use in the denominator, e.g. spawnwers(year-lag). Note not used if type=3.
-#' @param nwctrends.palette The colors to use for the plots. The default is `list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")`
+#' @param nwctrends.options A list of plot options to change the appearance (colors, line types, line widths, point types, etc)
+#' in the plots. See \code{\link{nwctrends.options}} for a description of the options. Note, if `risk_plot_multipanel()` is 
+#' called from \code{\link{NWCTrends_report}()} then `nwctrends.options` has already been set and can be left at `NULL` in this call.
 #' 
 #' @return
 #' A plot
@@ -30,7 +32,20 @@ productivity_plot <- function(esu, pops,
                               total.fit, fracwild.fit, 
                               min.year = NULL, max.year = NULL, 
                               type = 1, lag = 4,
-                              nwctrends.palette = list(red="#D44045", white="#FFFFFF", green="#007934", blue="#00467F", black="#000000")) {
+                              nwctrends.options = NULL) {
+  # Set-up the package globals (for plotting); Normally this has already been done via the NWCTrends_report() call
+  nwctrends.options.user <- nwctrends.options
+  nwctrends.options <- get("nwctrends.options", envir = pkg_globals) # the defaults
+  if(!is.null(nwctrends.options.user)){
+    if(!is.list(nwctrends.options.user)) stop("nwctrends.options must be a list.")
+    for(i in names(nwctrends.options.user)[names(nwctrends.options.user) %in% names(nwctrends.options)]){
+      nwctrends.options[[i]] <- nwctrends.options.user[[i]]
+    }
+    # nwctrends.options now has any values that the user passed in set.
+    # So assign that back to pkg_globals for use in plotting functions
+    assign("nwctrends.options", nwctrends.options, pkg_globals)
+  }
+  
   # Set up the min and max years
   years <- as.numeric(colnames(total.fit$model$data))
   if (is.null(min.year)) min.year <- years[1] + lag
@@ -95,7 +110,7 @@ productivity_plot <- function(esu, pops,
       if (n.end.data != n.end) vals[(length(t) - (n.end - n.end.data) + 1):(length(t))] <- NA
 
       barplot(vals,
-        col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$green),
+        col = ifelse(vals < 0, nwctrends.options$prod.col.neg, nwctrends.options$prod.col.pos),
         ylab = "", xlab = "", ylim = ylims
       )
       par(new = TRUE)
@@ -105,7 +120,8 @@ productivity_plot <- function(esu, pops,
       if (n.end.data != n.end) vals[(length(t) - (n.end - n.end.data) + 1):(length(t))] <- NA
 
       # make the labels so that year-lag is what appears instead of year[t]
-      plot(years[t], vals, axes = FALSE, type = "l", lwd = 2, ylab = "", xlab = "", col = "grey")
+      plot(years[t], vals, axes = FALSE, type = "l", ylab = "", xlab = "", 
+           col = "grey", lwd = 2)
       axis(side = 4)
       axis(side = 1)
     }
@@ -125,24 +141,26 @@ productivity_plot <- function(esu, pops,
       xlim2 <- length(year1:year2) - 1 + xlim1
       xlims <- c(xlim1, xlim2)
       x <- barplot(vals,
-        col = ifelse(vals < 0, nwctrends.palette$red, nwctrends.palette$green),
+        col = ifelse(vals < 0, nwctrends.options$prod.col.neg, nwctrends.options$prod.col.pos),
         ylab = "", xlab = "", ylim = ylims, xlim = xlims,
         axisnames = FALSE, width = 1, space = 0
       )
       axis(side = 1, at = seq(xlims[1], xlims[2], 5) - .5, labels = seq(year1, year2, 5))
     }
 
-    title(short.pops[pop], cex.main = 1)
+    title(short.pops[pop], cex.main = nwctrends.options$prod.poptitle.cex)
   }
-  mtext(esu, side = 3, outer = TRUE, line = 0, cex = 1.5)
+  mtext(esu, side = 3, outer = TRUE, line = 0, cex = nwctrends.options$prod.title.cex)
   if (type == 1) {
-    mtext(paste("log(wild spawner t+", lag, ") - log(total spawner t)", sep = ""), side = 2, outer = TRUE, line = 0, cex = .8)
+    mtext(paste("log(wild spawner t+", lag, ") - log(total spawner t)", sep = ""), side = 2, outer = TRUE, line = 0, 
+          cex = nwctrends.options$prod.ylabel.cex)
   }
   if (type == 2) {
-    mtext(expression(lambda(t)), side = 2, outer = TRUE, line = 0, cex = .8)
-    mtext("smoothed log wild spawners", side = 4, outer = TRUE, line = 0, cex = .8)
+    mtext(expression(lambda(t)), side = 2, outer = TRUE, line = 0, cex = nwctrends.options$prod.ylabel.cex)
+    mtext("smoothed log wild spawners", side = 4, outer = TRUE, line = 0, cex = nwctrends.options$prod.ylabel.cex)
   }
   if (type == 3) {
-    mtext("log(wild spawner t+1) - log(wild spawner t)", side = 2, outer = TRUE, line = 0, cex = .8)
+    mtext("log(wild spawner t+1) - log(wild spawner t)", side = 2, outer = TRUE, line = 0, 
+          cex = nwctrends.options$prod.ylabel.cex)
   }
 }
