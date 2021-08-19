@@ -1,5 +1,9 @@
 # NWCTrends
 
+# Version 1.29
+
+Raw geomeans captions have been updated to clarify how 0s in the data are dealt with. They are replaced with NA. The methods vignette has been updated to include a section on how 0s are dealt with and misspellings corrected.
+
 # Version 1.28
 
 I revamped how to customize plots and palettes. I no longer use `nwctrends.palette`. Instead I use `pkg_globals` in the package environment. The user passes in `nwctrends.options` as a list with any of the plot options that they want to update (e.g. line color or line type or point type). See the new `onLoad.R` file and the `nwctrends_options.R` file. None `.onLoad()` is run whether the package is loaded via `library()` or via `NWCTrends::`.

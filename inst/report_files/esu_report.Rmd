@@ -355,7 +355,7 @@ if (output.type == "latex") { # tex file
     file = paste0(figdir, "/geomean_wild_table.tex")
   )
 }
-caption <- "5-year geometric mean of raw wild spawner counts. This is the raw total spawner count times the fraction wild estimate, if available.  In parentheses, 5-year geometric mean of raw total spawner counts is shown. A value only in parentheses means that a total spawner count was available but no or only one estimate of wild spawners available. The geometric mean was computed as the product of counts raised to the power 1 over the number of counts available (2 to 5). A minimum of 2 values were used to compute the geometric mean."
+caption <- "5-year geometric mean of raw wild spawner counts, non-zero counts only. This is the raw total spawner count times the fraction wild estimate, if available.  In parentheses, 5-year geometric mean of raw total spawner counts is shown. A value only in parentheses means that a total spawner count was available but no or only one estimate of wild spawners available. The geometric mean was computed as the product of counts raised to the power 1 over the number of counts available (2 to 5). A minimum of 2 values were used to compute the geometric mean. Note, any zeros in the raw spawner data are replaced with NA and are not part of the geomean calculation."
 if (geomean.table.control$change.col == "first.last") {
   chg.col <- "Percent change between first and last 5-year periods is shown on the far right."
 }
@@ -374,7 +374,7 @@ if (output.type == "latex") {
   cat("\\end{landscape}")
 }
 if (output.type == "html") {
-  cat("## 5-year geometric mean of raw wild spawners\n\n")
+  cat("## 5-year geometric mean of raw wild spawners, non-zero counts only\n\n")
   cat(caption)
   clean.a <- data.frame(lapply(a[[2]], function(x) {
     stringr::str_replace_all(x, "[)]", "\\\\)")
@@ -384,7 +384,7 @@ if (output.type == "html") {
     kableExtra::kable_styling(full_width = FALSE)
 }
 if (output.type == "word") {
-  cat("## 5-year geometric mean of raw wild spawners\n\n")
+  cat("## 5-year geometric mean of raw wild spawners, non-zero counts only\n\n")
   cat(caption)
   clean.a <- data.frame(lapply(a[[2]], function(x) {
     stringr::str_replace_all(x, "[)]", "\\\\)")
