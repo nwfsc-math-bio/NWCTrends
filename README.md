@@ -8,11 +8,14 @@ To install, install the **devtools** package (if needed) and then use:
 ```
 devtools::install_github("nwfsc-timeseries/NWCTrends")
 ```
-to install the development version or
+to install the development version or to install the latest release, use
 ```
 devtools::install_github("nwfsc-timeseries/NWCTrends@*release")
 ```
-to install the latest release.
+To install a specific release (such as the one used in the 2020 Viability Report), use
+```
+devtools::install_github("nwfsc-timeseries/NWCTrends@v1.25")
+```
 
 To install an R package from Github, you need to be able to build an R package on your machine. If you are on Windows, that means you will need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/). On a Mac, installation should work fine; you don't need to install anything.
 
