@@ -1,4 +1,4 @@
-url: https://nwfsc-timeseries.github.io/NWCTrends/
+url: https://nwfsc-math-bio.github.io/NWCTrends/
 
 navbar:
   structure:
@@ -38,7 +38,7 @@ articles:
 news:
   releases:
   - text: "Version 1.0 2015 VR"
-    href: https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.0
+    href: https://github.com/nwfsc-math-bio/NWCTrends/releases/tag/v1.0
   - text: "Version 1.25 2020 VR"
-    href: https://github.com/nwfsc-timeseries/NWCTrends/releases/tag/v1.25
+    href: https://github.com/nwfsc-math-bio/NWCTrends/releases/tag/v1.25
 
