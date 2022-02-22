@@ -6,6 +6,11 @@
 #'  look of the table and can be controlled in the call to NWCTrends_report() by passing in
 #'  geomean.table.control as list.  For example `list(min.year=1999)` to change the min year shown
 #'  from the minimum in the dataset (the default) to 1999.
+#'  
+#'  Note that for the raw geomeans, the years used for the total count geomeans can be different than for the 
+#'  natural raw geomeans. This happens when there are years that are missing a frac wild number but there is a 
+#'  total count that year. So the raw geomean divided by the total geomean could be quite different than the 
+#'  average fraction wild.
 #'
 #'  The code will create bands with lenbands years in each band starting with min.year. If max.year,
 #'  would lead to a final band with less than lenbands years, then the last band will not have lenbands
