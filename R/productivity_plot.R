@@ -62,7 +62,11 @@ productivity_plot <- function(esu, pops,
 
   n <- length(pops)
   short.pops <- clean.pops(pops)
-
+  
+  # Set up the data.frame to return with the data
+  tab1 <- data.frame(population = short.pops, matrix(NA, length(pops), length(t)))
+  colnames(tab1) <- c("Population", years[t])
+  
   if (n == 1) {
     nplotcol <- 1
   }
@@ -149,6 +153,8 @@ productivity_plot <- function(esu, pops,
     }
 
     title(short.pops[pop], cex.main = nwctrends.options$prod.poptitle.cex)
+    
+    tab1[pop, 2:(length(t)+1)] <- vals
   }
   mtext(esu, side = 3, outer = TRUE, line = 0, cex = nwctrends.options$prod.title.cex)
   if (type == 1) {
@@ -163,4 +169,5 @@ productivity_plot <- function(esu, pops,
     mtext("log(wild spawner t+1) - log(wild spawner t)", side = 2, outer = TRUE, line = 0, 
           cex = nwctrends.options$prod.ylabel.cex)
   }
+  tab1
 }

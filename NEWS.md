@@ -1,5 +1,11 @@
 # NWCTrends
 
+# Version 1.30
+
+Raw geomeans captions updated to clarify that the number of years in the wild geomeans could be different than for the total geomeans because there may be years with missing fraction wild.
+
+Altered `productivity_fig.R` to output the data for the figure as a csv file.
+
 # Version 1.29
 
 Raw geomeans captions have been updated to clarify how 0s in the data are dealt with. They are replaced with NA. The methods vignette has been updated to include a section on how 0s are dealt with and misspellings corrected.

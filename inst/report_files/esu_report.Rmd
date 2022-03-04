@@ -89,10 +89,12 @@ coho.chum <- any(stringr::str_detect(tolower(metadat$Species), "coho")) |
 lag <- ifelse(coho.chum, 3, 4)
 # This plot is only for wild spawners
 if (length(pops.to.plot.wild) != 0) {
-  productivity_plot(esuname, pops.to.plot.wild, ifit.total, ifit.fracwild,
+  a <- productivity_plot(esuname, pops.to.plot.wild, ifit.total, ifit.fracwild,
     min.year = plot.min.year, max.year = plot.max.year, type = 1, lag = lag
   )
 }
+a <- data.frame(PopID = popid.to.plot.wild, a)
+write.csv(a, file = paste0(figdir, "productivity_fig.csv"), row.names = FALSE)
 ```
 
 ```{r, results='asis', echo=FALSE}
