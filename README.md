@@ -1,6 +1,6 @@
 # NWCTrends
 
-This is runs the standardized trends metrics used in the 2015 and 2020 5-year Viability Reports prepared by NWFSC for listed PNW salmonids.  
+This runs the standardized trends metrics used in the 2015 and 2020 5-year Viability Reports prepared by NWFSC for listed PNW salmonids.  
 
 ## Installation
 
