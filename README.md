@@ -6,15 +6,15 @@ This runs the standardized trends metrics used in the 2015 and 2020 5-year Viabi
 
 To install the development version, install the **devtools** package (if needed) and then use:
 ```
-devtools::install_github("nwfsc-timeseries/NWCTrends")
+devtools::install_github("nwfsc-math-bio/NWCTrends")
 ```
 to install the latest release, use
 ```
-devtools::install_github("nwfsc-timeseries/NWCTrends@*release")
+devtools::install_github("nwfsc-math-bio/NWCTrends@*release")
 ```
-To install a specific release the 2020 Viability Report version, use
+To install a specific release, e.g. the 2020 Viability Report version, use
 ```
-devtools::install_github("nwfsc-timeseries/NWCTrends@v1.25")
+devtools::install_github("nwfsc-math-bio/NWCTrends@v1.25")
 ```
 
 To install an R package from Github, you need to be able to build an R package on your machine. If you are on Windows, that means you will need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/). On a Mac, installation should work fine; you don't need to install anything.
