@@ -1,18 +1,18 @@
 # NWCTrends
 
-This is runs the standardized trends metrics used in the 2015 and 2020 5-year Viability Reports prepared by NWFSC for listed PNW salmonids.  
+This runs the standardized trends metrics used in the 2015 and 2020 5-year Viability Reports prepared by NWFSC for listed PNW salmonids.  
 
 ## Installation
 
-To install, install the **devtools** package (if needed) and then use:
+To install the development version, install the **devtools** package (if needed) and then use:
 ```
 devtools::install_github("nwfsc-timeseries/NWCTrends")
 ```
-to install the development version or to install the latest release, use
+to install the latest release, use
 ```
 devtools::install_github("nwfsc-timeseries/NWCTrends@*release")
 ```
-To install a specific release (such as the one used in the 2020 Viability Report), use
+To install a specific release the 2020 Viability Report version, use
 ```
 devtools::install_github("nwfsc-timeseries/NWCTrends@v1.25")
 ```

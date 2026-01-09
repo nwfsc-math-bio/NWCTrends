@@ -21,7 +21,7 @@ URL: https://nwfsc-math-bio.github.io/NWCTrends, https://github.com/nwfsc-math-b
 BugReports: https://github.com/nwfsc-math-bio/NWCTrends/issues
 Maintainer: Elizabeth Holmes - NOAA Federal <eli.holmes@noaa.gov>
 Description: This is runs the standardized trends metrics used in the 2016 and 2020 5-year NWFSC Viability Reports for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().
-License: GPL-2
+License: CC-0
 LazyData: yes
 BuildVignettes: yes
 ByteCompile: TRUE
