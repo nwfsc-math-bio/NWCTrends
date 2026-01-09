@@ -189,64 +189,17 @@ NWCTrends_report <- function(
   modn <- 1
 
   for (this.esu in 1:length(fits)) {
-    esuname <- names(fits)[this.esu]
-    ifit.total <- fits[[esuname]][[modn]]$fit
-    ifit.fracwild <- fits[[esuname]][["fwlogitfit"]]
-    esuname <- names(fits)[this.esu]
-    # Set up the min and max years
-    years <- as.numeric(colnames(ifit.total$model$data))
-    if (is.null(plot.min.year)) plot.min.year <- years[1]
-    if (is.null(plot.max.year)) plot.max.year <- max(years)
-
-    # Figure out the names of the populations to plot
-    # it's the row in total.fit where there are enough data points for the min to max year range
-    pops <- rownames(ifit.total$model$data)
-    mpg <- metadat$PopGroup[metadat$name %in% pops]
-    pops.to.plot <- pops[
-      apply(
-        ifit.total$model$data, 1,
-        function(x) {
-          sum(!is.na(x)) >= min.data.points
-        }
-      )
-    ]
-    # mpg.to.plot used for mgp col in tables
-    mpg.to.plot <- metadat$PopGroup[metadat$name %in% pops.to.plot]
-    mpg.to.plot <- clean.mpg(mpg.to.plot)
-    # popid.to.plot used for popid col in tables
-    popid.to.plot <- metadat$PopID[metadat$name %in% pops.to.plot]
-    
-    pops.to.plot.wild <- rownames(ifit.fracwild$fracwild.raw)[
-      apply(
-        ifit.fracwild$fracwild.raw, 1,
-        function(x) {
-          sum(!is.na(x)) >= min.data.points
-        }
-      )
-    ]
-    if(length(pops.to.plot.wild)==0){
-      cat(paste("No populations in", esuname, "have fracwild info. ESU is being skipped.\n"))
-      next
-    }
-    # mpg.to.plot.wild used for mgp col in tables
-    mpg.to.plot.wild <- metadat$PopGroup[metadat$name %in% pops.to.plot.wild]
-    mpg.to.plot.wild <- clean.mpg(mpg.to.plot.wild)
-    # mpg.to.plot.wild used for mgp col in tables
-    popid.to.plot.wild <- metadat$PopID[metadat$name %in% pops.to.plot.wild]
-
-        outputfile <- stringr::str_replace_all(esuname, "/", "-")
-    if (output.type == "latex") outputfile.ext <- ".pdf"
-    if (output.type == "html") outputfile.ext <- ".html"
-    if (output.type == "word") outputfile.ext <- ".docx"
-    outputfile <- paste0(figdir, outputfile, outputfile.ext)
+    rparams <- report_params(figdir, fits, datalist, this.esu=this.esu, plot.min.year=plot.min.year, plot.max.year=plot.max.year, output.type=output.type, min.data.points=min.data.points)
+    # No fracwild info on any populations
+    if(!rparams$ok) next
 
     # this Rmd file will make all the figures with a default name
     rmarkdown::render(paste0(reportpath, "/esu_report.Rmd"), render.type,
-      output_options = list(fig_caption = TRUE), quiet = TRUE
+      output_options = list(fig_caption = TRUE), quiet = TRUE, params = list(params=rparams)
     )
 
     # this will rename the figures made to the ESU specific name
-    file.rename(paste0(paste0(reportpath, "/esu_report"), outputfile.ext), outputfile)
+    file.rename(paste0(paste0(reportpath, "/esu_report"), rparams$outputfile.ext), outputfile)
     outnames <- paste(figdir, stringr::str_replace_all(esuname, "/", "-"), "-",
       c("summary_fig.pdf", "fracwild_fig.pdf", "main_fig.pdf", "productivity_fig.pdf", 
         "main_fig.csv", "total_trend_table.csv", "wild_trend_table.csv",
