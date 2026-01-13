@@ -6,7 +6,7 @@ This is runs the standardized trends metrics used in the 2015 and 2020 5-year NW
 
 To install, install the **devtools** package (if needed) and then to install the latest release use:
 ```
-devtools::install_github("nwfsc-timeseries/NWCTrends@*release")
+devtools::install_github("nwfsc-math-bio/NWCTrends@*release")
 ```
 To install an R package from Github, you need to be able to build an R package on your machine. If you are on Windows, that means you may need to install [Rtools](https://cran.r-project.org/bin/windows/Rtools/). On a Mac, installation should work fine; you don't need to install anything.
 
@@ -32,6 +32,21 @@ library(NWCTrends)
 NWCTrends_report()
 ```
 You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the `extdata` folder.
+
+Here is an example of customizing a variety of features:
+```
+NWCTrends::NWCTrends_report(inputfile="Data/CRchum2020.csv",
+                            fit.min.year=1949, fit.max.year = 2025,
+                            plot.min.year=1980, plot.max.year = 2025,
+                            geomean.table.control=list(
+                              min.year=1990, max.year=2025, lenbands=5, 
+                              min.band.points=2, change.col="last.two"),
+                            trend.table.control=list(
+                              year.ranges=list(1990:2005,2006:2020,2021:2025)),
+                            output.type = "word",
+                            output.dir = "Output/CRchum"
+)
+```
 
 Type `?NWCTrends` for instructions for analyzing a data set. The data must be .csv file. Figures will be saved in the **NWCTrends_output** folder, created in your working directory.  
 

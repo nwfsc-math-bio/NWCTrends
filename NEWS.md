@@ -1,5 +1,9 @@
 # NWCTrends
 
+# Version 1.31
+
+Create `report_params.R` so that the params can be returned as a list as needed instead of passing around.
+
 # Version 1.30
 
 Raw geomeans captions updated to clarify that the number of years in the wild geomeans could be different than for the total geomeans because there may be years with missing fraction wild.

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">NWCTrends</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.30</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.31</span>
       </span>
     </div>
 
@@ -66,10 +66,28 @@
     <li>
       <a href="https://github.com/nwfsc-math-bio/NWCTrends/releases/tag/v1.25" class="external-link">Version 1.25 2020 VR</a>
     </li>
+    <li>
+      <a href="https://github.com/nwfsc-math-bio/NWCTrends/releases/tag/v1.30" class="external-link">Version 1.30</a>
+    </li>
     <li class="divider">
     </li>
 <li>
       <a href="news/index.html">Changelog</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Viability PDFs
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="SR_2015.pdf">Viability Report 2015 (PDF)</a>
+    </li>
+    <li>
+      <a href="Methods.pdf">Methods (PDF)</a>
     </li>
   </ul>
 </li>
@@ -101,7 +119,7 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>To install, install the <strong>devtools</strong> package (if needed) and then to install the latest release use:</p>
-<pre><code><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nwfsc-timeseries/NWCTrends@*release"</span><span class="op">)</span></span></code></pre>
+<pre><code><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"nwfsc-math-bio/NWCTrends@*release"</span><span class="op">)</span></span></code></pre>
 <p>To install an R package from Github, you need to be able to build an R package on your machine. If you are on Windows, that means you may need to install <a href="https://cran.r-project.org/bin/windows/Rtools/" class="external-link">Rtools</a>. On a Mac, installation should work fine; you don’t need to install anything.</p>
 <p>The default is to create an html file with the tables and figures. You can also select Word or PDF output. In order to create PDF files and tables, you also need to install <strong>tinytex</strong> if you do not have a TeX installation. Code to install <strong>tinytex</strong> is below.</p>
 <pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'tinytex'</span><span class="op">)</span></span>
@@ -115,9 +133,21 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="va">fpath</span>, <span class="st">"."</span>,recursive<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
 <p>This will create a folder called <code>extdata</code> in your directory.</p>
 <p>To run a demo analysis and create a report, type</p>
-<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">NWCTrends</span><span class="op">)</span></span>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://nwfsc-math-bio.github.io/NWCTrends">NWCTrends</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/NWCTrends_report.html">NWCTrends_report</a></span><span class="op">(</span><span class="op">)</span></span></code></pre>
 <p>You will be asked to select a data file. If you do not have data, navigate to one of the .csv or .RData files in the <code>extdata</code> folder.</p>
+<p>Here is an example of customizing a variety of features:</p>
+<pre><code><span><span class="fu">NWCTrends</span><span class="fu">::</span><span class="fu"><a href="reference/NWCTrends_report.html">NWCTrends_report</a></span><span class="op">(</span>inputfile<span class="op">=</span><span class="st">"Data/CRchum2020.csv"</span>,</span>
+<span>                            fit.min.year<span class="op">=</span><span class="fl">1949</span>, fit.max.year <span class="op">=</span> <span class="fl">2025</span>,</span>
+<span>                            plot.min.year<span class="op">=</span><span class="fl">1980</span>, plot.max.year <span class="op">=</span> <span class="fl">2025</span>,</span>
+<span>                            geomean.table.control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>                              min.year<span class="op">=</span><span class="fl">1990</span>, max.year<span class="op">=</span><span class="fl">2025</span>, lenbands<span class="op">=</span><span class="fl">5</span>,</span>
+<span>                              min.band.points<span class="op">=</span><span class="fl">2</span>, change.col<span class="op">=</span><span class="st">"last.two"</span><span class="op">)</span>,</span>
+<span>                            trend.table.control<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>                              year.ranges<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1990</span><span class="op">:</span><span class="fl">2005</span>,<span class="fl">2006</span><span class="op">:</span><span class="fl">2020</span>,<span class="fl">2021</span><span class="op">:</span><span class="fl">2025</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                            output.type <span class="op">=</span> <span class="st">"word"</span>,</span>
+<span>                            output.dir <span class="op">=</span> <span class="st">"Output/CRchum"</span></span>
+<span><span class="op">)</span></span></code></pre>
 <p>Type <code><a href="reference/NWCTrends-package.html">?NWCTrends</a></code> for instructions for analyzing a data set. The data must be .csv file. Figures will be saved in the <strong>NWCTrends_output</strong> folder, created in your working directory.</p>
 </div>
 <div class="section level2">

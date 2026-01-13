@@ -9,25 +9,34 @@ navbar:
     - articles
     - tutorials
     - news
+    - viability
     right: github
-    
+
+  components:
+    viability:
+      text: Viability PDFs
+      menu:
+      - text: Viability Report 2015 (PDF)
+        href: SR_2015.pdf
+      - text: Methods (PDF)
+        href: Methods.pdf
+
 reference:
 - title: Package overview
-- contents: 
-  - matches("NWCTrends-package", internal=TRUE)
+  contents:
+  - matches("NWCTrends-package", internal = TRUE)
+
 - title: Main report writing functions
   desc: These are the functions that prepare the data, tables, figures and csv files.
-- contents:
+  contents:
   - has_keyword("report")
+
 - title: Utility
   desc: Utility functions
   contents:
   - has_keyword("utility")
 
 articles:
-- title: Viability Report Documents
-  desc: NWFSC Viability Report 2015 [PDF](SR_2015.pdf)<br>Methods only [PDF](Methods.pdf)
-  contents:
 - title: Example analysis
   desc: Example data and code
   contents:
@@ -41,4 +50,5 @@ news:
     href: https://github.com/nwfsc-math-bio/NWCTrends/releases/tag/v1.0
   - text: "Version 1.25 2020 VR"
     href: https://github.com/nwfsc-math-bio/NWCTrends/releases/tag/v1.25
-
+  - text: "Version 1.30"
+    href: https://github.com/nwfsc-math-bio/NWCTrends/releases/tag/v1.30
