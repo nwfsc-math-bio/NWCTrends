@@ -68,13 +68,8 @@ creates the ESU tables and figures from the
 Northwest Fisheries Science Center's Viability Report: "2015 Status review
 update for Pacific salmon and steelhead listed under the Endangered
 Species Act: Pacific Northwest".
-The 2015 NWFSC Viability Report can be viewed by typing
-\code{RShowDoc("2015_Status_Review_Update", package="NWCTrends")}
-at the command line. The report has a description of the
-methods used for computing the smoothed trend lines and the status metrics.
-A pdf of the methods is also available by typing
-\code{RShowDoc("Methods", package="NWCTrends")}
-at the command line.
+The 2015 and 2020 NWFSC PNW Salmonid Viability Reports can be viewed by typing
+\url{https://github.com/nwfsc-math-bio/NWCTrends/tree/master/reports}
 }
 \details{
 The default model used to fit the data is that used in the
@@ -132,8 +127,8 @@ NWCTrends_report(inputfile="thedata.csv",
 }
 }
 \references{
-Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. Nationa Marine Fisheries Service, Northwest Fisheries Science Center.
-Available from the NWFSC Publications page.
+Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. National Marine Fisheries Service, Northwest Fisheries Science Center.
+Available from \url{https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/2015_Status_Review_noaa_17015_DS1.pdf}.
 }
 \author{
 Eli Holmes, NOAA, Seattle, USA.  eli(dot)holmes(at)noaa(dot)gov

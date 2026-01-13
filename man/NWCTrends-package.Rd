@@ -12,12 +12,8 @@ Status Review updates (prepared by WRO) for Pacific salmon and steelhead listed
 under the Endangered Species Act: Pacific Northwest".
 }
 \details{
-The 2015 NWFSC PNW Salmonid Viability Report can be viewed by typing
-\code{RShowDoc("2015_Status_Review_Update", package="NWCTrends")}
-at the command line. The report has a description of the
-methods used for computing the smoothed trend lines and the status metrics. A pdf of the methods alone is also available by typing
-\code{RShowDoc("Methods", package="NWCTrends")}
-at the command line.
+The 2015 and 2020 NWFSC PNW Salmonid Viability Reports can be viewed by typing
+\url{https://github.com/nwfsc-math-bio/NWCTrends/tree/master/reports}
 
 The default model used to fit the data is that used in the
 2015 Status Update. This model uses information across the
@@ -41,7 +37,7 @@ passing in \code{\link{nwctrends.options}} to
 }
 \references{
 Ford, M. J., K. Barnas, T. Cooney, L. G. Crozier, M. Diaz, J. J. Hard, E. E. Holmes, D. M. Holzer, R. G. Kope, P. W. Lawson, M. Liermann, J. M. Myers, M. Rowse, D. J. Teel, D. M. Van Doornik, T. C. Wainwright, L. A. Weitkamp, M. Williams. 2015. Status Review Update for Pacific Salmon and Steelhead Listed under the Endangered Species Act:  Pacific Northwest. National Marine Fisheries Service, Northwest Fisheries Science Center.
-Available from the NWFSC Publications page.
+Available from \url{https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/2015_Status_Review_noaa_17015_DS1.pdf}.
 }
 \seealso{
 \link{data_setup}, \link{trend_15_table}, \link{trend_fits}, \link{geomean_table}.

@@ -28,7 +28,7 @@ A dataframe
 }
 \description{
 This returns a data frame that is written to a csv file. Not exported. It is used by
-\code{inst/doc/report_files/esu_report.Rmd}.
+\code{inst/report_files/esu_report.Rmd}.
 
 It returns the smoothed total spawners estimate and the
 smoothed wild spawners estimate which is

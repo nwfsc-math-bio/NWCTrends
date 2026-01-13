@@ -2,7 +2,9 @@
 
 # Version 1.31
 
-Create `report_params.R` so that the params can be returned as a list as needed instead of passing around.
+* Create `report_params.R` so that the params can be returned as a list as needed instead of passing around.
+* Move the big pdfs into `/reports` and ignore that via `.Rbuildignore` and `.pkgdownignore`.
+* replace gdata package with readxl since gdata no longer has read Excel function.
 
 # Version 1.30
 

@@ -11,20 +11,21 @@ Imports:
     tools,
     stringr (>= 1.4.0), 
     MARSS (>= 3.10.10), 
-    xtable (>= 1.8-4), 
-    kableExtra (>= 1.1.0),
-    gdata,
-    knitr,
+    readxl,
     rmarkdown
+Suggests:
+    knitr,
+    kableExtra,
+    xtable
 Authors@R: person("Holmes", "Elizabeth", , "eli.holmes@noaa.gov", role = c("aut", "cre"))
 URL: https://nwfsc-math-bio.github.io/NWCTrends, https://github.com/nwfsc-math-bio/NWCTrends
 BugReports: https://github.com/nwfsc-math-bio/NWCTrends/issues
 Maintainer: Elizabeth Holmes - NOAA Federal <eli.holmes@noaa.gov>
 Description: This is runs the standardized trends metrics used in the 2016 and 2020 5-year NWFSC Viability Reports for listed PNW salmonids.  To run, type library(NWCTrends) and then NWCTrends_report().
-License: CC-0
+License: CC0
 LazyData: yes
 BuildVignettes: yes
 ByteCompile: TRUE
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

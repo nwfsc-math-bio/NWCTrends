@@ -86,8 +86,10 @@
 
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.31" id="version-131">Version 1.31<a class="anchor" aria-label="anchor" href="#version-131"></a></h2>
-<p>Create <code>report_params.R</code> so that the params can be returned as a list as needed instead of passing around.</p>
-</div>
+<ul><li>Create <code>report_params.R</code> so that the params can be returned as a list as needed instead of passing around.</li>
+<li>Move the big pdfs into <code>/reports</code> and ignore that via <code>.Rbuildignore</code> and <code>.pkgdownignore</code>.</li>
+<li>replace gdata package with readxl since gdata no longer has read Excel function.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.30" id="version-130">Version 1.30<a class="anchor" aria-label="anchor" href="#version-130"></a></h2>
 <p>Raw geomeans captions updated to clarify that the number of years in the wild geomeans could be different than for the total geomeans because there may be years with missing fraction wild.</p>

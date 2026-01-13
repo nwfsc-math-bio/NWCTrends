@@ -35,7 +35,7 @@ called from \code{\link{NWCTrends_report}()} then \code{nwctrends.options} has a
 A plot
 }
 \description{
-This is the fracwild figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/doc/report_files/esu_report.Rmd}.
+This is the fracwild figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/report_files/esu_report.Rmd}.
 
 The dots are the raw fracwild values, the black
 line is the smoothed fracwild estimate.

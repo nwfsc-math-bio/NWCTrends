@@ -1,27 +1,23 @@
 # Local build and push to GitHub instructions
 
-devtools R check commands will delete the inst/doc folder, but I want that properly constructed so that when the package is installed from GitHub, it has the vignettes. Note, it is actually the pkgbuild::build() that is removing the `inst/doc` folder I believe.
+## Checking
 
-## Building
+Run check as normal.
 
-Install and Restart can be used as normal.
+## Updating man files
 
-## Vignettes
+Make sure to configure the building so that man files are remade with Roxygen. Then install as normal.
 
-The key is to have the `inst/doc` folder properly constructed with all the vignettes complete (with html, Rmd, and R) plus any extra PDFs that I want there.
+## Creating the pkgdown
 
-Put the Rmd vignettes and any PDFs in the vignettes folder. Then run this code is `inst/doc` needs to be re-built (vignettes have changed).
+Make sure that the man files are rebuilt because pkgdown will not rebuild. Also sometimes garbage gets
+build up in docs so you might delete that folder. pkgdown should rebuild it completely. 
+
+Then run
 ```
-tools::buildVignettes(dir = ".", tangle=TRUE)
-dir.create("inst/doc")
-file.copy(dir("vignettes", full.names=TRUE), "inst/doc", overwrite=TRUE)
+pkgdown::build_site()
 ```
 
-This should still work
-```
-remotes::install_github(build_vignettes = TRUE)
-```
-It will warn that `inst/doc` will be deleted but I think I have the vignettes `.install_extras` set up so that the installed `inst/doc` will be the same as the `inst/doc` folder created by the above code.
+## Push to GitHub
 
-My post on this
-https://community.rstudio.com/t/browsevignettes-mypackage-saying-no-vignettes-found/68656
+The repo is set to deliver the Page with the docs folder.

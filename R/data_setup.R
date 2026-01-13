@@ -49,9 +49,14 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
   }
 
   # read in the data
-  if (stringr::str_sub(inputfile, -4) == ".xls" | stringr::str_sub(inputfile, -5) == ".xlsx") {
-    dat <- gdata::read.xls(inputfile, na.strings = c("-99", "-99.00", "-99.0", "-99.000"), stringsAsFactors = FALSE)
-    dat <- dat[,!stringr::str_detect(colnames(dat), "X[.]")]
+  ext <- tolower(tools::file_ext(inputfile))
+  if (ext %in% c("xls", "xlsx")) {
+    dat <- readxl::read_excel(inputfile, na = c("-99", "-99.00", "-99.0", "-99.000"))
+    dat <- as.data.frame(dat, stringsAsFactors = FALSE)
+    # Drop columns created from blank/duplicate headers (often ...1, ...2 in readxl)
+    dat <- dat[, !grepl("^\\.\\.\\.[0-9]+$", names(dat)), drop = FALSE]
+    # drop columns named like X.
+    dat <- dat[, !stringr::str_detect(names(dat), "X[.]"), drop = FALSE]
   }
   if (stringr::str_sub(inputfile, -4) == ".csv"){
     dat <- utils::read.csv(inputfile, header = TRUE, na.strings = c("-99", "-99.00", "-99.0", "-99.000"), stringsAsFactors = FALSE)
