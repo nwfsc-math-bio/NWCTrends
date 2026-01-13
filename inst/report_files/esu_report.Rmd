@@ -8,7 +8,13 @@ header-includes:
 output:
   pdf_document:
     fig_caption: yes
+params: 
+  params: list()
 ---
+```{r, echo=FALSE}
+for(i in names(params$params)) assign(i, params$params[[i]])
+```
+
 ```{r, results='asis', echo=FALSE}
 if (output.type == "latex") {
   cat("\\renewcommand{\\floatpagefraction}{0.7}")
