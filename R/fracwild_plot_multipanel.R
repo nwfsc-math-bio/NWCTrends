@@ -3,7 +3,7 @@
 #' @title
 #' Figure of the raw and smoothed fracwild estimates.
 #' @description
-#' This is the fracwild figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/doc/report_files/esu_report.Rmd}. 
+#' This is the fracwild figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/report_files/esu_report.Rmd}. 
 #' 
 #' The dots are the raw fracwild values, the black
 #' line is the smoothed fracwild estimate.
