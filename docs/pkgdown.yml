@@ -1,12 +1,11 @@
-pandoc: 2.11.2
-pkgdown: 1.6.1
+pandoc: '3.4'
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
-  Methods: Methods.html
   demo-code: demo-code.html
   demo-data: demo-data.html
-last_built: 2021-10-09T05:06Z
+  Methods: Methods.html
+last_built: 2026-01-13T17:03Z
 urls:
-  reference: https://nwfsc-math-bio.github.io/NWCTrends//reference
-  article: https://nwfsc-math-bio.github.io/NWCTrends//articles
-
+  reference: https://nwfsc-math-bio.github.io/NWCTrends/reference
+  article: https://nwfsc-math-bio.github.io/NWCTrends/articles
