@@ -67,7 +67,6 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
     stop()
   }
   
-  
   required <- c(
     "YEAR", "NUMBER_OF_SPAWNERS", "SPECIES", "FRACWILD", "COMMON_POPULATION_NAME",
     "RUN_TIMING", "ESU", "MAJOR_POPULATION_GROUP"
@@ -98,10 +97,20 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
   if (!("Citation" %in% names(dat))) dat$Citation <- NA
   if (!("Contributor" %in% names(dat))) dat$Contributor <- NA
   
+  ## Some basic QC
+  if(!all(is.numeric(dat$Fracwild))){
+    cat("Fraction wild column must have values or NA. Cannot be blank.", inputfile, "\n")
+    stop()
+  }
+  if(any(trimws(dat$Run.Timing) == "" & !is.na(dat$Run.Timing))){
+    cat("Run timing column must have a text value or NA. Use NA if run timing does not apply.", inputfile, "\n")
+    stop()
+  }
+  
   ## Derived Datasets
   dat$wildspawners <- dat$Spawners * dat$Fracwild
 
-  ## Do clean up on names to get rid of duplicated run timing info
+  ## Do clean up on names to get rid of duplicated run timing info in common name
   dat$Common.Population.Name <- stringr::str_trim(dat$Common.Population.Name)
   for (i in c(
     "Fall-run", "Winter-run", "Spring-run", "Summer-run", "Late-run", "Early-run", "Early-late-run",
