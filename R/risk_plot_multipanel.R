@@ -3,7 +3,7 @@
 #' @title
 #' Main figure of estimated trends (wild and total spawners)
 #' @description
-#' This is the main figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/doc/report_files/esu_report.Rmd}. 
+#' This is the main figure function. Not exported. It is used by \code{\link{NWCTrends_report}} and \code{inst/report_files/esu_report.Rmd}. 
 #' 
 #' The dots are the raw spawner counts, the black
 #' line is the smoothed total spawners estimate, and the red line is the 
