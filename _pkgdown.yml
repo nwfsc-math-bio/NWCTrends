@@ -17,9 +17,11 @@ navbar:
       text: Viability PDFs
       menu:
       - text: Viability Report 2015 (PDF)
-        href: SR_2015.pdf
+        href: https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/2015_Status_Review_noaa_17015_DS1.pdf
+      - text: Viability Report 2020 (PDF)
+        href: https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/2020_Viability_Report.pdf
       - text: Methods (PDF)
-        href: Methods.pdf
+        href: https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/Methods.pdf
 
 reference:
 - title: Package overview
