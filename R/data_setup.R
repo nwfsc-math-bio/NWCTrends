@@ -103,7 +103,7 @@ data_setup <- function(inputfile, min.year, max.year, fit.all=FALSE) {
     stop()
   }
   if(any(trimws(dat$Run.Timing) == "" & !is.na(dat$Run.Timing))){
-    cat("Run timing column must have a value or NA.", inputfile, "\n")
+    cat("Run timing column must have a text value or NA. Use NA if run timing does not apply.", inputfile, "\n")
     stop()
   }
   
