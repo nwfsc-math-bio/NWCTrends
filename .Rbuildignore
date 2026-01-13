@@ -7,3 +7,4 @@
 index.md$
 inst/shinyapp_notes.txt$
 local_build_instructions.txt$
+^reports$

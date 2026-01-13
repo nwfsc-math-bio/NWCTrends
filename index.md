@@ -83,17 +83,21 @@ NWCTrends_report(fit.min.year=1990, fit.max.year=2019,
 
 ## References
 
-The 2015 NWFSC PNW Salmonid Viability Report can be viewed from the R command line by typing
-```
-RShowDoc("2015_Status_Review_Update", package="NWCTrends")
-```
-after installing the NWCTrends package. Or go to the GitHub repository and navigate to the "vignettes" folder on GitHub. The **NWCTrends** version used was v1.0.
+The **2015 NWFSC PNW Salmonid Viability Report** can be assessed via the GitHub repo:
 
-A pdf of the methods alone is also available by typing
-```
-RShowDoc("Methods", package="NWCTrends")
-``` 
-at the command line or navigate to the "vignettes" folder on GitHub.
+- **Viability Report 2015 (PDF)**  
+  https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/2015_Status_Review_Update.pdf
+- **Viability Report 2020 (PDF)**  
+  https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/2020_Viability_Report.pdf
+
+The version of **NWCTrends** used for the original report was **v1.0**.
+
+A standalone PDF of the **Methods** section is also available:
+
+- **Methods (PDF)**  
+  https://github.com/nwfsc-math-bio/NWCTrends/raw/master/reports/Methods.pdf
+
+
 
 ## Example output
 
